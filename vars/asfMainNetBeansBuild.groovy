@@ -26,7 +26,7 @@ def call(Map params = [:]) {
     def apidocurl = ""
     def date  = ""
     def atomdate = ""
-    
+    def jdktool = ""
     pipeline {
         options {
             buildDiscarder(logRotator(numToKeepStr: '1'))
@@ -44,22 +44,23 @@ def call(Map params = [:]) {
                         echo "curl over"
                         // write a custom json with valid data
                         writeFile(file: 'test.json', text: '{    "release90": {        "ant": "Ant (latest)",        "jdk": "JDK 1.8 (latest)",        "maven": "Maven 3.3.9",        "releaseDate": "29 Jul 2018",        "atomreleaseDate": "2018-07-29T12:00:00Z",        "tlp": "false",        "apidocurl": "https://bits.netbeans.org/9.0/javadoc"                            },    "release100": {        "ant": "Ant (latest)",        "jdk": "JDK 1.8 (latest)",        "maven": "Maven 3.3.9",        "releaseDate": "27 Dec 2018",        "atomreleaseDate": "2018-12-27T12:00:00Z",        "tlp": "false",        "apidocurl": "https://bits.netbeans.org/10.0/javadoc"                            },    "release110": {        "ant": "Ant (latest)",        "jdk": "JDK 1.8 (latest)",        "maven": "Maven 3.3.9",        "releaseDate": "13 Feb 2019",        "atomreleaseDate": "2019-02-13T12:00:00Z",        "tlp": "false",        "apidocurl": "https://bits.netbeans.org/11.0/javadoc"                            },    "master": {        "ant": "Ant (latest)",        "jdk": "JDK 1.8 (latest)",        "maven": "Maven 3.3.9",        "releaseDate": "-",        "atomreleaseDate": "-",        "tlp": "true",        "apidocurl": "https://bits.netbeans.org/dev/javadoc"                            }                        }')
-                        echo "write over"
                         
                         def foo = readJSON file: 'test.json'
-                        echo "readjs over"
-                        
                         sh 'rm -f test.json'
-                        echo "remove over"
+ 
                         myAnt = foo[env.BRANCH_NAME].ant;
                         apidocurl = foo[env.BRANCH_NAME].apidocurl
                         date  = foo[env.BRANCH_NAME].releaseDate
                         atomdate = foo[env.BRANCH_NAME].atomreleaseDate
-                        echo "echo over"
+                        jdktool = foo[env.BRANCH_NAME].jdk
+ 
                     }
                 }
             }
             stage ("Apidoc") {
+                tools {
+                   jdk jdktool
+                }
                 steps {
                     withAnt(installation: myAnt) {                  
                         script {
