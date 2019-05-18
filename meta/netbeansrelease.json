@@ -6,7 +6,12 @@
         "releaseDate": "29 Jul 2018",
         "atomreleaseDate": "2018-07-29T12:00:00Z",
         "tlp": "false",
-        "apidocurl": "https://bits.netbeans.org/9.0/javadoc"
+        "apidocurl": "https://bits.netbeans.org/9.0/javadoc",
+        "previousrelease": {
+            "day": "03",
+            "month": "10",
+            "year": "2016"
+        }
     },
     "release100": {
         "ant": "Ant (latest)",
@@ -15,7 +20,12 @@
         "releaseDate": "27 Dec 2018",
         "atomreleaseDate": "2018-12-27T12:00:00Z",
         "tlp": "false",
-        "apidocurl": "https://bits.netbeans.org/10.0/javadoc"
+        "apidocurl": "https://bits.netbeans.org/10.0/javadoc",
+        "previousrelease": {
+            "day": "29",
+            "month": "07",
+            "year": "2018"
+        }
     },
     "release110": {
         "ant": "Ant (latest)",
@@ -24,7 +34,12 @@
         "releaseDate": "13 Feb 2019",
         "atomreleaseDate": "2019-02-13T12:00:00Z",
         "tlp": "false",
-        "apidocurl": "https://bits.netbeans.org/11.0/javadoc"
+        "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
+        "previousrelease": {
+            "day": "27",
+            "month": "12",
+            "year": "2018"
+        }
     },
     "master": {
         "ant": "Ant (latest)",
@@ -33,6 +48,11 @@
         "releaseDate": "-",
         "atomreleaseDate": "-",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/dev/javadoc"
+        "apidocurl": "https://bits.netbeans.org/dev/javadoc",
+        "previousrelease": {
+            "day": "2019",
+            "month": "04",
+            "year": "04"
+        }
     }
 }
