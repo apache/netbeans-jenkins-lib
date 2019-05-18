@@ -1,5 +1,6 @@
 {
     "release90": {
+        "position": "1",
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
@@ -14,6 +15,7 @@
         }
     },
     "release100": {
+        "position": "2",
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
@@ -28,6 +30,7 @@
         }
     },
     "release110": {
+        "position" : "3",
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
@@ -42,6 +45,7 @@
         }
     },
     "master": {
+        "position" : "4",
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
