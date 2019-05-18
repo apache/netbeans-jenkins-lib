@@ -17,4 +17,6 @@
 #
 -->
 
-Shared Jenkins pipeline for Apache NetBeans Maven related builds
+Json file containing release information for Apache NetBeans.
+
+Json cannot contains ASF Header
