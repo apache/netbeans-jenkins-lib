@@ -41,13 +41,30 @@ def call(Map params = [:]) {
                     script {
                         // test if we can do that 
                         sh 'curl "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" -o netbeansrelease.json'
-                        def releaseData = readJSON file: 'netbeansrelease.json'
+                        def releaseInformation = readJSON file: 'netbeansrelease.json'
                         sh 'rm -f netbeansrelease.json'
-                        myAnt = releaseData[env.BRANCH_NAME].ant;
-                        apidocurl = releaseData[env.BRANCH_NAME].apidocurl
-                        date  = releaseData[env.BRANCH_NAME].releaseDate
-                        atomdate = releaseData[env.BRANCH_NAME].atomreleaseDate
-                        jdktool = releaseData[env.BRANCH_NAME].jdk
+                        myAnt = releaseInformation[env.BRANCH_NAME].ant;
+                        apidocurl = releaseInformation[env.BRANCH_NAME].apidocurl
+                        def month
+                        switch (releaseInformation[env.BRANCH_NAME].releasedate['month']) {
+                        case '01':month  = 'Jan'; break;
+                        case '02':month  = 'Feb'; break;
+                        case '03':month  = 'Mar'; break;
+                        case '04':month  = 'Apr'; break;
+                        case '05':month  = 'May'; break;
+                        case '06':month  = 'Jun'; break;
+                        case '07':month  = 'Jul'; break;
+                        case '08':month  = 'Aug'; break;
+                        case '09':month  = 'Sep'; break;
+                        case '10':month  = 'Oct'; break;
+                        case '11':month  = 'Nov'; break;
+                        case '12':month  = 'Dec'; break;
+                        default: month ='Invalid';
+                        }
+                        date  = releaseInformation[env.BRANCH_NAME].releasedate['day'] + ' '+ month + ' '+releaseInformation[env.BRANCH_NAME].releasedate['year']
+                        //2018-07-29T12:00:00Z
+                        atomdate = releaseInformation[env.BRANCH_NAME].releasedate['year']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['month']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['day']+'T12:00:00Z'
+                        jdktool = releaseInformation[env.BRANCH_NAME].jdk
  
                     }
                 }

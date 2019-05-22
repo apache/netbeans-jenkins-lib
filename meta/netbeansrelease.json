@@ -4,11 +4,14 @@
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
-        "releaseDate": "29 Jul 2018",
-        "atomreleaseDate": "2018-07-29T12:00:00Z",
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/9.0/javadoc",
-        "previousrelease": {
+        "releasedate": {
+            "day": "29",
+            "month": "07",
+            "year": "2018"
+        },
+        "previousreleasedate": {
             "day": "03",
             "month": "10",
             "year": "2016"
@@ -19,10 +22,13 @@
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
-        "releaseDate": "27 Dec 2018",
-        "atomreleaseDate": "2018-12-27T12:00:00Z",
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/10.0/javadoc",
+        "releasedate": {
+            "day": "27",
+            "month": "12",
+            "year": "2018"
+        },
         "previousrelease": {
             "day": "29",
             "month": "07",
@@ -30,14 +36,17 @@
         }
     },
     "release110": {
-        "position" : "3",
+        "position": "3",
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
-        "releaseDate": "13 Feb 2019",
-        "atomreleaseDate": "2019-02-13T12:00:00Z",
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
+        "releasedate": {
+            "day": "13",
+            "month": "02",
+            "year": "2019"
+        },
         "previousrelease": {
             "day": "27",
             "month": "12",
@@ -45,14 +54,17 @@
         }
     },
     "master": {
-        "position" : "4",
+        "position": "4",
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
-        "releaseDate": "-",
-        "atomreleaseDate": "-",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/dev/javadoc",
+        "releasedate": {
+            "day": "-",
+            "month": "-",
+            "year": "-"
+        },
         "previousrelease": {
             "day": "2019",
             "month": "04",
