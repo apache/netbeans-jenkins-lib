@@ -43,8 +43,8 @@
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
         "releasedate": {
-            "day": "13",
-            "month": "02",
+            "day": "04",
+            "month": "04",
             "year": "2019"
         },
         "previousrelease": {
@@ -66,9 +66,9 @@
             "year": "-"
         },
         "previousrelease": {
-            "day": "2019",
+            "day": "04",
             "month": "04",
-            "year": "04"
+            "year": "2019"
         }
     }
 }
