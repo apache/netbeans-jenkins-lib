@@ -4,6 +4,7 @@
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
+        "versionName": "9.0",
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/9.0/javadoc",
         "releasedate": {
@@ -22,6 +23,7 @@
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
+        "versionName": "10",
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/10.0/javadoc",
         "releasedate": {
@@ -40,6 +42,7 @@
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
+        "versionName": "11.0",
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
         "releasedate": {
@@ -58,6 +61,7 @@
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
+        "versionNameName": "-",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/dev/javadoc",
         "releasedate": {
