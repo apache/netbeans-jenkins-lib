@@ -61,7 +61,7 @@
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "maven": "Maven 3.3.9",
-        "versionNameName": "-",
+        "versionName": "-",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/dev/javadoc",
         "releasedate": {
