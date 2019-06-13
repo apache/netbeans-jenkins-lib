@@ -79,11 +79,11 @@ def call(Map params = [:]) {
                 steps {
                     withAnt(installation: myAnt) {
                         script {
-                            //sh 'ant'
+                            sh 'ant'
                             if (env.BRANCH_NAME=="master") {
-                                /*sh "ant build-nbms"
+                                sh "ant build-nbms"
                                 sh "ant build-source-zips"
-                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"*/
+                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 sh "rm -rf ${env.WORKSPACE}/testrepo/.m2"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
