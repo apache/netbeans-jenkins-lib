@@ -90,9 +90,9 @@ def call(Map params = [:]) {
                                 def localRepo = "${env.WORKSPACE}/.repository"
                                 withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
                                 {
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.4:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryId=apache.snapshots -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                     sh 'mkdir -p testrepo/.m2'
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.4:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnebeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=dev-SNAPSHOT -DskipInstall=true -DdeployUrl=https://repository.apache.org/snapshots"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnebeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=dev-SNAPSHOT -DskipInstall=true -DrepositoryId=apache.snapshots -DdeployUrl=https://repository.apache.org/snapshots"
                                 }
                                 
                             } else {
