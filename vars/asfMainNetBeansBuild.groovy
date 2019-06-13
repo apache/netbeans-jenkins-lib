@@ -81,9 +81,8 @@ def call(Map params = [:]) {
                         script {
                             sh 'ant'
                             if (env.BRANCH_NAME=="master") {
-                                sh "ant build-nbm"
+                                sh "ant build-nbms"
                                 sh "ant build-source-zips"
-                                sh "ant build-javadoc"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 sh "rm -rf ${env.WORKSPACE}/testrepo/.m2"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
