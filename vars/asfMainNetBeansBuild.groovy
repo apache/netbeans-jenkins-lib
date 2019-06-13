@@ -27,9 +27,11 @@ def call(Map params = [:]) {
     def date  = ""
     def atomdate = ""
     def jdktool = ""
+    def myMaven=""
+    
     pipeline {
         options {
-            buildDiscarder(logRotator(numToKeepStr: '1'))
+            buildDiscarder(logRotator(numToKeepStr: '2'))
             disableConcurrentBuilds() 
         }
         agent { node { label 'ubuntu' } }
@@ -65,6 +67,7 @@ def call(Map params = [:]) {
                         //2018-07-29T12:00:00Z
                         atomdate = releaseInformation[env.BRANCH_NAME].releasedate['year']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['month']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['day']+'T12:00:00Z'
                         jdktool = releaseInformation[env.BRANCH_NAME].jdk
+                        myMaven = releaseInformation[env.BRANCH_NAME].maven
  
                     }
                 }
@@ -74,11 +77,25 @@ def call(Map params = [:]) {
                     jdk jdktool
                 }
                 steps {
-                    withAnt(installation: myAnt) {                  
+                    withAnt(installation: myAnt) {
                         script {
                             sh 'ant'
                             if (env.BRANCH_NAME=="master") {
+                                sh "ant build-nbm"
+                                sh "ant build-source-zips"
+                                sh "ant build-javadoc"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "rm -rf ${env.WORKSPACE}/testrepo/.m2"
+                                sh "rm -rf ${env.WORKSPACE}/repoindex/"
+                                sh "rm -rf ${env.WORKSPACE}/.repository"
+                                def localRepo = "${env.WORKSPACE}/.repository"
+                                withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
+                                {
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.4:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                    sh 'mkdir -p testrepo/.m2'
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.4:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/netbeanssources/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/netbeanssources/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/netbeanssources/nbbuild/build/source-zips -DnebeansJavadocDirectory=${env.WORKSPACE}/netbeanssources/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=dev-SNAPSHOT -DskipInstall=true -DdeployUrl=https://repository.apache.org/snapshots"
+                                }
+                                
                             } else {
                                 sh "ant build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
