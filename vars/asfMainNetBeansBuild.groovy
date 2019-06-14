@@ -84,16 +84,14 @@ def call(Map params = [:]) {
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
-                                sh "rm -rf ${env.WORKSPACE}/testrepo/.m2"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
                                 def localRepo = "${env.WORKSPACE}/.repository"
                                 withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
                                 {
                                     sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryId=apache.snapshots.https -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                    sh 'mkdir -p testrepo/.m2'
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnebeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=dev-SNAPSHOT -DskipInstall=true -DrepositoryId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/snapshots"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnebeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=dev-SNAPSHOT -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/snapshots"
                                 }
                                 
                             } else {
