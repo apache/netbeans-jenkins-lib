@@ -105,9 +105,8 @@ def call(Map params = [:]) {
                                     for (String target in targets){
                                         sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                        sh "cd ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
-                                        sh "cp ${env.WORKSPACE}/.gitignore ."
+                                        sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         def add = "";
                                         if (target=="build") {
                                             add=" -Ddo.build.windows.launchers=true"
