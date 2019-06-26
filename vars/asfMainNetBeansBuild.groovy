@@ -28,7 +28,7 @@ def call(Map params = [:]) {
     def atomdate = ""
     def jdktool = ""
     def myMaven=""
-    
+    def version=""
     pipeline {
         options {
             buildDiscarder(logRotator(numToKeepStr: '2'))
@@ -68,7 +68,7 @@ def call(Map params = [:]) {
                         atomdate = releaseInformation[env.BRANCH_NAME].releasedate['year']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['month']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['day']+'T12:00:00Z'
                         jdktool = releaseInformation[env.BRANCH_NAME].jdk
                         myMaven = releaseInformation[env.BRANCH_NAME].maven
- 
+                        version = releaseInformation[env.BRANCH_NAME].versionName;
                     }
                 }
             }
@@ -95,7 +95,88 @@ def call(Map params = [:]) {
                                 }
                                 
                             } else {
+                                
+                                def clusterconfigs = ['platform','release']
+                                def targets = ['verify-libs-and-licenses','rat','build']
+                                for (String clusterconfig in clusterconfigs) {
+                                    sh "ant build-source-config -Dcluster.config=${clusterconfig}"
+                                    for (String target in targets){
+                                        sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                        sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                        sh "cd ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                        sh "unzip ${env.WORKSPACE}/nbbuild/build/*${clusterconfig}*.zip"
+                                        sh "cp ${env.WORKSPACE}/.gitignore ."
+                                        def add = "";
+                                        if (clusterconfig=="build") {
+                                            add=" -Ddo.build.windows.launchers=true"
+                                        }
+                                        sh "ant -f ${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
+                                    }
+                                    
+                                }
+                                
+                                //sh "ant build-source-config -Dcluster.config=release"
+                                
+                                
+                               /* sh "rm -rf ${env.WORKSPACE}/build-platform-temp"
+                                sh "mkdir ${env.WORKSPACE}/build-platform-temp"
+                                sh "cd ${env.WORKSPACE}/build-platform-temp"
+                                sh "unzip ${env.WORKSPACE}/nbbuild/build/*platform*.zip"
+
+                                sh "rm -rf ${env.WORKSPACE}/verify-platform-temp"
+                                sh "mkdir ${env.WORKSPACE}/verify-platform-temp"
+                                sh "cd ${env.WORKSPACE}/verify-platform-temp"
+                                sh "unzip ${env.WORKSPACE}/nbbuild/build/*platform*.zip"
+                                sh "cp ${env.WORKSPACE}/.gitignore ."
+
+                                sh "rm -rf ${env.WORKSPACE}/rat-platform-temp"
+                                sh "mkdir ${env.WORKSPACE}/rat-platform-temp"
+                                sh "cd ${env.WORKSPACE}/rat-platform-temp"
+                                sh "unzip ${env.WORKSPACE}/nbbuild/build/*platform*.zip"
+
+                                sh "rm -rf ${env.WORKSPACE}/build-release-temp"
+                                sh "mkdir ${env.WORKSPACE}/build-release-temp"
+                                sh "cd ${env.WORKSPACE}/build-release-temp"
+                                sh "unzip ${env.WORKSPACE}/nbbuild/build/release*.zip"
+
+                                sh "rm -rf ${env.WORKSPACE}/verify-release-temp"
+                                sh "mkdir ${env.WORKSPACE}/verify-release-temp"
+                                sh "cd ${env.WORKSPACE}/verify-release-temp"
+                                sh "unzip ${env.WORKSPACE}/nbbuild/build/release*.zip"
+                                sh "cp ${env.WORKSPACE}/.gitignore ."
+
+                                sh "rm -rf ${env.WORKSPACE}/rat-release-temp"
+                                sh "mkdir ${env.WORKSPACE}/rat-release-temp"
+                                sh "cd ${env.WORKSPACE}/rat-release-temp"
+                                sh "unzip ${env.WORKSPACE}/nbbuild/build/release*.zip"
+                                
+                                sh "ant -f verify-platform-temp/build.xml verify-libs-and-licenses -Dcluster.config=platform"
+                                sh "ant -f verify-release-temp/build.xml verify-libs-and-licenses -Dcluster.config=release"
+                                
+                                sh "ant -f rat-platform-temp/build.xml rat -Dcluster.config=platform"
+                                sh "ant -f rat-release-temp/build.xml rat -Dcluster.config=release"
+                                */
+                               
+                                //sh "ant -f build-platform-temp/build.xml build -Dcluster.config=platform -Ddo.build.windows.launchers=true"
+                                
+                                sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog build-javadoc -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                                
+                                sh "rm -rf ${env.WORKSPACE}/dist"
+                                sh "mkdir ${env.WORKSPACE}/dist"
+                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-source.zip"
+                                sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist/netbeans-${version}-source.zip"
+                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-bin.zip"
+                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-${version}-bin.zip"
+                                sh "mkdir ${env.WORKSPACE}/dist/nbms"
+                                sh "mkdir ${env.WORKSPACE}/dist/mavenrepository"
+                                sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist/nbms/"
+                                sh "cd ${env.WORKSPACE}/dist"
+                                sh 'for z in $(find . -name "*.zip") ; do sha512sum $z >$z.sha512 ; done'
+                                sh 'for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
+                                sh 'for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
+
                                 sh "ant build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                archiveArtifacts 'dist/**'
                             }
                         }
                         
