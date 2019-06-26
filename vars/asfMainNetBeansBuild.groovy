@@ -99,7 +99,7 @@ def call(Map params = [:]) {
                                 def clusterconfigs = ['platform','release']
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 for (String clusterconfig in clusterconfigs) {
-                                    sh "ant build-source-config -Dcluster.config=${clusterconfig}"
+                                    sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
                                     for (String target in targets){
                                         sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
@@ -107,7 +107,7 @@ def call(Map params = [:]) {
                                         sh "unzip ${env.WORKSPACE}/nbbuild/build/*${clusterconfig}*.zip"
                                         sh "cp ${env.WORKSPACE}/.gitignore ."
                                         def add = "";
-                                        if (clusterconfig=="build") {
+                                        if (target=="build") {
                                             add=" -Ddo.build.windows.launchers=true"
                                         }
                                         sh "ant -f ${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
