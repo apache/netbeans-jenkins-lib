@@ -98,13 +98,15 @@ def call(Map params = [:]) {
                                 
                                 def clusterconfigs = ['platform','release']
                                 def targets = ['verify-libs-and-licenses','rat','build']
+                                sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
+                                
                                 for (String clusterconfig in clusterconfigs) {
                                     sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
                                     for (String target in targets){
                                         sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "cd ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                        sh "unzip ${env.WORKSPACE}/nbbuild/build/*${clusterconfig}*.zip"
+                                        sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
                                         sh "cp ${env.WORKSPACE}/.gitignore ."
                                         def add = "";
                                         if (target=="build") {
