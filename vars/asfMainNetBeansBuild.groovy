@@ -160,7 +160,7 @@ def call(Map params = [:]) {
                                
                                 //sh "ant -f build-platform-temp/build.xml build -Dcluster.config=platform -Ddo.build.windows.launchers=true"
                                 
-                                sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog build-javadoc -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                                sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
                                 
                                 sh "rm -rf ${env.WORKSPACE}/dist"
                                 sh "mkdir ${env.WORKSPACE}/dist"
@@ -171,10 +171,9 @@ def call(Map params = [:]) {
                                 sh "mkdir ${env.WORKSPACE}/dist/nbms"
                                 sh "mkdir ${env.WORKSPACE}/dist/mavenrepository"
                                 sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist/nbms/"
-                                sh "cd ${env.WORKSPACE}/dist"
-                                sh 'for z in $(find . -name "*.zip") ; do sha512sum $z >$z.sha512 ; done'
-                                sh 'for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
-                                sh 'for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
+                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.zip") ; do sha512sum $z >$z.sha512 ; done'
+                                sh "cd ${env.WORKSPACE}/dist"+'for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
+                                sh "cd ${env.WORKSPACE}/dist"+'for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
 
                                 sh "ant build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 archiveArtifacts 'dist/**'
