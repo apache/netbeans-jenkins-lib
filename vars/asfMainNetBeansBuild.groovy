@@ -29,6 +29,7 @@ def call(Map params = [:]) {
     def jdktool = ""
     def myMaven=""
     def version=""
+    def mavenVersion=""
     pipeline {
         options {
             buildDiscarder(logRotator(numToKeepStr: '2'))
@@ -47,6 +48,7 @@ def call(Map params = [:]) {
                         sh 'rm -f netbeansrelease.json'
                         myAnt = releaseInformation[env.BRANCH_NAME].ant;
                         apidocurl = releaseInformation[env.BRANCH_NAME].apidocurl
+                        mavenVersion=releaseInformation[env.BRANCH_NAME].mavenversion
                         def month
                         switch (releaseInformation[env.BRANCH_NAME].releasedate['month']) {
                         case '01':month  = 'Jan'; break;
@@ -91,7 +93,7 @@ def call(Map params = [:]) {
                                 {
                                     sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnebeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=dev-SNAPSHOT -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnebeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
                                 }
                                 
                             } else {
@@ -115,50 +117,7 @@ def call(Map params = [:]) {
                                     }
                                     
                                 }
-                                
-                                //sh "ant build-source-config -Dcluster.config=release"
-                                
-                                
-                               /* sh "rm -rf ${env.WORKSPACE}/build-platform-temp"
-                                sh "mkdir ${env.WORKSPACE}/build-platform-temp"
-                                sh "cd ${env.WORKSPACE}/build-platform-temp"
-                                sh "unzip ${env.WORKSPACE}/nbbuild/build/*platform*.zip"
-
-                                sh "rm -rf ${env.WORKSPACE}/verify-platform-temp"
-                                sh "mkdir ${env.WORKSPACE}/verify-platform-temp"
-                                sh "cd ${env.WORKSPACE}/verify-platform-temp"
-                                sh "unzip ${env.WORKSPACE}/nbbuild/build/*platform*.zip"
-                                sh "cp ${env.WORKSPACE}/.gitignore ."
-
-                                sh "rm -rf ${env.WORKSPACE}/rat-platform-temp"
-                                sh "mkdir ${env.WORKSPACE}/rat-platform-temp"
-                                sh "cd ${env.WORKSPACE}/rat-platform-temp"
-                                sh "unzip ${env.WORKSPACE}/nbbuild/build/*platform*.zip"
-
-                                sh "rm -rf ${env.WORKSPACE}/build-release-temp"
-                                sh "mkdir ${env.WORKSPACE}/build-release-temp"
-                                sh "cd ${env.WORKSPACE}/build-release-temp"
-                                sh "unzip ${env.WORKSPACE}/nbbuild/build/release*.zip"
-
-                                sh "rm -rf ${env.WORKSPACE}/verify-release-temp"
-                                sh "mkdir ${env.WORKSPACE}/verify-release-temp"
-                                sh "cd ${env.WORKSPACE}/verify-release-temp"
-                                sh "unzip ${env.WORKSPACE}/nbbuild/build/release*.zip"
-                                sh "cp ${env.WORKSPACE}/.gitignore ."
-
-                                sh "rm -rf ${env.WORKSPACE}/rat-release-temp"
-                                sh "mkdir ${env.WORKSPACE}/rat-release-temp"
-                                sh "cd ${env.WORKSPACE}/rat-release-temp"
-                                sh "unzip ${env.WORKSPACE}/nbbuild/build/release*.zip"
-                                
-                                sh "ant -f verify-platform-temp/build.xml verify-libs-and-licenses -Dcluster.config=platform"
-                                sh "ant -f verify-release-temp/build.xml verify-libs-and-licenses -Dcluster.config=release"
-                                
-                                sh "ant -f rat-platform-temp/build.xml rat -Dcluster.config=platform"
-                                sh "ant -f rat-release-temp/build.xml rat -Dcluster.config=release"
-                                */
-                               
-                                //sh "ant -f build-platform-temp/build.xml build -Dcluster.config=platform -Ddo.build.windows.launchers=true"
+                                                               
                                 
                                 sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
                                 
@@ -177,6 +136,17 @@ def call(Map params = [:]) {
 
                                 sh "ant build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 archiveArtifacts 'dist/**'
+                                sh "rm -rf ${env.WORKSPACE}/repoindex/"
+                                sh "rm -rf ${env.WORKSPACE}/.repository"
+                                def localRepo = "${env.WORKSPACE}/.repository"
+                                def netbeansbase = "${env.WORKSPACE}/build-release-temp/nbbuild"
+                                withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
+                                {
+                                    sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnebeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=${env.WORKSPACE}/dist/mavenrepository"
+                                }
+                                
                             }
                         }
                         
