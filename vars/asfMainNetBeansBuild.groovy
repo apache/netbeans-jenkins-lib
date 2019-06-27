@@ -111,7 +111,7 @@ def call(Map params = [:]) {
                                         if (target=="build") {
                                             add=" -Ddo.build.windows.launchers=true"
                                         }
-                                        sh "ant -f ${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
+                                        sh "ant -f ${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER} ${add}"
                                     }
                                     
                                 }
@@ -160,7 +160,7 @@ def call(Map params = [:]) {
                                
                                 //sh "ant -f build-platform-temp/build.xml build -Dcluster.config=platform -Ddo.build.windows.launchers=true"
                                 
-                                sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                                sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
                                 
                                 sh "rm -rf ${env.WORKSPACE}/dist"
                                 sh "mkdir ${env.WORKSPACE}/dist"
