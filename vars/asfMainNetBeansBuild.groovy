@@ -172,8 +172,8 @@ def call(Map params = [:]) {
                                 sh "mkdir ${env.WORKSPACE}/dist/mavenrepository"
                                 sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist/nbms/"
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.zip") ; do sha512sum $z >$z.sha512 ; done'
-                                sh "cd ${env.WORKSPACE}/dist"+'for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
-                                sh "cd ${env.WORKSPACE}/dist"+'for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
+                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
+                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
 
                                 sh "ant build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 archiveArtifacts 'dist/**'
