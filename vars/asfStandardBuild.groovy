@@ -31,7 +31,7 @@ def call(Map params = [:]) {
     // now determine params
     def jdk = params.containsKey('jdk') ? params.jdk : 'JDK 1.8 (latest)'
     // use the cmdLine parameter otherwise default depending on current branch
-    def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy site:jar -Dproject.build.finalName=uploadablewebsite ":"clean install")
+    def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy site:jar":"clean install")
     def mvnName = params.containsKey('mvnName') ? params.mvnName : 'Maven 3.5.2'
 
 
@@ -94,7 +94,7 @@ def call(Map params = [:]) {
 def mavenBuild(jdk, cmdline, mvnName, publishers) {
     def localRepo = "../.maven_repositories/${env.EXECUTOR_NUMBER}" // ".repository" //
     //def settingsName = 'archiva-uid-jenkins'
-    def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true'
+    def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true -Dproject.build.finalName=uploadablewesite'
 
     withMaven(
         maven: mvnName,
