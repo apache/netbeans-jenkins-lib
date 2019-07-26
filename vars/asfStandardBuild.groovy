@@ -94,7 +94,7 @@ def call(Map params = [:]) {
 def mavenBuild(jdk, cmdline, mvnName, publishers) {
     def localRepo = "../.maven_repositories/${env.EXECUTOR_NUMBER}" // ".repository" //
     //def settingsName = 'archiva-uid-jenkins'
-    def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true -Dproject.build.finalName=uploadablewesite'
+    def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true'
 
     withMaven(
         maven: mvnName,
