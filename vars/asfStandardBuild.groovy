@@ -107,7 +107,7 @@ def mavenBuild(jdk, cmdline, mvnName, publishers) {
         // Some common Maven command line + provided command line
         sh "mvn -V -B -U -e -Dmaven.test.failure.ignore=true $cmdline "
     }
-    archiveArtifacts artifacts: 'target/uploa**'
+ 
 }
 
 def notifyBuild(String buildStatus) {
