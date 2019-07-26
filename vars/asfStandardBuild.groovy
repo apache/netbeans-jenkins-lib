@@ -31,7 +31,7 @@ def call(Map params = [:]) {
     // now determine params
     def jdk = params.containsKey('jdk') ? params.jdk : 'JDK 1.8 (latest)'
     // use the cmdLine parameter otherwise default depending on current branch
-    def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy":"clean install")
+    def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy site:jar -Dproject.build.finalName=uploadablewebsite ":"clean install")
     def mvnName = params.containsKey('mvnName') ? params.mvnName : 'Maven 3.5.2'
 
 
@@ -107,6 +107,7 @@ def mavenBuild(jdk, cmdline, mvnName, publishers) {
         // Some common Maven command line + provided command line
         sh "mvn -V -B -U -e -Dmaven.test.failure.ignore=true $cmdline "
     }
+    archiveArtifacts artifacts: 'target/uploa**'
 }
 
 def notifyBuild(String buildStatus) {
