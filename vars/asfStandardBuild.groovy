@@ -45,6 +45,9 @@ def call(Map params = [:]) {
 
     pipeline {
         agent any
+	triggers {
+	   pollSCM('H/5 * * * * ')
+	}
         stages{
             stage("Build"){
                 agent { node { label 'ubuntu' } }
