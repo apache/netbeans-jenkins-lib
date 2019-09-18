@@ -124,8 +124,8 @@
         "versionName": "-",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/dev/javadoc",
-        "update_url": "https://builds.apache.org/job/netbeans-linux/lastSuccessfulBuild/artifact/nbbuild/nbms/updates.xml.gz",
-        "plugin_url": "http://netbeans-vm.apache.org/pluginportal/data/latest/catalog-experimental.xml.gz",        
+        "update_url": "https://netbeans.apache.org/nb/updates/dev/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/dev/catalog.xml.gz",        
         "releasedate": {
             "day": "-",
             "month": "-",
