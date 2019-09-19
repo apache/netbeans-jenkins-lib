@@ -100,8 +100,8 @@ def call(Map params = [:]) {
                                 }
                                 
                             } else {
-                                
-                                def clusterconfigs = ['platform','release']
+                                // remove platform for testing issue
+                                def clusterconfigs = [/*'platform',*/'release']
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
@@ -128,9 +128,9 @@ def call(Map params = [:]) {
                                
                                 sh "rm -rf ${env.WORKSPACE}/dist"
                                 sh "mkdir ${env.WORKSPACE}/dist"
-                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-source.zip"
+                                //sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-source.zip"
                                 sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist/netbeans-${version}-source.zip"
-                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-bin.zip"
+                                //sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-bin.zip"
                                 sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-${version}-bin.zip"
                                 sh "mkdir ${env.WORKSPACE}/dist/nbms"
                                 sh "mkdir ${env.WORKSPACE}/dist/mavenrepository"
