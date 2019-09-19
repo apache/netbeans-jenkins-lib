@@ -49,7 +49,7 @@ def call(Map params = [:]) {
                         if (!releaseInformation[env.BRANCH_NAME]) {
                             // no branch definined in json exit build
                             currentBuild.result = "FAILURE"
-                            throw new Exception("Throw to stop pipeline")
+                            throw new Exception("No entry in json for $env.BRANCH_NAME")
                         }
                         myAnt = releaseInformation[env.BRANCH_NAME].ant;
                         apidocurl = releaseInformation[env.BRANCH_NAME].apidocurl
@@ -117,14 +117,14 @@ def call(Map params = [:]) {
                                         if (target=="build" && env.BRANCH_NAME!="release90") {
                                             add=" -Ddo.build.windows.launchers=true"
                                         }
-                                        sh "ant -f ${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER} ${add}"
+                                        sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER} ${add}"
                                     }
                                     
                                 }
                                                                
                                 
-                                sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
-                                sh "ant -f build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
+                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                
                                 sh "rm -rf ${env.WORKSPACE}/dist"
                                 sh "mkdir ${env.WORKSPACE}/dist"
