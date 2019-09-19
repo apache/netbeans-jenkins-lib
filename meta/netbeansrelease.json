@@ -115,7 +115,7 @@
         }
     },
     "master": {
-        "position": "5",
+        "position": "50000",
         "ant": "Ant (latest)",
         "jdk": "JDK 1.8 (latest)",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
