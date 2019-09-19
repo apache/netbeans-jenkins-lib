@@ -81,11 +81,9 @@ def call(Map params = [:]) {
                 steps {
                     withAnt(installation: myAnt) {
                         script {
-                            sh 'ant'
+                            //sh 'ant'
                             if (env.BRANCH_NAME=="master") {
-                                sh "ant build-nbms"
-                                sh "ant build-source-zips"
-                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "ant build-nbms build-source-zips build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
                                 def localRepo = "${env.WORKSPACE}/.repository"
@@ -110,7 +108,8 @@ def call(Map params = [:]) {
                                         sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
                                         sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         def add = "";
-                                        if (target=="build") {
+                                        // 
+                                        if (target=="build" && env.BRANCH_NAME!="release90") {
                                             add=" -Ddo.build.windows.launchers=true"
                                         }
                                         sh "ant -f ${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER} ${add}"
@@ -120,7 +119,8 @@ def call(Map params = [:]) {
                                                                
                                 
                                 sh "ant -f build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
-                                
+                                sh "ant -f build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                               
                                 sh "rm -rf ${env.WORKSPACE}/dist"
                                 sh "mkdir ${env.WORKSPACE}/dist"
                                 sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-source.zip"
@@ -134,8 +134,7 @@ def call(Map params = [:]) {
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
 
-                                sh "ant build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
-                                
+                                 
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
                                 def localRepo = "${env.WORKSPACE}/.repository"
