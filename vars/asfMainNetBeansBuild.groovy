@@ -46,6 +46,11 @@ def call(Map params = [:]) {
                         sh 'curl "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" -o netbeansrelease.json'
                         def releaseInformation = readJSON file: 'netbeansrelease.json'
                         sh 'rm -f netbeansrelease.json'
+                        if (!releaseInformation[env.BRANCH_NAME]) {
+                            // no branch definined in json exit build
+                            currentBuild.result = "FAILURE"
+                            throw new Exception("Throw to stop pipeline")
+                        }
                         myAnt = releaseInformation[env.BRANCH_NAME].ant;
                         apidocurl = releaseInformation[env.BRANCH_NAME].apidocurl
                         mavenVersion=releaseInformation[env.BRANCH_NAME].mavenversion
