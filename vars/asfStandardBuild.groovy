@@ -120,7 +120,7 @@ def notifyBuild(String buildStatus) {
     def color
     if (buildStatus == 'STARTED') {
         color = '#F0F0F0'
-    } else if (buildStatus == 'SUCCESS') {
+    } else if (buildStatus == 'SUCCESS' || buildStatus=='Fixed') {
         color = '#00FF00'
     } else if (buildStatus == 'UNSTABLE') {
         color = '#ffff50'
