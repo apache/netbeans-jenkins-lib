@@ -87,6 +87,19 @@ def call(Map params = [:]) {
                     withAnt(installation: myAnt) {
                         script {
                             //sh 'ant'
+                            // experiment 
+                            echo ')==='
+                            sh 'cat ${env.WORKSPACE}/.git/HEAD'
+                            echo '==,'
+                            sh 'git --version'
+                            echo '==,'
+                            sh 'git rev-parse HEAD'
+                            echo '==,'
+                            sh 'git rev-parse --abbrev-ref HEAD '
+                            echo '==,'
+                            sh 'git branch --remote --verbose --no-abbrev --contains'
+                            throw new Exception("Fail fast debug")
+                            // end experiement
                             if (env.BRANCH_NAME=="master") {
                                 sh "ant build-nbms build-source-zips build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
