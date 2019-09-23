@@ -87,21 +87,6 @@ def call(Map params = [:]) {
                     withAnt(installation: myAnt) {
                         script {
                             //sh 'ant'
-                            // experiment 
-                            /*echo ')==='
-                            echo "${env.GIT_BRANCH} commit hash ${env.GIT_COMMIT}"
-                            echo '==,'
-                            sh "cat ${env.WORKSPACE}/.git/HEAD"
-                            echo '==,'
-                            sh 'git --version'
-                            echo '==,'
-                            sh 'git rev-parse HEAD'
-                            echo '==,'
-                            sh 'git rev-parse --abbrev-ref HEAD '
-                            echo '==,'
-                            sh 'git branch --remote --verbose --no-abbrev --contains'*/
-                            throw new Exception("Fail fast debug")
-                            // end experiement
                             if (env.BRANCH_NAME=="master") {
                                 sh "ant build-nbms build-source-zips build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
@@ -154,7 +139,7 @@ def call(Map params = [:]) {
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
 
-                                 
+                                //prepare a maven repository to be used by RM 
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
                                 def localRepo = "${env.WORKSPACE}/.repository"
