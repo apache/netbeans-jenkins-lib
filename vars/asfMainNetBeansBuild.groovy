@@ -88,7 +88,7 @@ def call(Map params = [:]) {
                         script {
                             //sh 'ant'
                             // experiment 
-                            echo ')==='
+                            /*echo ')==='
                             echo "${env.GIT_BRANCH} commit hash ${env.GIT_COMMIT}"
                             echo '==,'
                             sh "cat ${env.WORKSPACE}/.git/HEAD"
@@ -99,7 +99,7 @@ def call(Map params = [:]) {
                             echo '==,'
                             sh 'git rev-parse --abbrev-ref HEAD '
                             echo '==,'
-                            sh 'git branch --remote --verbose --no-abbrev --contains'
+                            sh 'git branch --remote --verbose --no-abbrev --contains'*/
                             throw new Exception("Fail fast debug")
                             // end experiement
                             if (env.BRANCH_NAME=="master") {
@@ -116,7 +116,7 @@ def call(Map params = [:]) {
                                 
                             } else {
                                 // remove platform for testing issue
-                                def clusterconfigs = [/*'platform',*/'release']
+                                def clusterconfigs = ['platform','release']
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
@@ -143,9 +143,9 @@ def call(Map params = [:]) {
                                
                                 sh "rm -rf ${env.WORKSPACE}/dist"
                                 sh "mkdir ${env.WORKSPACE}/dist"
-                                //sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-source.zip"
+                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-source.zip"
                                 sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist/netbeans-${version}-source.zip"
-                                //sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-bin.zip"
+                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-bin.zip"
                                 sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-${version}-bin.zip"
                                 sh "mkdir ${env.WORKSPACE}/dist/nbms"
                                 sh "mkdir ${env.WORKSPACE}/dist/mavenrepository"
