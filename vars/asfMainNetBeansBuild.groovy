@@ -103,7 +103,7 @@ def call(Map params = [:]) {
                             throw new Exception("Fail fast debug")
                             // end experiement
                             if (env.BRANCH_NAME=="master") {
-                                sh "ant build-nbms build-source-zips build-javadoc -Dmetabuild.branch=${env.BRANCH_NAME} -Dmetabuild.hash=${env.GIT_COMMIT} -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "ant build-nbms build-source-zips build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
                                 def localRepo = "${env.WORKSPACE}/.repository"
@@ -121,7 +121,7 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 for (String clusterconfig in clusterconfigs) {
-                                    sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dmetabuild.branch=${env.BRANCH_NAME} -Dmetabuild.hash=${env.GIT_COMMIT} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
+                                    sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
                                     for (String target in targets){
                                         sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
@@ -132,14 +132,14 @@ def call(Map params = [:]) {
                                         if (target=="build" && env.BRANCH_NAME!="release90") {
                                             add=" -Ddo.build.windows.launchers=true"
                                         }
-                                        sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} -Dmetabuild.branch=${env.BRANCH_NAME} -Dmetabuild.hash=${env.GIT_COMMIT} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER} ${add}"
+                                        sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER} ${add}"
                                     }
                                     
                                 }
                                                                
                                 
-                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dmetabuild.branch=${env.BRANCH_NAME} -Dmetabuild.hash=${env.GIT_COMMIT} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
-                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip -Dmetabuild.branch=${env.BRANCH_NAME} -Dmetabuild.hash=${env.GIT_COMMIT}"
+                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
+                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                
                                 sh "rm -rf ${env.WORKSPACE}/dist"
                                 sh "mkdir ${env.WORKSPACE}/dist"
