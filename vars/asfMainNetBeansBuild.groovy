@@ -89,7 +89,7 @@ def call(Map params = [:]) {
                             //sh 'ant'
                             // experiment 
                             echo ')==='
-                            sh 'cat ${env.WORKSPACE}/.git/HEAD'
+                            sh "cat ${env.WORKSPACE}/.git/HEAD"
                             echo '==,'
                             sh 'git --version'
                             echo '==,'
