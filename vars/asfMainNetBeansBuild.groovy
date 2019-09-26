@@ -29,6 +29,7 @@ def call(Map params = [:]) {
     def jdktool = ""
     def myMaven=""
     def version=""
+    def rmversion=""
     def mavenVersion=""
     pipeline {
         options {
@@ -46,16 +47,22 @@ def call(Map params = [:]) {
                         sh 'curl "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" -o netbeansrelease.json'
                         def releaseInformation = readJSON file: 'netbeansrelease.json'
                         sh 'rm -f netbeansrelease.json'
-                        if (!releaseInformation[env.BRANCH_NAME]) {
+                        def branch = env.BRANCH_NAME 
+                        def githash = env.GIT_COMMIT
+                        
+                        println githash
+                        println branch
+                        
+                        if (!releaseInformation[branch]) {
                             // no branch definined in json exit build
                             currentBuild.result = "FAILURE"
-                            throw new Exception("No entry in json for $env.BRANCH_NAME")
+                            throw new Exception("No entry in json for $branch")
                         }
-                        myAnt = releaseInformation[env.BRANCH_NAME].ant;
-                        apidocurl = releaseInformation[env.BRANCH_NAME].apidocurl
-                        mavenVersion=releaseInformation[env.BRANCH_NAME].mavenversion
+                        myAnt = releaseInformation[branch].ant;
+                        apidocurl = releaseInformation[branch].apidocurl
+                        mavenVersion=releaseInformation[branch].mavenversion
                         def month
-                        switch (releaseInformation[env.BRANCH_NAME].releasedate['month']) {
+                        switch (releaseInformation[branch].releasedate['month']) {
                         case '01':month  = 'Jan'; break;
                         case '02':month  = 'Feb'; break;
                         case '03':month  = 'Mar'; break;
@@ -70,12 +77,31 @@ def call(Map params = [:]) {
                         case '12':month  = 'Dec'; break;
                         default: month ='Invalid';
                         }
-                        date  = releaseInformation[env.BRANCH_NAME].releasedate['day'] + ' '+ month + ' '+releaseInformation[env.BRANCH_NAME].releasedate['year']
+                        date  = releaseInformation[branch].releasedate['day'] + ' '+ month + ' '+releaseInformation[branch].releasedate['year']
                         //2018-07-29T12:00:00Z
-                        atomdate = releaseInformation[env.BRANCH_NAME].releasedate['year']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['month']+'-'+releaseInformation[env.BRANCH_NAME].releasedate['day']+'T12:00:00Z'
-                        jdktool = releaseInformation[env.BRANCH_NAME].jdk
-                        myMaven = releaseInformation[env.BRANCH_NAME].maven
-                        version = releaseInformation[env.BRANCH_NAME].versionName;
+                        atomdate = releaseInformation[branch].releasedate['year']+'-'+releaseInformation[branch].releasedate['month']+'-'+releaseInformation[branch].releasedate['day']+'T12:00:00Z'
+                        jdktool = releaseInformation[branch].jdk
+                        myMaven = releaseInformation[branch].maven
+                        version = releaseInformation[branch].versionName;
+                        
+                        rmversion = version
+                        //
+                        if (releaseInformation[branch].milestones) {
+                            releaseInformation[branch].milestones.each{key,value ->
+                                if (key==githash) {
+                                    // vote candidate prior
+                                    if (value['vote']) {
+                                        rmversion = rmversion+'-vc'+value['vote']
+                                    } else if (value['version']){
+                                        // other named version
+                                        rmversion = rmversion+'-'+value['version']
+                                    }
+
+                                }
+                               
+                            }
+                        }
+                       
                     }
                 }
             }
@@ -126,19 +152,27 @@ def call(Map params = [:]) {
                                 sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
                                 sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                
+                                // remove folders
                                 sh "rm -rf ${env.WORKSPACE}/dist"
+                                sh "rm -rf ${env.WORKSPACE}/mavenrepository"
+                                
+                                // create dist folder and content
                                 sh "mkdir ${env.WORKSPACE}/dist"
-                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-source.zip"
-                                sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist/netbeans-${version}-source.zip"
-                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${version}-bin.zip"
-                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-${version}-bin.zip"
+                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${rmversion}-source.zip"
+                                sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist/netbeans-${rmversion}-source.zip"
+                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${rmversion}-bin.zip"
+                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-${rmversion}-bin.zip"
                                 sh "mkdir ${env.WORKSPACE}/dist/nbms"
-                                sh "mkdir ${env.WORKSPACE}/dist/mavenrepository"
+                                 
+                                // creat maven repository folder and content
+                                sh "mkdir ${env.WORKSPACE}/mavenrepository"
                                 sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist/nbms/"
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.zip") ; do sha512sum $z >$z.sha512 ; done'
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
-
+                                
+                                archiveArtifacts 'dist/**'
+                                
                                 //prepare a maven repository to be used by RM 
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
@@ -148,10 +182,12 @@ def call(Map params = [:]) {
                                 {
                                     sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/dist/mavenrepository"
+                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                 }
                                 
-                                archiveArtifacts 'dist/**'
+                                archiveArtifacts 'mavenrepository/**'
+                                
+                                
                                 
                             }
                         }
