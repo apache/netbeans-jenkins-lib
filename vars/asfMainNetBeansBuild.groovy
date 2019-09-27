@@ -129,6 +129,7 @@ def call(Map params = [:]) {
                                 
                             } else if (month !='Invalid') {
                                 // we have a valid month, this package is already released. Build only javadoc
+                                sh "ant"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             } else {
                                 // we want to setup for release
