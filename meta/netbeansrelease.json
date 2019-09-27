@@ -150,7 +150,7 @@
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "maven": "Maven 3.3.9",
         "mavenversion": "dev-SNAPSHOT",
-        "versionName": "-",
+        "versionName": "master",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/dev/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/dev/updates.xml.gz?{$netbeans.hash.code}",
