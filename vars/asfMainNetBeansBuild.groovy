@@ -115,8 +115,8 @@ def call(Map params = [:]) {
                             //sh 'ant'
                             if (env.BRANCH_NAME=="master") {
                                 sh "ant build-nbms"
-                                sh "build-source-zips"
-                                sh "build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "ant build-source-zips"
+                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
                                 def localRepo = "${env.WORKSPACE}/.repository"
