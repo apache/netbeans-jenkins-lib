@@ -38,7 +38,7 @@ def call(Map params = [:]) {
         }
         agent { node { label 'ubuntu' } }
         stages{
-            stage("Test"){
+            stage("Preparing Variable"){
                 agent { node { label 'ubuntu' } }
                 options { timeout(time: 180, unit: 'MINUTES') }
                 steps{
@@ -96,16 +96,13 @@ def call(Map params = [:]) {
                                         // other named version
                                         rmversion = rmversion+'-'+value['version']
                                     }
-
-                                }
-                               
+                                }                             
                             }
-                        }
-                       
+                        } 
                     }
                 }
             }
-            stage ("Apidoc") {
+            stage ("Main build") {
                 tools {
                     jdk jdktool
                 }
@@ -114,6 +111,8 @@ def call(Map params = [:]) {
                         script {
                             //sh 'ant'
                             if (env.BRANCH_NAME=="master") {
+                                // on master we build apidoc + populating snapshot repository
+                                // should be on line for each otherwise cluster are wrong
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
@@ -127,8 +126,12 @@ def call(Map params = [:]) {
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnetbeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
                                 }
                                 
+                            } else if (month !='Invalid') {
+                                // we have a valid month, this package is already released. Build only javadoc
+                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             } else {
-                                // remove platform for testing issue
+                                // we want to setup for release
+                                // apidoc + repomaven + dist bundle
                                 def clusterconfigs = ['platform','release']
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
@@ -185,15 +188,10 @@ def call(Map params = [:]) {
                                     sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
-                                }
-                                
-                                archiveArtifacts 'mavenrepository/**'
-                                
-                                
-                                
+                                }                            
+                                archiveArtifacts 'mavenrepository/**'     
                             }
-                        }
-                        
+                        }                       
                     }
                     archiveArtifacts 'WEBZIP.zip'
                     
