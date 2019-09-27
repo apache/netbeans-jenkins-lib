@@ -31,6 +31,7 @@ def call(Map params = [:]) {
     def version=""
     def rmversion=""
     def mavenVersion=""
+    def month=""
     pipeline {
         options {
             buildDiscarder(logRotator(numToKeepStr: '2'))
@@ -61,7 +62,7 @@ def call(Map params = [:]) {
                         myAnt = releaseInformation[branch].ant;
                         apidocurl = releaseInformation[branch].apidocurl
                         mavenVersion=releaseInformation[branch].mavenversion
-                        def month
+                        
                         switch (releaseInformation[branch].releasedate['month']) {
                         case '01':month  = 'Jan'; break;
                         case '02':month  = 'Feb'; break;
