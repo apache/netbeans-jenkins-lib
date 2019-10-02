@@ -139,7 +139,8 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 for (String clusterconfig in clusterconfigs) {
-                                    sh "ant build-source-config -Dcluster.config=${clusterconfig}"
+                                    // force a build num for build-source-config
+                                    sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
                                     for (String target in targets){
                                         sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
