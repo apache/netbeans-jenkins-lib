@@ -169,7 +169,7 @@ def call(Map params = [:]) {
                                 sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${rmversion}-source.zip"
                                 sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist/netbeans-${rmversion}-source.zip"
                                 sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${rmversion}-bin.zip"
-                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-${rmversion}-bin.zip"
+                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*-release.zip ${env.WORKSPACE}/dist/netbeans-${rmversion}-bin.zip"
                                 sh "mkdir ${env.WORKSPACE}/dist/nbms"
                                  
                                 // creat maven repository folder and content
