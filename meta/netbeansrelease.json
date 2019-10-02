@@ -130,6 +130,10 @@
             "fc82d6fe44bb3557f757bc520b7bc95fade01ebd": {
                 "version": "beta1",
                 "position": "1"
+            },
+            "86e1b2eb194e8e9628a66e6ee1a128134c70671a": {
+                "version": "beta2",
+                "position": "2"
             }
         },
         "releasedate": {
