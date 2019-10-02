@@ -139,7 +139,7 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 for (String clusterconfig in clusterconfigs) {
-                                    sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
+                                    sh "ant build-source-config -Dcluster.config=${clusterconfig}"
                                     for (String target in targets){
                                         sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                         sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
@@ -150,13 +150,13 @@ def call(Map params = [:]) {
                                         if (target=="build" && env.BRANCH_NAME!="release90") {
                                             add=" -Ddo.build.windows.launchers=true"
                                         }
-                                        sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER} ${add}"
+                                        sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
                                     }
                                     
                                 }
                                                                
                                 
-                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dbuildnum=${env.BRANCH_NAME}_${env.BUILD_NUMBER}"
+                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
                                 sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                
                                 // remove folders
