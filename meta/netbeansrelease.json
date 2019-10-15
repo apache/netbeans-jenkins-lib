@@ -134,6 +134,10 @@
             "86e1b2eb194e8e9628a66e6ee1a128134c70671a": {
                 "version": "beta2",
                 "position": "2"
+            },
+            "d60b28422c35fc6f2fa0952dc214c3bf010c33d3": {
+                "version": "beta3",
+                "position": "3"
             }
         },
         "releasedate": {
