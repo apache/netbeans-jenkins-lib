@@ -46,20 +46,32 @@ def call(Map params = [:]) {
     pipeline {
         agent any
 	triggers {
-	   pollSCM('H/5 * * * * ')
+            pollSCM('H/5 * * * * ')
 	}
         stages{
-            stage("Build"){
+            stage("Build with xvfb") {
                 agent { node { label 'ubuntu' } }
                 options { timeout(time: 120, unit: 'MINUTES') }
+                when {expression {
+                        return xvfb
+                    }
+                }
                 steps{
-		    if (xvbf) {
-			wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayNameOffset: 0, installationName: 'Xvfb', parallelBuild: true, screen: '']) {
-			    mavenBuild( jdk, cmdline, mvnName, publishers)
-			}
-		    } else {
-	                 mavenBuild( jdk, cmdline, mvnName, publishers)
-		    }
+                    wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayNameOffset: 0, installationName: 'Xvfb', parallelBuild: true, screen: '']) {
+                        mavenBuild( jdk, cmdline, mvnName, publishers)
+                    }
+                }
+            }
+            stage("Build") {
+                agent { node { label 'ubuntu' } }
+                options { timeout(time: 120, unit: 'MINUTES') }
+                when {expression {
+                        return !xvfb
+                    }
+                }
+                steps{
+                    mavenBuild( jdk, cmdline, mvnName, publishers)
+                    
                 }
             }
         }
