@@ -33,7 +33,7 @@ def call(Map params = [:]) {
     // use the cmdLine parameter otherwise default depending on current branch
     def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy site:jar":"clean install")
     def mvnName = params.containsKey('mvnName') ? params.mvnName : 'Maven 3.5.4'
-
+    def xvfb = params.containsKey('xvfb') ? true : false
 
     def defaultPublishers = [artifactsPublisher(disabled: false), junitPublisher(ignoreAttachments: false, disabled: false),
         findbugsPublisher(disabled: true), openTasksPublisher(disabled: true),
@@ -53,7 +53,13 @@ def call(Map params = [:]) {
                 agent { node { label 'ubuntu' } }
                 options { timeout(time: 120, unit: 'MINUTES') }
                 steps{
-                    mavenBuild( jdk, cmdline, mvnName, publishers)
+		    if (xvbf) {
+			wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayNameOffset: 0, installationName: 'Xvfb', parallelBuild: true, screen: '']) {
+			    mavenBuild( jdk, cmdline, mvnName, publishers)
+			}
+		    } else {
+	                 mavenBuild( jdk, cmdline, mvnName, publishers)
+		    }
                 }
             }
         }
