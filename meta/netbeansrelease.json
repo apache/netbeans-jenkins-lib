@@ -136,8 +136,12 @@
                 "position": "2"
             },
             "d60b28422c35fc6f2fa0952dc214c3bf010c33d3": {
-                "vote": "1",
+                "version": "beta3",
                 "position": "3"
+            },
+            "d04fb24027334c4b6fd8397b5d0cdd33187a8f54": {
+                "vote": "1",
+                "position": "4"
             }
         },
         "releasedate": {
