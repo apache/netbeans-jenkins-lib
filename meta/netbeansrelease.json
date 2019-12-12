@@ -149,9 +149,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "25",
+            "month": "10",
+            "year": "2019"
         },
         "previousreleasedate": {
             "day": "22",
@@ -177,8 +177,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "04",
-            "month": "04",
+            "day": "25",
+            "month": "10",
             "year": "2019"
         }
     }
