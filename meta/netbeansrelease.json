@@ -179,6 +179,10 @@
             "090a21448c308c29c7ede623e33518a4714b0487": {
                 "version": "beta2",
                 "position": "2"
+            },
+            "e6797e81ac82d087d9a95c36b9b8f93523945d16": {
+                "version": "beta3",
+                "position": "3"
             }
         },   
         "releasedate": {
