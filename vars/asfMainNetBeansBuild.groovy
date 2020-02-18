@@ -174,7 +174,7 @@ def call(Map params = [:]) {
                                 def platformpath = "";
                                 def releasepath = "";
                                 if (votecandidate) {
-                                    versionpath = "/${version}/"vc"${vote}"
+                                    versionpath = "/${version}/vc${vote}"
                                     platformpath = "/netbeans-platform/netbeans-platform${versionpath}/"
                                     releasepath = "/netbeans/netbeans${versionpath}/";
                                 }
