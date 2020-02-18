@@ -32,6 +32,9 @@ def call(Map params = [:]) {
     def rmversion=""
     def mavenVersion=""
     def month=""
+    def votecandidate=false
+    def vote=""
+    
     pipeline {
         options {
             buildDiscarder(logRotator(numToKeepStr: '2'))
@@ -92,7 +95,9 @@ def call(Map params = [:]) {
                                 if (key==githash) {
                                     // vote candidate prior
                                     if (value['vote']) {
-                                        rmversion = rmversion+'-vc'+value['vote']
+                                        votecandidate = true
+                                        vote = value['vote']
+                                        rmversion = rmversion
                                     } else if (value['version']){
                                         // other named version
                                         rmversion = rmversion+'-'+value['version']
@@ -165,19 +170,38 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/mavenrepository"
                                 
                                 // create dist folder and content
-                                sh "mkdir ${env.WORKSPACE}/dist"
-                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist/netbeans-platform-${rmversion}-source.zip"
-                                sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist/netbeans-${rmversion}-source.zip"
-                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist/netbeans-platform-${rmversion}-bin.zip"
-                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*-release.zip ${env.WORKSPACE}/dist/netbeans-${rmversion}-bin.zip"
-                                sh "mkdir ${env.WORKSPACE}/dist/nbms"
+                                def versionpath = "";
+                                def platformpath = "";
+                                def releasepath = "";
+                                if (votecandidate) {
+                                    versionpath = "/${version}/"vc"${vote}"
+                                    platformpath = "/netbeans-platform/netbeans-platform${versionpath}/"
+                                    releasepath = "/netbeans/netbeans${versionpath}/";
+                                }
+                                
+                                sh "mkdir -p ${env.WORKSPACE}/dist${platformpath}"
+                                // source
+                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist${platformpath}netbeans-platform-${rmversion}-source.zip"
+                                // binaries
+                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist${platformpath}netbeans-platform-${rmversion}-bin.zip"
+                                
+                                
+                                sh "mkdir -p ${env.WORKSPACE}/dist${releasepath}"
+                                
+                                sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist${releasepath}netbeans-${rmversion}-source.zip"
+                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*-release.zip ${env.WORKSPACE}/dist${releasepath}netbeans-${rmversion}-bin.zip"
+                                sh "mkdir ${env.WORKSPACE}/dist${releasepath}nbms"
                                  
-                                // creat maven repository folder and content
+                                // create maven repository folder and content
                                 sh "mkdir ${env.WORKSPACE}/mavenrepository"
-                                sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist/nbms/"
+                                
+                                //checksume
+                                sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist${releasepath}nbms/"
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.zip") ; do sha512sum $z >$z.sha512 ; done'
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
                                 sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
+                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.jar") ; do sha512sum $z >$z.sha512 ; done'
+                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.xml") ; do sha512sum $z >$z.sha512 ; done'
                                 
                                 archiveArtifacts 'dist/**'
                                 
