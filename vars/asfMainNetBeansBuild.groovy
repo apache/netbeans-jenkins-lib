@@ -175,8 +175,8 @@ def call(Map params = [:]) {
                                 def releasepath = "";
                                 if (votecandidate) {
                                     versionpath = "/${version}/vc${vote}"
-                                    platformpath = "/netbeans-platform/netbeans-platform${versionpath}/"
-                                    releasepath = "/netbeans/netbeans${versionpath}/";
+                                    platformpath = "/netbeans-platform${versionpath}/"
+                                    releasepath = "/netbeans${versionpath}/";
                                 }
                                 
                                 sh "mkdir -p ${env.WORKSPACE}/dist${platformpath}"
