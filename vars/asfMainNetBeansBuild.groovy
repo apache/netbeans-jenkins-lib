@@ -195,14 +195,16 @@ def call(Map params = [:]) {
                                 // create maven repository folder and content
                                 sh "mkdir ${env.WORKSPACE}/mavenrepository"
                                 
-                                //checksume
                                 sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist${releasepath}nbms/"
-                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.zip") ; do sha512sum $z >$z.sha512 ; done'
-                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.nbm") ; do sha512sum $z >$z.sha512 ; done'
-                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.gz") ; do sha512sum $z >$z.sha512 ; done'
-                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.jar") ; do sha512sum $z >$z.sha512 ; done'
-                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "*.xml") ; do sha512sum $z >$z.sha512 ; done'
                                 
+                                //checksums
+                                
+                                def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml']
+                                for (String extension in extensions) {
+                                
+                                    sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
+                                
+                                }
                                 archiveArtifacts 'dist/**'
                                 
                                 //prepare a maven repository to be used by RM 
