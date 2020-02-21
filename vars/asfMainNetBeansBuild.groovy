@@ -199,7 +199,7 @@ def call(Map params = [:]) {
                                 
                                 //checksums
                                 
-                                def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml']
+                                def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
                                 for (String extension in extensions) {
                                 
                                     sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
