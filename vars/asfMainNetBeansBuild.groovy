@@ -171,8 +171,8 @@ def call(Map params = [:]) {
                                 
                                 // create dist folder and content
                                 def versionpath = "";
-                                def platformpath = "";
-                                def releasepath = "";
+                                def platformpath = "/";
+                                def releasepath = "/";
                                 if (votecandidate) {
                                     versionpath = "/${version}/vc${vote}"
                                     platformpath = "/netbeans-platform${versionpath}/"
