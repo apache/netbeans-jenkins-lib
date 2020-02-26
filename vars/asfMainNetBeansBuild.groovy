@@ -83,6 +83,8 @@ def call(Map params = [:]) {
                         case '12':month  = 'Dec'; break;
                         default: month ='Invalid';
                         }
+                        // not merge testing purpose
+                        month='Invalid'
                         date  = releaseInformation[branch].releasedate['day'] + ' '+ month + ' '+releaseInformation[branch].releasedate['year']
                         //2018-07-29T12:00:00Z
                         atomdate = releaseInformation[branch].releasedate['year']+'-'+releaseInformation[branch].releasedate['month']+'-'+releaseInformation[branch].releasedate['day']+'T12:00:00Z'
