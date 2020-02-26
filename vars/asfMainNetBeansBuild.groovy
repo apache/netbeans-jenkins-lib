@@ -147,6 +147,7 @@ def call(Map params = [:]) {
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 stash 'sources'
+                                stash '.gitignore' 'git'
                                 doParallelClusters(clusterconfigs);
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
@@ -255,6 +256,7 @@ def doParallelClusters(cconfigs) {
                 stage("jjj ${cluster}") {
                     // pristine source
                     unstash 'sources'
+                    unstash 'git'
                     sh "ant build-source-config -Dcluster.config=${cluster} -Dbuildnum=666"
                     script {
                         def targets = ['verify-libs-and-licenses','rat','build']
