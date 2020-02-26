@@ -151,23 +151,29 @@ def call(Map params = [:]) {
                                 
                                 stash 'sources'
                                 stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
-                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate);
+                                
+                                def versionpath = "/";
+                                if (votecandidate) {
+                                    versionpath = "/${version}/vc${vote}"
+                                }
+                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion);
+                                
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
                                 /*sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
                                 for (String target in targets){
-                                    sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                    sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                    sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
-                                    sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                    def add = "";
-                                    // 
-                                    if (target=="build" && env.BRANCH_NAME!="release90") {
-                                        add=" -Ddo.build.windows.launchers=true"
-                                    }
-                                    sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
+                                sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
+                                sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                def add = "";
+                                // 
+                                if (target=="build" && env.BRANCH_NAME!="release90") {
+                                add=" -Ddo.build.windows.launchers=true"
                                 }
-                                */
+                                sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
+                                }
+                                 */
                                 //}
                                                                
                                 
@@ -179,9 +185,9 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/mavenrepository"
                                 
                                 // create dist folder and content
-                                def versionpath = "";
-                                def platformpath = "/";
-                                def releasepath = "/";
+                                //def versionpath = "";
+                                //def platformpath = "/";
+                                //def releasepath = "/";
                                 if (votecandidate) {
                                     versionpath = "/${version}/vc${vote}"
                                     platformpath = "/netbeans-platform${versionpath}/"
@@ -251,10 +257,11 @@ def call(Map params = [:]) {
     }
 }
 
-def doParallelClusters(cconfigs,apidocurl,date,atomdate) {
+def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
     jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster[0]
+        def path = cluster[1]
         jobs["${clustername}"] = {
             node {
                 stage("prepare ${clustername}") {
@@ -284,6 +291,16 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate) {
                             sh "ant -f ${env.WORKSPACE}/build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
                             archiveArtifacts 'WEBZIP.zip'   
                         }
+                        def versionnedpath = "/${path}${versionpath}/"
+                        sh "rm -rf ${env.WORKSPACE}/dist"
+                        sh "mkdir -p ${env.WORKSPACE}/dist${versionnedpath}"
+                        // source
+                        sh "cp ${env.WORKSPACE}/nbbuild/build/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}netbeans-platform-${rmversion}-source.zip"
+                        // binaries
+                        sh "cp ${env.WORKSPACE}/build-${clustername}-temp/nbbuild/*.zip ${env.WORKSPACE}/dist${versionnedpath}netbeans-platform-${rmversion}-bin.zip"
+                                
+                        archiveArtifacts 'dist/**'
+                        
                     }
                 }
             } 
