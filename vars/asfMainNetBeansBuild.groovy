@@ -147,6 +147,7 @@ def call(Map params = [:]) {
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
+                                doParallelClusters(clusterconfigs);
                                 for (String clusterconfig in clusterconfigs) {
                                     // force a build num for build-source-config
                                     sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
@@ -244,4 +245,19 @@ def call(Map params = [:]) {
             
         }
     }
+}
+
+def doParallelClusters(cconfigs) {
+    jobs  = [:]
+    for (cluster in cconfigs) {
+        tests["${cluster}"] = {
+            node {
+                stage("jjj ${cluster}") {
+                    sh "ant build-source-config -Dcluster.config=${cluster} -Dbuildnum=666"
+                } 
+            }
+        }
+    }
+
+    parallel jobs
 }
