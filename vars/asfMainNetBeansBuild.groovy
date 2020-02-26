@@ -282,7 +282,10 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
                             sh "ant -f ${env.WORKSPACE}/${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
-                            
+                            if (target=="rat") {
+                            junit "${env.WORKSPACE}/${target}-${clustername}-temp/nbuild/build/rat-report.xml"   
+                            }
+                             
                         }
                         
                         // special case for release
@@ -297,7 +300,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                         // source
                         sh "cp ${env.WORKSPACE}/nbbuild/build/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-source.zip"
                         // binaries
-                        sh "cp ${env.WORKSPACE}/build-${clustername}-temp/nbbuild/*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                        sh "cp ${env.WORKSPACE}/build-${clustername}-temp/nbbuild/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                 
                         archiveArtifacts 'dist/**'
                         
