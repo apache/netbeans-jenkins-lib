@@ -270,7 +270,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                     unstash 'gitignore'
                     sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
                     script {
-                        def targets = ['verify-libs-and-licenses','rat','build']
+                        def targets = [/*'verify-libs-and-licenses',*/'rat'/*,'build'*/]
                         for (String target in targets) {
                             sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp"
                             sh "unzip nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp "
@@ -284,8 +284,9 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                              
                         }
                         archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
-                        //junit "rat-${clustername}-temp/nbbuild/build/rat/**/*.xml"   
-                        junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
+                        junit "rat-${clustername}-temp/nbbuild/build/rat/**/*.xml"   
+                        
+                        //junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
                             
                         // special case for release
                         if (clustername == "release") {
@@ -293,15 +294,16 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                             sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
                             archiveArtifacts 'WEBZIP.zip'   
                         }
-                        def versionnedpath = "/${path}/${versionpath}/"
-                        sh "rm -rf ${env.WORKSPACE}/dist"
-                        sh "mkdir -p ${env.WORKSPACE}/dist${versionnedpath}"
+                        /*def versionnedpath = "/${path}/${versionpath}"
+                        sh "rm -rf dist"
+                        sh "mkdir -p dist${versionnedpath}"
                         // source
-                        sh "cp ${env.WORKSPACE}/nbbuild/build/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-source.zip"
+                        sh "cp nbbuild/build/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-source.zip"
                         // binaries
-                        sh "cp ${env.WORKSPACE}/build-${clustername}-temp/nbbuild/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                        sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                 
                         archiveArtifacts 'dist/**'
+                        */
                         for (String target in targets) {
                             sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'
                         }
