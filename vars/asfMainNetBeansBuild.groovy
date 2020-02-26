@@ -217,7 +217,7 @@ def call(Map params = [:]) {
                                 def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
                                 for (String extension in extensions) {
                                 
-                                    sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
+                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
                                 
                                 }
                                 archiveArtifacts 'dist/**'
@@ -229,9 +229,9 @@ def call(Map params = [:]) {
                                 def netbeansbase = "${env.WORKSPACE}/build-release-temp/nbbuild"
                                 withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                 {
-                                    //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                 }                            
                                 archiveArtifacts 'mavenrepository/**'     */
                             }
@@ -281,8 +281,6 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
                             sh "ant -f ${env.WORKSPACE}/${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
-                            
-                            
                              
                         }
                         archiveArtifacts "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat-repot.txt"
@@ -304,7 +302,9 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                         sh "cp ${env.WORKSPACE}/build-${clustername}-temp/nbbuild/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                 
                         archiveArtifacts 'dist/**'
-                        
+                        for (String target in targets) {
+                            sh script: "rm -rf ${env.WORKSPACE}/${target}-${clustername}-temp", label: 'clean temp build'
+                        }
                     }
                 }
             } 
