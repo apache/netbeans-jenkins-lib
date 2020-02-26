@@ -135,22 +135,23 @@ def call(Map params = [:]) {
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DnetbeansNbmDirectory=${env.WORKSPACE}/nbbuild/nbms -DnetbeansInstallDirectory=${env.WORKSPACE}/nbbuild/netbeans -DnetbeansSourcesDirectory=${env.WORKSPACE}/nbbuild/build/source-zips -DnetbeansJavadocDirectory=${env.WORKSPACE}/nbbuild/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
                                 }
-                                
+                                archiveArtifacts 'WEBZIP.zip'
                             } else if (month !='Invalid') {
                                 // we have a valid month, this package is already released. Build only javadoc
                                 sh "ant"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                archiveArtifacts 'WEBZIP.zip'
                             } else {
                                 // we want to setup for release
                                 // apidoc + repomaven + dist bundle
-                                def clusterconfigs = ['platform','release']
+                                def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 
                                 stash 'sources'
                                 stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
-                                doParallelClusters(clusterconfigs);
+                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate);
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
                                 /*sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
@@ -170,8 +171,8 @@ def call(Map params = [:]) {
                                 //}
                                                                
                                 
-                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
-                                sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                //sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                                //sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                
                                 // remove folders
                                 sh "rm -rf ${env.WORKSPACE}/dist"
@@ -230,7 +231,7 @@ def call(Map params = [:]) {
                             }
                         }                       
                     }
-                    archiveArtifacts 'WEBZIP.zip'
+                    
                     
                 }
             }
@@ -250,10 +251,10 @@ def call(Map params = [:]) {
     }
 }
 
-def doParallelClusters(cconfigs) {
+def doParallelClusters(cconfigs,apidocurl,date,atomdate) {
     jobs  = [:]
     for (cluster in cconfigs) {
-        def clustername = cluster
+        def clustername = cluster[0]
         jobs["${clustername}"] = {
             node {
                 stage("prepare ${clustername}") {
@@ -279,9 +280,9 @@ def doParallelClusters(cconfigs) {
                         
                         // special case for release
                         if (clustername == "release") {
-                            sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
-                            sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
-                            
+                            sh "ant -f ${env.WORKSPACE}/build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                            sh "ant -f ${env.WORKSPACE}/build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
+                            archiveArtifacts 'WEBZIP.zip'   
                         }
                     }
                 }
