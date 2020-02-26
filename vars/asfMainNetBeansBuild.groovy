@@ -284,7 +284,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                              
                         }
                         archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
-                        junit "rat-${clustername}-temp/nbbuild/build/rat/*.xml"   
+                        junit "rat-${clustername}-temp/nbbuild/build/rat/**/*.xml"   
                         junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
                             
                         // special case for release
