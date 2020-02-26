@@ -282,12 +282,13 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
                             sh "ant -f ${env.WORKSPACE}/${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
-                            if (target=="rat") {
-                            junit "${env.WORKSPACE}/${target}-${clustername}-temp/nbuild/build/rat-report.xml"   
-                            }
+                            
+                            
                              
                         }
-                        
+                        junit "${env.WORKSPACE}/rat-${clustername}-temp/nbuild/build/rat/*.xml"   
+                        junit "${env.WORKSPACE}/verify-libs-and-licenses-${clustername}-temp/nbuild/build/verifylibsandlicenses.xml"   
+                            
                         // special case for release
                         if (clustername == "release") {
                             sh "ant -f ${env.WORKSPACE}/build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
