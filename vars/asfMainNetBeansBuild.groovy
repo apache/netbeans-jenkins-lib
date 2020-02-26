@@ -152,9 +152,9 @@ def call(Map params = [:]) {
                                 stash 'sources'
                                 stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
                                 
-                                def versionpath = "/";
+                                def versionpath = "";
                                 if (votecandidate) {
-                                    versionpath = "/${version}/vc${vote}"
+                                    versionpath = "${version}/vc${vote}"
                                 }
                                 doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion);
                                 
@@ -190,10 +190,10 @@ def call(Map params = [:]) {
                                 //def releasepath = "/";
                                 if (votecandidate) {
                                     versionpath = "/${version}/vc${vote}"
-                                    platformpath = "/netbeans-platform${versionpath}/"
-                                    releasepath = "/netbeans${versionpath}/";
+                                    platformpath = "netbeans-platform${versionpath}"
+                                    releasepath = "netbeans${versionpath}";
                                 }
-                                
+                                /*
                                 sh "mkdir -p ${env.WORKSPACE}/dist${platformpath}"
                                 // source
                                 sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist${platformpath}netbeans-platform-${rmversion}-source.zip"
@@ -233,7 +233,7 @@ def call(Map params = [:]) {
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                 }                            
-                                archiveArtifacts 'mavenrepository/**'     
+                                archiveArtifacts 'mavenrepository/**'     */
                             }
                         }                       
                     }
@@ -291,13 +291,13 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                             sh "ant -f ${env.WORKSPACE}/build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
                             archiveArtifacts 'WEBZIP.zip'   
                         }
-                        def versionnedpath = "/${path}${versionpath}/"
+                        def versionnedpath = "/${path}/${versionpath}/"
                         sh "rm -rf ${env.WORKSPACE}/dist"
                         sh "mkdir -p ${env.WORKSPACE}/dist${versionnedpath}"
                         // source
-                        sh "cp ${env.WORKSPACE}/nbbuild/build/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}netbeans-platform-${rmversion}-source.zip"
+                        sh "cp ${env.WORKSPACE}/nbbuild/build/*${clustername}*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-source.zip"
                         // binaries
-                        sh "cp ${env.WORKSPACE}/build-${clustername}-temp/nbbuild/*.zip ${env.WORKSPACE}/dist${versionnedpath}netbeans-platform-${rmversion}-bin.zip"
+                        sh "cp ${env.WORKSPACE}/build-${clustername}-temp/nbbuild/*.zip ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                 
                         archiveArtifacts 'dist/**'
                         
