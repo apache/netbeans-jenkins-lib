@@ -283,7 +283,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                             sh "ant -f ${env.WORKSPACE}/${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
                              
                         }
-                        archiveArtifacts "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat-repot.txt"
+                        archiveArtifacts "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat-report.txt"
                         junit "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat/*.xml"   
                         junit "${env.WORKSPACE}/verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
                             
