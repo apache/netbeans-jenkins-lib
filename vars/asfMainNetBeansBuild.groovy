@@ -53,6 +53,8 @@ def call(Map params = [:]) {
                         sh 'rm -f netbeansrelease.json'
                         def branch = env.BRANCH_NAME 
                         def githash = env.GIT_COMMIT
+                        // not merge testing purpose
+                        branch = 'release113'
                         
                         println githash
                         println branch
