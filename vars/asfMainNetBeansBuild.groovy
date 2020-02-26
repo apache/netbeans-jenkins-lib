@@ -147,7 +147,7 @@ def call(Map params = [:]) {
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 stash 'sources'
-                                stash includes: '*.gitignore',name: 'gitignore'
+                                stash includes: '**/.gitignore',name: 'gitignore'
                                 doParallelClusters(clusterconfigs);
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
