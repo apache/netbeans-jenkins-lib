@@ -250,7 +250,7 @@ def call(Map params = [:]) {
 def doParallelClusters(cconfigs) {
     jobs  = [:]
     for (cluster in cconfigs) {
-        tests["${cluster}"] = {
+        jobs["${cluster}"] = {
             node {
                 stage("jjj ${cluster}") {
                     sh "ant build-source-config -Dcluster.config=${cluster} -Dbuildnum=666"
