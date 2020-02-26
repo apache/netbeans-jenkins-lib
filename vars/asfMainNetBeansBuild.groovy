@@ -259,16 +259,16 @@ def doParallelClusters(cconfigs) {
                     script {
                         def targets = ['verify-libs-and-licenses','rat','build']
                         for (String target in targets) {
-                            sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                            sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                            sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
-                            sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                            sh "rm -rf ${env.WORKSPACE}/${target}-${cluster}-temp"
+                            sh "mkdir  ${env.WORKSPACE}/${target}-${cluster}-temp"
+                            sh "unzip ${env.WORKSPACE}/nbbuild/build/${cluster}*.zip -d ${env.WORKSPACE}/${target}-${cluster}-temp "
+                            sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${cluster}-temp"
                             def add = "";
                             // 
                             if (target=="build" && env.BRANCH_NAME!="release90") {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
-                            sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
+                            sh "ant -f ${env.WORKSPACE}/${target}-${cluster}-temp/build.xml ${target} -Dcluster.config=${cluster} ${add}"
                         }
                     }
                 }
