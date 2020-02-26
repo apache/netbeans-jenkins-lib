@@ -146,6 +146,8 @@ def call(Map params = [:]) {
                                 def clusterconfigs = ['platform','release']
                                 def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
+                                
+                                
                                 stash 'sources'
                                 stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
                                 doParallelClusters(clusterconfigs);
@@ -252,7 +254,7 @@ def doParallelClusters(cconfigs) {
     jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster
-        jobs["${cluster}"] = {
+        jobs["${clustername}"] = {
             node {
                 stage("prepare ${clustername}") {
                     // pristine source
@@ -272,6 +274,14 @@ def doParallelClusters(cconfigs) {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
                             sh "ant -f ${env.WORKSPACE}/${target}-${cluster}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
+                            
+                        }
+                        
+                        // special case for release
+                        if (clustername == "release") {
+                            sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                            sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
+                            
                         }
                     }
                 }
