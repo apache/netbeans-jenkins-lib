@@ -272,25 +272,25 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                     script {
                         def targets = ['verify-libs-and-licenses','rat','build']
                         for (String target in targets) {
-                            sh "rm -rf ${env.WORKSPACE}/${target}-${clustername}-temp && mkdir  ${env.WORKSPACE}/${target}-${clustername}-temp"
-                            sh "unzip ${env.WORKSPACE}/nbbuild/build/${clustername}*.zip -d ${env.WORKSPACE}/${target}-${clustername}-temp "
-                            sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
+                            sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp"
+                            sh "unzip nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp "
+                            sh "cp .gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
                             def add = "";
                             // 
                             if (target=="build" && env.BRANCH_NAME!="release90") {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
-                            sh "ant -f ${env.WORKSPACE}/${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
+                            sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
                              
                         }
-                        archiveArtifacts "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat-report.txt"
-                        junit "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat/*.xml"   
-                        junit "${env.WORKSPACE}/verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
+                        archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
+                        junit "rat-${clustername}-temp/nbbuild/build/rat/*.xml"   
+                        junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
                             
                         // special case for release
                         if (clustername == "release") {
-                            sh "ant -f ${env.WORKSPACE}/build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
-                            sh "ant -f ${env.WORKSPACE}/build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
+                            sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                            sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
                             archiveArtifacts 'WEBZIP.zip'   
                         }
                         def versionnedpath = "/${path}/${versionpath}/"
@@ -303,7 +303,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                                 
                         archiveArtifacts 'dist/**'
                         for (String target in targets) {
-                            sh script: "rm -rf ${env.WORKSPACE}/${target}-${clustername}-temp", label: 'clean temp build'
+                            sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'
                         }
                     }
                 }
