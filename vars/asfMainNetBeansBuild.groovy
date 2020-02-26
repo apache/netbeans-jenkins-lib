@@ -151,7 +151,7 @@ def call(Map params = [:]) {
                                 doParallelClusters(clusterconfigs);
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
-                                sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
+                                /*sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
                                 for (String target in targets){
                                     sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
                                     sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
@@ -164,7 +164,7 @@ def call(Map params = [:]) {
                                     }
                                     sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
                                 }
-                                    
+                                */
                                 //}
                                                                
                                 
@@ -251,26 +251,27 @@ def call(Map params = [:]) {
 def doParallelClusters(cconfigs) {
     jobs  = [:]
     for (cluster in cconfigs) {
+        def clustername = cluster
         jobs["${cluster}"] = {
             node {
-                stage("prepare ${cluster}") {
+                stage("prepare ${clustername}") {
                     // pristine source
                     unstash 'sources'
                     unstash 'gitignore'
-                    sh "ant build-source-config -Dcluster.config=${cluster} -Dbuildnum=666"
+                    sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
                     script {
                         def targets = ['verify-libs-and-licenses','rat','build']
                         for (String target in targets) {
-                            sh "rm -rf ${env.WORKSPACE}/${target}-${cluster}-temp"
-                            sh "mkdir  ${env.WORKSPACE}/${target}-${cluster}-temp"
-                            sh "unzip ${env.WORKSPACE}/nbbuild/build/${cluster}*.zip -d ${env.WORKSPACE}/${target}-${cluster}-temp "
-                            sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${cluster}-temp"
+                            sh "rm -rf ${env.WORKSPACE}/${target}-${clustername}-temp"
+                            sh "mkdir  ${env.WORKSPACE}/${target}-${clustername}-temp"
+                            sh "unzip ${env.WORKSPACE}/nbbuild/build/${clustername}*.zip -d ${env.WORKSPACE}/${target}-${clustername}-temp "
+                            sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
                             def add = "";
                             // 
                             if (target=="build" && env.BRANCH_NAME!="release90") {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
-                            sh "ant -f ${env.WORKSPACE}/${target}-${cluster}-temp/build.xml ${target} -Dcluster.config=${cluster} ${add}"
+                            sh "ant -f ${env.WORKSPACE}/${target}-${cluster}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
                         }
                     }
                 }
