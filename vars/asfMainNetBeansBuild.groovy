@@ -148,23 +148,23 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 stash 'sources'
                                 doParallelClusters(clusterconfigs);
-                                for (String clusterconfig in clusterconfigs) {
-                                    // force a build num for build-source-config
-                                    sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
-                                    for (String target in targets){
-                                        sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                        sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                        sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
-                                        sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                        def add = "";
-                                        // 
-                                        if (target=="build" && env.BRANCH_NAME!="release90") {
-                                            add=" -Ddo.build.windows.launchers=true"
-                                        }
-                                        sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
+                                //for (String clusterconfig in clusterconfigs) {
+                                // force a build num for build-source-config
+                                sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
+                                for (String target in targets){
+                                    sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                    sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                    sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
+                                    sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                                    def add = "";
+                                    // 
+                                    if (target=="build" && env.BRANCH_NAME!="release90") {
+                                        add=" -Ddo.build.windows.launchers=true"
                                     }
-                                    
+                                    sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
                                 }
+                                    
+                                //}
                                                                
                                 
                                 sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
@@ -253,12 +253,29 @@ def doParallelClusters(cconfigs) {
         jobs["${cluster}"] = {
             node {
                 stage("jjj ${cluster}") {
+                    // pristine source
                     unstash 'sources'
                     sh "ant build-source-config -Dcluster.config=${cluster} -Dbuildnum=666"
-                } 
-            }
+                    script {
+                        def targets = ['verify-libs-and-licenses','rat','build']
+                        for (String target in targets) {
+                            sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                            sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                            sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
+                            sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
+                            def add = "";
+                            // 
+                            if (target=="build" && env.BRANCH_NAME!="release90") {
+                                add=" -Ddo.build.windows.launchers=true"
+                            }
+                            sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
+                        }
+                    }
+                }
+            } 
         }
     }
+}
 
-    parallel jobs
+parallel jobs
 }
