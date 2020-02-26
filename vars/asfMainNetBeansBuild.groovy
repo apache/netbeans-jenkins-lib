@@ -272,8 +272,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                     script {
                         def targets = ['verify-libs-and-licenses','rat','build']
                         for (String target in targets) {
-                            sh "rm -rf ${env.WORKSPACE}/${target}-${clustername}-temp"
-                            sh "mkdir  ${env.WORKSPACE}/${target}-${clustername}-temp"
+                            sh "rm -rf ${env.WORKSPACE}/${target}-${clustername}-temp && mkdir  ${env.WORKSPACE}/${target}-${clustername}-temp"
                             sh "unzip ${env.WORKSPACE}/nbbuild/build/${clustername}*.zip -d ${env.WORKSPACE}/${target}-${clustername}-temp "
                             sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
                             def add = "";
@@ -286,6 +285,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                             
                              
                         }
+                        archiveArtifacts "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat-repot.txt"
                         junit "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat/*.xml"   
                         junit "${env.WORKSPACE}/verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
                             
