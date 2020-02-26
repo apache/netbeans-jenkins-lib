@@ -274,7 +274,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate) {
                             if (target=="build" && env.BRANCH_NAME!="release90") {
                                 add=" -Ddo.build.windows.launchers=true"
                             }
-                            sh "ant -f ${env.WORKSPACE}/${target}-${cluster}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
+                            sh "ant -f ${env.WORKSPACE}/${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
                             
                         }
                         
