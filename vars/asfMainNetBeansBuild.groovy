@@ -275,7 +275,6 @@ def doParallelClusters(cconfigs) {
             } 
         }
     }
-}
 
-parallel jobs
+    parallel jobs
 }
