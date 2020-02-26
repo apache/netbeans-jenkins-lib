@@ -286,8 +286,8 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                             
                              
                         }
-                        junit "${env.WORKSPACE}/rat-${clustername}-temp/nbuild/build/rat/*.xml"   
-                        junit "${env.WORKSPACE}/verify-libs-and-licenses-${clustername}-temp/nbuild/build/verifylibsandlicenses.xml"   
+                        junit "${env.WORKSPACE}/rat-${clustername}-temp/nbbuild/build/rat/*.xml"   
+                        junit "${env.WORKSPACE}/verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
                             
                         // special case for release
                         if (clustername == "release") {
