@@ -253,7 +253,7 @@ def doParallelClusters(cconfigs) {
     for (cluster in cconfigs) {
         jobs["${cluster}"] = {
             node {
-                stage("jjj ${cluster}") {
+                stage("prepare ${cluster}") {
                     // pristine source
                     unstash 'sources'
                     unstash 'git'
