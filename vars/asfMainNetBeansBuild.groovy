@@ -156,7 +156,7 @@ def call(Map params = [:]) {
                                 if (votecandidate) {
                                     versionpath = "${version}/vc${vote}"
                                 }
-                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool);
+                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool,mavenVersion);
                                 
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
@@ -260,7 +260,7 @@ def call(Map params = [:]) {
     }
 }
 
-def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool) {
+def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool,mavenVersion) {
     jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster[0]
@@ -273,7 +273,7 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,my
                     unstash 'gitignore'
                     sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
                     script {
-                        def targets = ['verify-libs-and-licenses','rat','build']
+                        def targets = [/*'verify-libs-and-licenses','rat',*/'build']
                         for (String target in targets) {
                             stage("${target} for ${clustername}") {
                                 // prepare a clean subfolder target - clustername prefixed
@@ -307,25 +307,163 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,my
                                 
                                     // special case for release
                                     if (clustername == "release") {
+                                        
+                                        sh "mkdir dist${versionnedpath}nbms"
+                                        sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
+                                
+                                        sh "mkdir dist${versionnedpath}installer"
+                                        def script = '''###!/bin/bash  \n 
+                                        BASE_DIR=`pwd` \n
+                                        NB_ALL=$BASE_DIR \n
+                                        export BASE_DIR NB_ALL
+
+                                        DIST=$BASE_DIR/dist
+                                        export DIST
+
+                                        if [ -d $DIST ] ; then
+                                        rm -rf $DIST
+                                        fi
+
+                                        rm -rf NBI-cache
+
+                                        mkdir -p $DIST/zip/moduleclusters
+                                        mkdir -p $DIST/logs
+
+                                        ARTIFACT=netbeans-*-bin
+                                        BIN_NAME=`ls $ARTIFACT.zip`
+                                        BINARY_NAME=`echo "${BIN_NAME%%.zip*}"`
+
+
+                                        #create cluster zip files
+                                        rm -rf temp
+                                        unzip $BINARY_NAME.zip -d temp
+                                        cd temp
+                                        mkdir javase
+                                        mkdir javase/netbeans
+                                        mkdir javaee
+                                        mkdir javaee/netbeans
+                                        mkdir webcommon
+                                        mkdir webcommon/netbeans
+                                        mkdir php
+                                        mkdir php/netbeans
+                                        mkdir extide
+                                        mkdir extide/netbeans
+
+                                        cd netbeans
+                                        #java
+                                        mv apisupport ../javase/netbeans
+                                        mv ergonomics ../javase/netbeans
+                                        mv java ../javase/netbeans
+                                        mv javafx ../javase/netbeans
+                                        mv profiler ../javase/netbeans
+
+                                        #javaee
+                                        mv enterprise ../javaee/netbeans
+                                        mv groovy ../javaee/netbeans
+
+                                        #webcommon
+                                        mv webcommon ../webcommon/netbeans
+
+                                        #php
+                                        mv php ../php/netbeans
+
+                                        #websvccommon
+                                        mv websvccommon ../extide/netbeans
+
+                                        #create cluster zip files
+                                        cd ..
+                                        echo `pwd`
+                                        echo $BINARY_NAME
+                                        zip -r $BINARY_NAME-base.zip netbeans
+                                        mv $BINARY_NAME-base.zip ..
+
+                                        echo `pwd`
+
+                                        cd javase
+                                        zip -r $BINARY_NAME-java.zip netbeans
+                                        mv $BINARY_NAME-java.zip ../..
+cd ..
+
+cd javaee
+zip -r $BINARY_NAME-enterprise.zip netbeans
+mv $BINARY_NAME-enterprise.zip ../..
+                                        cd ..
+
+                                        cd php
+                                        zip -r $BINARY_NAME-php.zip netbeans
+                                        mv $BINARY_NAME-php.zip ../..
+cd ..
+
+cd webcommon
+zip -r $BINARY_NAME-webcommon.zip netbeans
+mv $BINARY_NAME-webcommon.zip ../..
+                                        cd ..
+
+                                        cd extide
+                                        zip -r $BINARY_NAME-websvccommon.zip netbeans
+                                        mv $BINARY_NAME-websvccommon.zip ../..
+cd ../..
+
+                                        rm -rf temp
+
+                                        mv $BINARY_NAME-*.zip $DIST/zip/moduleclusters
+
+                                        export BINARY_NAME
+
+                                        cd $BASE_DIR
+                                        NB_BUILD_NUMBER=200224
+                                        BUILDNUMBER=$NB_BUILD_NUMBER
+                                        DATESTAMP=$BUILDNUMBER
+                                        NB_VER_NUMBER=11.3
+                                        BASENAME_PREFIX=Apache-NetBeans-$NB_VER_NUMBER-bin
+                                        BUILD_DESC=$BASENAME_PREFIX
+                                        export NB_VER_NUMBER BUILDNUMBER BASENAME_PREFIX NB_BUILD_NUMBER DATESTAMP BUILD_DESC
+
+                                        MAC_PATH=$DIST
+                                        #export MAC_PATH
+
+                                        MAC_LOG_NEW=$DIST/logs/native_mac-$BUILDNUMBER.log
+                                        export MAC_LOG_NEW
+                                        BUILD_NB=1
+                                        BUILD_NETBEANS=0
+                                        BUILD_NBJDK6=0
+                                        BUILD_NBJDK7=0
+                                        BUILD_NBJDK8=0
+                                        BUILD_NBJDK11=0
+
+                                        export BUILD_NETBEANS BUILD_NB
+                                        export BUILD_NBJDK6 BUILD_NBJDK7 BUILD_NBJDK8 BUILD_NBJDK11
+                                        BUNDLE_JDK_PLATFORM=
+                                        export BUNDLE_JDK_PLATFORM
+
+                                        OUTPUT_DIR=${NB_ALL}/dist/installers
+                                        export OUTPUT_DIR
+
+                                        DONT_SIGN_INSTALLER=y
+                                        export DONT_SIGN_INSTALLER
+
+                                        bash -x $NB_ALL/nbbuild/newbuild/build-nbi.sh '''
+
+                                        sh "echo ${script} > dist${versionnedpath}installer/build.sh"
+                                        sh "chmod +x dist${versionnedpath}installer/build.sh"
+                                        sh "dist${versionnedpath}installer/build.sh"
+                                        
+                                        // enough to populate maven repo
+                                        /*
                                         sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
                                         sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
                                         archiveArtifacts 'WEBZIP.zip'
                             
-                                        sh "mkdir dist${versionnedpath}nbms"
-                                        sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
-                                
-                            
-                                        // enought to populate maven repo
                                         sh "rm -rf repoindex"
                                         sh "rm -rf .repository"
                                         def localRepo = ".repository"
                                         def netbeansbase = "build-${clustername}-temp/nbbuild"
                                         withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                         {
-                                            //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                            def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
-                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                        //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                        def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
+                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                         }                            
                                         archiveArtifacts 'mavenrepository/**'
                             
@@ -333,27 +471,27 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,my
                             
                                         sh "rm -rf repoindex"
                                         sh "rm -rf .repository"
-                            
-                                    }
+                                        */
+                                        }
                        
-                                    // do signature
-                                    def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
-                                    for (String extension in extensions) {                                
+                                        // do signature
+                                        def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
+                                        for (String extension in extensions) {                                
                                         sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
-                                    }
-                        
-                                    archiveArtifacts 'dist/**' 
-                                    // remove create folder
-                                    sh "rm -rf dist"              
-                                }
-                                sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
-                            }
-                        }
-                    }
-                }
-            } 
-        }
-    }
+                                        }
+                                    
+                                        archiveArtifacts 'dist/**' 
+                                        // remove create folder
+                                        sh "rm -rf dist"
+                                        }              
+                                        sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
+                                        }
+                                        }
+                                        }
+                                        }
+                                        } 
+                                        }
+                                        }
 
-    parallel jobs
-}
+                                        parallel jobs
+                                        }
