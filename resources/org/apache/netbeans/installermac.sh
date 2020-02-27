@@ -28,6 +28,11 @@ export BASE_DIR NB_ALL
 DIST=$BASE_DIR/dist
 export DIST
 
+if [[ "$4" ]]; then 
+  echo 'I need 4 arguments:'
+  echo 'usage: installer usage [file path to Apache NetBeans binaries-zip] [versionumber formated xx.y] [timestamp YYMMDD] [path to a certificate]'
+fi
+
 if [ -d $DIST ] ; then
 rm -rf $DIST
 fi
@@ -133,7 +138,8 @@ MAC_PATH=$DIST
 #To build MAC installer on mac host set BUILD_MAC to 1
 BUILD_MAC=1
 export BUILD_MAC
-MAC_SIGN_IDENTITY_NAME=/Users/aksinsin/Documents/mac-installer-sign/certificate.txt
+MAC_SIGN_IDENTITY_NAME=$4
+##/Users/aksinsin/Documents/mac-installer-sign/certificate.txt
 export MAC_SIGN_IDENTITY_NAME
 
 BUILD_NB=0

@@ -27,6 +27,11 @@ export BASE_DIR NB_ALL
 
 `echo "$1 $2 $3" > parameters.info`
 
+if [[ "$3" ]]; then 
+  echo 'I need 3 arguments:'
+  echo 'usage: installer usage [file path to Apache NetBeans binaries-zip] [versionumber formated xx.y] [timestamp YYMMDD]'
+fi
+
 DIST=$BASE_DIR/dist
 export DIST
 
