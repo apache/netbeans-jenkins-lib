@@ -349,6 +349,8 @@ def doParallelClusters(cconfigs) {
                                         
                                         sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                         sh "cp distpreparation${versionnedpath}installer/dist/bundles/* dist/installers/ "
+                                        sh "rm -rf distpreparation${versionnedpath}installer/dist"
+                                    
                                         // enough to populate maven repo
                                         /*
                                         sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
