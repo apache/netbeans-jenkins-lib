@@ -321,6 +321,10 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                                         sh "chmod +x dist${versionnedpath}installer/installer.sh"
                                         
                                         sh "mkdir -p dist${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* dist${versionnedpath}installer/nbbuild/newbuild "
+                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer/* dist${versionnedpath}installer/nbbuild/installer "
+                                        
+                                        
+                                        
                                         sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         sh "cd dist${versionnedpath}installer && ./installer.sh ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         
