@@ -317,6 +317,9 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,my
                                         //sh "echo ${script} > dist${versionnedpath}installer/build.sh"
                                         
                                         sh "chmod +x dist${versionnedpath}installer/installer.sh"
+                                        
+                                        sh "mdkir dist${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* dist${versionnedpath}installer/nbbuild/newbuild "
+                                        sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         sh "cd dist${versionnedpath}installer && ./installer.sh ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         
                                         // enough to populate maven repo
