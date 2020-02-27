@@ -325,9 +325,9 @@ def doParallelClusters(cconfigs) {
                                     // special case for release
                                     if (clustername == "release") {
                                         
-                                        sh "mkdir dist${versionnedpath}nbms"
+                                        sh "mkdir -p dist${versionnedpath}nbms"
                                         
-                                        sh "mkdir distpreparation${versionnedpath}installer"
+                                        sh "mkdir -p distpreparation${versionnedpath}installer"
                                         
                                         def installer =  libraryResource 'org/apache/netbeans/installer.sh'
                                         writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
@@ -370,6 +370,7 @@ def doParallelClusters(cconfigs) {
                                         sh "rm -rf repoindex"
                                         sh "rm -rf .repository"
                                          */
+                                        archiveArtifacts 'distpreparation/**' 
                                     }
                        
                                     // do signature
@@ -379,7 +380,7 @@ def doParallelClusters(cconfigs) {
                                     }
                                     
                                     archiveArtifacts 'dist/**' 
-                                    archiveArtifacts 'distpreparation/**' 
+                                    
                                     // remove create folder
                                     sh "rm -rf dist"
                                 }              
