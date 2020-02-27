@@ -332,6 +332,8 @@ def doParallelClusters(cconfigs) {
                                         def installer =  libraryResource 'org/apache/netbeans/installer.sh'
                                         writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
                                         //sh "echo ${script} > dist${versionnedpath}installer/build.sh"
+                                        def installermac =  libraryResource 'org/apache/netbeans/installermac.sh'
+                                        writeFile file: "distpreparation${versionnedpath}installer/installermac.sh", text: installermac
                                         
                                         sh "chmod +x distpreparation${versionnedpath}installer/installer.sh"
                                         
