@@ -20,17 +20,19 @@
  */
 
 // this script is taken from olamy works on archiva-jenkins-lib for the Apache Archiva project
+
+def myMaven=""
+def mavenVersion=""
+def jdktool = ""
+
 def call(Map params = [:]) {
     // variable needed for apidoc
     def myAnt = ""
     def apidocurl = ""
     def date  = ""
     def atomdate = ""
-    def jdktool = ""
-    def myMaven=""
     def version=""
     def rmversion=""
-    def mavenVersion=""
     def month=""
     def votecandidate=false
     def vote=""
@@ -156,7 +158,7 @@ def call(Map params = [:]) {
                                 if (votecandidate) {
                                     versionpath = "${version}/vc${vote}"
                                 }
-                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool,mavenVersion);
+                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion);
                                 
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
@@ -260,7 +262,7 @@ def call(Map params = [:]) {
     }
 }
 
-def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool,mavenVersion) {
+def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
     jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster[0]
