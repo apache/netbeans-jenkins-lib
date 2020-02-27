@@ -20,7 +20,7 @@
 ## param 1 workspace filename for binaries-zip 
 ## param 2 version number xx.y (mandatory)
 ## param 3 timestamp  YYMMDD
-## param 4 outputfolder 
+
 BASE_DIR=`pwd`
 NB_ALL=$BASE_DIR
 export BASE_DIR NB_ALL
@@ -143,9 +143,6 @@ export BUILD_NETBEANS BUILD_NB
 export BUILD_NBJDK6 BUILD_NBJDK7 BUILD_NBJDK8 BUILD_NBJDK11
 BUNDLE_JDK_PLATFORM=
 export BUNDLE_JDK_PLATFORM
-
-OUTPUT_DIR=$4
-export OUTPUT_DIR
 
 DONT_SIGN_INSTALLER=y
 export DONT_SIGN_INSTALLER

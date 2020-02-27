@@ -344,9 +344,8 @@ def doParallelClusters(cconfigs) {
                                         sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         def binaryfile = "${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         def timestamp = sh(returnStdout: true, script: 'date +%y%m%d').trim() 
-                                        def output = "${env.WORKSPACE}/dist/installers/";
                                         
-                                        sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp} ${output} "
+                                        sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                         
                                         // enough to populate maven repo
                                         /*
