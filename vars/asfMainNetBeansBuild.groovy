@@ -327,22 +327,22 @@ def doParallelClusters(cconfigs) {
                                         
                                         sh "mkdir dist${versionnedpath}nbms"
                                         
-                                        sh "mkdir dist${versionnedpath}installer"
+                                        sh "mkdir distpreparation${versionnedpath}installer"
                                         
                                         def installer =  libraryResource 'org/apache/netbeans/installer.sh'
-                                        writeFile file: "dist${versionnedpath}installer/installer.sh", text: installer
+                                        writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
                                         //sh "echo ${script} > dist${versionnedpath}installer/build.sh"
                                         
-                                        sh "chmod +x dist${versionnedpath}installer/installer.sh"
+                                        sh "chmod +x distpreparation${versionnedpath}installer/installer.sh"
                                         
-                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* dist${versionnedpath}installer/nbbuild/newbuild "
-                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer dist${versionnedpath}installer/nbbuild "
+                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* distpreparation${versionnedpath}installer/nbbuild/newbuild "
+                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer distpreparation${versionnedpath}installer/nbbuild "
                                         sh "mkdir -p dist${versionnedpath}installer/nbi && cp -r build-${clustername}-temp/nbi dist${versionnedpath}installer "
                                         
                                         
                                         
                                         sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                        sh "cd dist${versionnedpath}installer && ./installer.sh ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                                        sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         
                                         // enough to populate maven repo
                                         /*
@@ -379,6 +379,7 @@ def doParallelClusters(cconfigs) {
                                     }
                                     
                                     archiveArtifacts 'dist/**' 
+                                    archiveArtifacts 'distpreparation/**' 
                                     // remove create folder
                                     sh "rm -rf dist"
                                 }              
