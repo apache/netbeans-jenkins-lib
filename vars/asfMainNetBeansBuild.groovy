@@ -336,7 +336,7 @@ def doParallelClusters(cconfigs) {
                                         sh "chmod +x dist${versionnedpath}installer/installer.sh"
                                         
                                         sh "mkdir -p dist${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* dist${versionnedpath}installer/nbbuild/newbuild "
-                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer dist${versionnedpath}installer/nbbuild/installer "
+                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer/{.,}* dist${versionnedpath}installer/nbbuild/installer "
                                         
                                         
                                         
