@@ -21,18 +21,31 @@
 
 // this script is taken from olamy works on archiva-jenkins-lib for the Apache Archiva project
 
+@groovy.transform.Field
 def myMaven=""
+@groovy.transform.Field
 def mavenVersion=""
+@groovy.transform.Field
 def jdktool = ""
-def versionpath = "";
+@groovy.transform.Field
+def versionpath = ""
+@groovy.transform.Field
 def apidocurl = ""
+@groovy.transform.Field
 def myAnt = ""
+@groovy.transform.Field
 def date  = ""
+@groovy.transform.Field
 def atomdate = ""
+@groovy.transform.Field
 def version=""
+@groovy.transform.Field
 def rmversion=""
+@groovy.transform.Field
 def month=""
+@groovy.transform.Field
 def votecandidate=false
+@groovy.transform.Field
 def vote=""
 
 def call(Map params = [:]) {
