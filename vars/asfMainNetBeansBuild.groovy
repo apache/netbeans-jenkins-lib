@@ -156,7 +156,7 @@ def call(Map params = [:]) {
                                 if (votecandidate) {
                                     versionpath = "${version}/vc${vote}"
                                 }
-                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion);
+                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool);
                                 
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
@@ -260,7 +260,7 @@ def call(Map params = [:]) {
     }
 }
 
-def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
+def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,myMaven,jdktool) {
     jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster[0]
@@ -275,74 +275,80 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
                     script {
                         def targets = ['verify-libs-and-licenses','rat','build']
                         for (String target in targets) {
-                            // prepare a clean subfolder target - clustername prefixed
-                            sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp && unzip nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp && cp .gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
-                            def add = "";
-                            // 
-                            if (target=="build" && env.BRANCH_NAME!="release90") {
-                                add=" -Ddo.build.windows.launchers=true"
-                            }
-                            sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
-                             
-                        }
-                        // save report and test for rat and verify..
-                        archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
-                        junit testResults: "rat-${clustername}-temp/nbbuild/build/rat/*.xml" , allowEmptyResults:true 
-                        junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
+                            stage("${target} for ${clustername}") {
+                                // prepare a clean subfolder target - clustername prefixed
+                                sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp && unzip nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp && cp .gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
+                                def add = "";
+                                // 
+                                if (target=="build" && env.BRANCH_NAME!="release90") {
+                                    add=" -Ddo.build.windows.launchers=true"
+                                }
+                                sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
                             
-                        // prepare versionned path
-                        def versionnedpath = "/${path}/${versionpath}"
-                        sh "rm -rf dist"
-                        sh "mkdir -p dist${versionnedpath}"
-                        // source
-                        sh "cp nbbuild/build/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-source.zip"
-                        // binaries
-                        sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                        
-                        // special case for release
-                        if (clustername == "release") {
-                            sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
-                            sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
-                            archiveArtifacts 'WEBZIP.zip'
+                                if (target=='verify-libs-and-licenses') {
+                                    junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
+                                }
+                                
+                                if (target=='rat') {
+                                    // save report and test for rat and verify..
+                                    archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
+                                    junit testResults: "rat-${clustername}-temp/nbbuild/build/rat/*.xml" , allowEmptyResults:true 
+                                }
+                                
+                                if (target=='build') {
+                                    // prepare versionned path
+                                    def versionnedpath = "/${path}/${versionpath}"
+                                    sh "rm -rf dist"
+                                    sh "mkdir -p dist${versionnedpath}"
+                                    // source
+                                    sh "cp nbbuild/build/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-source.zip"
+                                    // binaries
+                                    sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                                
+                                    // special case for release
+                                    if (clustername == "release") {
+                                        sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                                        sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
+                                        archiveArtifacts 'WEBZIP.zip'
                             
-                            sh "mkdir dist${versionnedpath}nbms"
-                            sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
+                                        sh "mkdir dist${versionnedpath}nbms"
+                                        sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
                                 
                             
-                            // enought to populate maven repo
-                            sh "rm -rf repoindex"
-                            sh "rm -rf .repository"
-                            def localRepo = ".repository"
-                            def netbeansbase = "build-${clustername}-temp/nbbuild"
-                            withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
-                            {
-                                //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
-                                sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
-                            }                            
-                            archiveArtifacts 'mavenrepository/**'
+                                        // enought to populate maven repo
+                                        sh "rm -rf repoindex"
+                                        sh "rm -rf .repository"
+                                        def localRepo = ".repository"
+                                        def netbeansbase = "build-${clustername}-temp/nbbuild"
+                                        withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
+                                        {
+                                            //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                            def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
+                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                        }                            
+                                        archiveArtifacts 'mavenrepository/**'
                             
-                            sh "rm -rf mavenrepository"
+                                        sh "rm -rf mavenrepository"
                             
-                            sh "rm -rf repoindex"
-                            sh "rm -rf .repository"
+                                        sh "rm -rf repoindex"
+                                        sh "rm -rf .repository"
                             
-                        }
+                                    }
                        
-                        // do signature
-                        def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
-                        for (String extension in extensions) {                                
-                            sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
-                        }
+                                    // do signature
+                                    def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
+                                    for (String extension in extensions) {                                
+                                        sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
+                                    }
                         
-                        archiveArtifacts 'dist/**' 
-                        // remove create folder
-                        for (String target in targets) {
-                            sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'
+                                    archiveArtifacts 'dist/**' 
+                                    // remove create folder
+                                    sh "rm -rf dist"              
+                                }
+                                sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
+                            }
                         }
-                        sh "rm -rf dist"
-                        
                     }
                 }
             } 
