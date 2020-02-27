@@ -24,18 +24,20 @@
 def myMaven=""
 def mavenVersion=""
 def jdktool = ""
+def versionpath = "";
+def apidocurl = ""
+def myAnt = ""
+def date  = ""
+def atomdate = ""
+def version=""
+def rmversion=""
+def month=""
+def votecandidate=false
+def vote=""
 
 def call(Map params = [:]) {
     // variable needed for apidoc
-    def myAnt = ""
-    def apidocurl = ""
-    def date  = ""
-    def atomdate = ""
-    def version=""
-    def rmversion=""
-    def month=""
-    def votecandidate=false
-    def vote=""
+    
     
     pipeline {
         options {
@@ -147,18 +149,18 @@ def call(Map params = [:]) {
                                 // we want to setup for release
                                 // apidoc + repomaven + dist bundle
                                 def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
-                                def targets = ['verify-libs-and-licenses','rat','build']
+                                //def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 
                                 stash 'sources'
                                 stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
                                 
-                                def versionpath = "";
+                                
                                 if (votecandidate) {
                                     versionpath = "${version}/vc${vote}"
                                 }
-                                doParallelClusters(clusterconfigs,apidocurl,date,atomdate,versionpath,rmversion);
+                                doParallelClusters(clusterconfigs);
                                 
                                 //for (String clusterconfig in clusterconfigs) {
                                 // force a build num for build-source-config
@@ -262,7 +264,7 @@ def call(Map params = [:]) {
     }
 }
 
-def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion) {
+def doParallelClusters(cconfigs) {
     jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster[0]
