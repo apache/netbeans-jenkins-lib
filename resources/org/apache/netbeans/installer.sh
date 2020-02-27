@@ -1,6 +1,7 @@
 #!/bin/bash
-BASE_DIR=`pwd` \n
-NB_ALL=$BASE_DIR \n
+## param  workspace file name 
+BASE_DIR=`pwd`
+NB_ALL=$BASE_DIR
 export BASE_DIR NB_ALL
 
 DIST=$BASE_DIR/dist
@@ -16,7 +17,7 @@ mkdir -p $DIST/zip/moduleclusters
 mkdir -p $DIST/logs
 
 ARTIFACT=netbeans-*-bin
-BIN_NAME=`ls $ARTIFACT.zip`
+BIN_NAME=`basename $1`
 BINARY_NAME=`echo "${BIN_NAME%%.zip*}"`
 
 
