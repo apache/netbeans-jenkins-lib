@@ -346,7 +346,7 @@ def doParallelClusters(cconfigs) {
                                         def timestamp = sh(returnStdout: true, script: 'date +%y%m%d').trim() 
                                         
                                         sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
-                                        
+                                        sh "cp distpreparation${versionnedpath}installer/dist/bundles/* dist/installers/ "
                                         // enough to populate maven repo
                                         /*
                                         sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
