@@ -1,5 +1,8 @@
 #!/bin/bash
-## param  workspace file name 
+## param 1 workspace filename for binaries-zip 
+## param 2 version number xx.y (mandatory)
+## param 3 timestamp  YYMMDD
+## param 4 outputfolder 
 BASE_DIR=`pwd`
 NB_ALL=$BASE_DIR
 export BASE_DIR NB_ALL
@@ -98,10 +101,10 @@ mv $BINARY_NAME-*.zip $DIST/zip/moduleclusters
 export BINARY_NAME
 
 cd $BASE_DIR
-NB_BUILD_NUMBER=200224
+NB_BUILD_NUMBER=$3
 BUILDNUMBER=$NB_BUILD_NUMBER
 DATESTAMP=$BUILDNUMBER
-NB_VER_NUMBER=11.3
+NB_VER_NUMBER=$2
 BASENAME_PREFIX=Apache-NetBeans-$NB_VER_NUMBER-bin
 BUILD_DESC=$BASENAME_PREFIX
 export NB_VER_NUMBER BUILDNUMBER BASENAME_PREFIX NB_BUILD_NUMBER DATESTAMP BUILD_DESC
@@ -123,10 +126,13 @@ export BUILD_NBJDK6 BUILD_NBJDK7 BUILD_NBJDK8 BUILD_NBJDK11
 BUNDLE_JDK_PLATFORM=
 export BUNDLE_JDK_PLATFORM
 
-OUTPUT_DIR=${NB_ALL}/dist/installers
+OUTPUT_DIR=$4
 export OUTPUT_DIR
 
 DONT_SIGN_INSTALLER=y
 export DONT_SIGN_INSTALLER
 
 bash -x $NB_ALL/nbbuild/newbuild/build-nbi.sh
+
+## cleanup cache
+rm -rf NBI-cache
