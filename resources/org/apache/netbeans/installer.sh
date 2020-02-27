@@ -25,6 +25,8 @@ BASE_DIR=`pwd`
 NB_ALL=$BASE_DIR
 export BASE_DIR NB_ALL
 
+`echo "$1 $2 $3" > parameters.info"`
+
 DIST=$BASE_DIR/dist
 export DIST
 
