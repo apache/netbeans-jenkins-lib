@@ -445,7 +445,7 @@ cd ../..
 
                                         sh "echo ${script} > dist${versionnedpath}installer/build.sh"
                                         sh "chmod +x dist${versionnedpath}installer/build.sh"
-                                        sh "dist${versionnedpath}installer/build.sh"
+                                        sh " cd dist${versionnedpath}installer && build.sh"
                                         
                                         // enough to populate maven repo
                                         /*
