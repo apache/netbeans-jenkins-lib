@@ -23,7 +23,7 @@ BINARY_NAME=`echo "${BIN_NAME%%.zip*}"`
 
 #create cluster zip files
 rm -rf temp
-unzip $BINARY_NAME.zip -d temp
+unzip $1 -d temp
 cd temp
 mkdir javase
 mkdir javase/netbeans
