@@ -291,99 +291,97 @@ def doParallelClusters(cconfigs) {
                     sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
                     script {
                         def targets = [/*'verify-libs-and-licenses','rat',*/'build']
-                        stages {
-                            for (String target in targets) {
-                                stage("${target} for ${clustername}") {
-                                    // prepare a clean subfolder target - clustername prefixed
-                                    sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp && unzip nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp && cp .gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
-                                    def add = "";
-                                    // 
-                                    if (target=="build" && env.BRANCH_NAME!="release90") {
-                                        add=" -Ddo.build.windows.launchers=true"
-                                    }
-                                    sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
-                            
-                                    if (target=='verify-libs-and-licenses') {
-                                        junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
-                                    }
-                                
-                                    if (target=='rat') {
-                                        // save report and test for rat and verify..
-                                        archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
-                                        junit testResults: "rat-${clustername}-temp/nbbuild/build/rat/*.xml" , allowEmptyResults:true 
-                                    }
-                                
-                                    if (target=='build') {
-                                        // prepare versionned path
-                                        def versionnedpath = "/${path}/${versionpath}"
-                                        sh "rm -rf dist"
-                                        sh "mkdir -p dist${versionnedpath}"
-                                        // source
-                                        sh "cp nbbuild/build/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-source.zip"
-                                        // binaries
-                                        sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                
-                                        // special case for release
-                                        if (clustername == "release") {
-                                        
-                                            sh "mkdir dist${versionnedpath}nbms"
-                                        
-                                            sh "mkdir dist${versionnedpath}installer"
-                                        
-                                            def installer =  libraryResource 'org/apache/netbeans/installer.sh'
-                                            writeFile file: "dist${versionnedpath}installer/installer.sh", text: installer
-                                            //sh "echo ${script} > dist${versionnedpath}installer/build.sh"
-                                        
-                                            sh "chmod +x dist${versionnedpath}installer/installer.sh"
-                                        
-                                            sh "mkdir -p dist${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* dist${versionnedpath}installer/nbbuild/newbuild "
-                                            sh "mkdir -p dist${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer dist${versionnedpath}installer/nbbuild "
-                                        
-                                        
-                                        
-                                            sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                            sh "cd dist${versionnedpath}installer && ./installer.sh ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                        
-                                            // enough to populate maven repo
-                                            /*
-                                            sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
-                                            sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
-                                            sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
-                                
-                                            archiveArtifacts 'WEBZIP.zip'
-                            
-                                            sh "rm -rf repoindex"
-                                            sh "rm -rf .repository"
-                                            def localRepo = ".repository"
-                                            def netbeansbase = "build-${clustername}-temp/nbbuild"
-                                            withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
-                                            {
-                                            //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                            def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
-                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
-                                            }                            
-                                            archiveArtifacts 'mavenrepository/**'
-                            
-                                            sh "rm -rf mavenrepository"
-                            
-                                            sh "rm -rf repoindex"
-                                            sh "rm -rf .repository"
-                                             */
-                                        }
-                       
-                                        // do signature
-                                        def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
-                                        for (String extension in extensions) {                                
-                                            sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
-                                        }
-                                    
-                                        archiveArtifacts 'dist/**' 
-                                        // remove create folder
-                                        sh "rm -rf dist"
-                                    }              
-                                    sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
+                        for (String target in targets) {
+                            stage("${target} for ${clustername}") {
+                                // prepare a clean subfolder target - clustername prefixed
+                                sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp && unzip nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp && cp .gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
+                                def add = "";
+                                // 
+                                if (target=="build" && env.BRANCH_NAME!="release90") {
+                                    add=" -Ddo.build.windows.launchers=true"
                                 }
+                                sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
+                            
+                                if (target=='verify-libs-and-licenses') {
+                                    junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
+                                }
+                                
+                                if (target=='rat') {
+                                    // save report and test for rat and verify..
+                                    archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
+                                    junit testResults: "rat-${clustername}-temp/nbbuild/build/rat/*.xml" , allowEmptyResults:true 
+                                }
+                                
+                                if (target=='build') {
+                                    // prepare versionned path
+                                    def versionnedpath = "/${path}/${versionpath}"
+                                    sh "rm -rf dist"
+                                    sh "mkdir -p dist${versionnedpath}"
+                                    // source
+                                    sh "cp nbbuild/build/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-source.zip"
+                                    // binaries
+                                    sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                                
+                                    // special case for release
+                                    if (clustername == "release") {
+                                        
+                                        sh "mkdir dist${versionnedpath}nbms"
+                                        
+                                        sh "mkdir dist${versionnedpath}installer"
+                                        
+                                        def installer =  libraryResource 'org/apache/netbeans/installer.sh'
+                                        writeFile file: "dist${versionnedpath}installer/installer.sh", text: installer
+                                        //sh "echo ${script} > dist${versionnedpath}installer/build.sh"
+                                        
+                                        sh "chmod +x dist${versionnedpath}installer/installer.sh"
+                                        
+                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* dist${versionnedpath}installer/nbbuild/newbuild "
+                                        sh "mkdir -p dist${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer dist${versionnedpath}installer/nbbuild "
+                                        
+                                        
+                                        
+                                        sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                                        sh "cd dist${versionnedpath}installer && ./installer.sh ${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                                        
+                                        // enough to populate maven repo
+                                        /*
+                                        sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
+                                        sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
+                                        sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
+                                
+                                        archiveArtifacts 'WEBZIP.zip'
+                            
+                                        sh "rm -rf repoindex"
+                                        sh "rm -rf .repository"
+                                        def localRepo = ".repository"
+                                        def netbeansbase = "build-${clustername}-temp/nbbuild"
+                                        withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
+                                        {
+                                        //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                        def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
+                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                        }                            
+                                        archiveArtifacts 'mavenrepository/**'
+                            
+                                        sh "rm -rf mavenrepository"
+                            
+                                        sh "rm -rf repoindex"
+                                        sh "rm -rf .repository"
+                                         */
+                                    }
+                       
+                                    // do signature
+                                    def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
+                                    for (String extension in extensions) {                                
+                                        sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
+                                    }
+                                    
+                                    archiveArtifacts 'dist/**' 
+                                    // remove create folder
+                                    sh "rm -rf dist"
+                                }              
+                                sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
                             }
                         }
                     }
