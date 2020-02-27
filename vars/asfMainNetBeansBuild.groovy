@@ -443,7 +443,7 @@ cd ../..
 
                                         bash -x $NB_ALL/nbbuild/newbuild/build-nbi.sh '''
 
-                                        sh "echo ${script} > dist${versionnedpath}installer/build.sh"
+                                        sh "echo ${script} >> dist${versionnedpath}installer/build.sh"
                                         sh "chmod +x dist${versionnedpath}installer/build.sh"
                                         sh " cd dist${versionnedpath}installer && build.sh"
                                         
@@ -472,27 +472,27 @@ cd ../..
                             
                                         sh "rm -rf repoindex"
                                         sh "rm -rf .repository"
-                                        */
-                                        }
+                                         */
+                                    }
                        
-                                        // do signature
-                                        def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
-                                        for (String extension in extensions) {                                
+                                    // do signature
+                                    def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
+                                    for (String extension in extensions) {                                
                                         sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
-                                        }
+                                    }
                                     
-                                        archiveArtifacts 'dist/**' 
-                                        // remove create folder
-                                        sh "rm -rf dist"
-                                        }              
-                                        sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
-                                        }
-                                        }
-                                        }
-                                        }
-                                        } 
-                                        }
-                                        }
+                                    archiveArtifacts 'dist/**' 
+                                    // remove create folder
+                                    sh "rm -rf dist"
+                                }              
+                                sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
+                            }
+                        }
+                    }
+                }
+            } 
+        }
+    }
 
-                                        parallel jobs
-                                        }
+    parallel jobs
+}
