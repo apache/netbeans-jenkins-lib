@@ -386,7 +386,7 @@ def doParallelClusters(cconfigs) {
                                     archiveArtifacts 'dist/**' 
                                     
                                     // remove create folder
-                                    sh "rm -rf dist"
+                                    //sh "rm -rf dist"
                                 }              
                                 sh script: "rm -rf ${target}-${clustername}-temp", label: 'clean temp build'                                    
                             }
