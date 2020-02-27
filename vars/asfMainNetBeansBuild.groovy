@@ -313,11 +313,11 @@ def doParallelClusters(cconfigs,apidocurl,date,atomdate,versionpath,rmversion,my
                                         sh "mkdir dist${versionnedpath}installer"
                                         
                                         def installer =  libraryResource 'org/apache/netbeans/installer.sh'
-                                        writeFile file: "dist${versionnedpath}installer/build.sh", text: installer
+                                        writeFile file: "dist${versionnedpath}installer/installer.sh", text: installer
                                         //sh "echo ${script} > dist${versionnedpath}installer/build.sh"
                                         
-                                        sh "chmod +x dist${versionnedpath}installer/build.sh"
-                                        sh "cd dist${versionnedpath}installer && build.sh"
+                                        sh "chmod +x dist${versionnedpath}installer/installer.sh"
+                                        sh "cd dist${versionnedpath}installer && installer.sh"
                                         
                                         // enough to populate maven repo
                                         /*
