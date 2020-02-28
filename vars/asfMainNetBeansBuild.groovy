@@ -277,7 +277,7 @@ def doParallelClusters(cconfigs) {
                                         
                                 sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
                                 sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
-                                sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
+                                sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
                                 
                                 archiveArtifacts 'WEBZIP.zip'
                             
