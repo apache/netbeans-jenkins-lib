@@ -204,7 +204,7 @@ def doParallelClusters(cconfigs) {
         def clustername = cluster[0]
         def path = cluster[1]
         jobs["${clustername}"] = {
-            node {
+            //node {
                 stage("prepare ${clustername}") {
                     // pristine source
                     unstash 'sources'
@@ -319,7 +319,7 @@ def doParallelClusters(cconfigs) {
                     }
                 }
             } 
-        }
+        //}
     }
 
     parallel jobs
