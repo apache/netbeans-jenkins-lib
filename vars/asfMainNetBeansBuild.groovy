@@ -166,8 +166,8 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 
-                                stash 'sources'
-                                stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
+                                //stash 'sources'
+                                //stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
                                 
                                 
                                 if (votecandidate) {
@@ -207,8 +207,8 @@ def doParallelClusters(cconfigs) {
             //node {
                 stage("prepare ${clustername}") {
                     // pristine source
-                    unstash 'sources'
-                    unstash 'gitignore'
+                    //unstash 'sources'
+                    //unstash 'gitignore'
                     sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
                     script {
                         def targets = [/*'verify-libs-and-licenses','rat',*/'build']
