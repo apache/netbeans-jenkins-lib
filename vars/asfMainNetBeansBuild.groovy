@@ -163,7 +163,6 @@ def call(Map params = [:]) {
                                 // apidoc + repomaven + dist bundle
                                 def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
                                 def targets = ['verify-libs-and-licenses','rat','build']
-                                sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 
                                 //stash 'sources'
@@ -199,7 +198,7 @@ def call(Map params = [:]) {
 }
 
 def doParallelClusters(cconfigs) {
-    jobs  = [:]
+    //jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster[0]
         def path = cluster[1]
@@ -209,6 +208,8 @@ def doParallelClusters(cconfigs) {
                     // pristine source
                     //unstash 'sources'
                     //unstash 'gitignore'
+                    sh "rm -rf nbbuild/build"
+                                
                     sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
                     script {
                         def targets = [/*'verify-libs-and-licenses','rat',*/'build']
@@ -236,7 +237,7 @@ def doParallelClusters(cconfigs) {
                                 if (target=='build') {
                                     // prepare versionned path
                                     def versionnedpath = "/${path}/${versionpath}"
-                                    sh "rm -rf dist"
+      //                              sh "rm -rf dist"
                                     sh "mkdir -p dist${versionnedpath}"
                                     // source
                                     sh "cp nbbuild/build/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-source.zip"
@@ -280,8 +281,8 @@ def doParallelClusters(cconfigs) {
                                 
                                         archiveArtifacts 'WEBZIP.zip'
                             
-                                        sh "rm -rf repoindex"
-                                        sh "rm -rf .repository"
+        //                                sh "rm -rf repoindex"
+        //                                sh "rm -rf .repository"
                                         def localRepo = ".repository"
                                         def netbeansbase = "build-${clustername}-temp/nbbuild"
                                         
@@ -294,10 +295,10 @@ def doParallelClusters(cconfigs) {
                                         }                            
                                         archiveArtifacts 'mavenrepository/**'
                             
-                                        sh "rm -rf mavenrepository"
+          //                              sh "rm -rf mavenrepository"
                             
-                                        sh "rm -rf repoindex"
-                                        sh "rm -rf .repository"
+          //                              sh "rm -rf repoindex"
+          //                              sh "rm -rf .repository"
                                         
                                         archiveArtifacts 'distpreparation/**' 
                                     }
