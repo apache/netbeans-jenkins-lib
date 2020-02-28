@@ -22,17 +22,9 @@
 // this script is taken from olamy works on archiva-jenkins-lib for the Apache Archiva project
 
 @groovy.transform.Field
-def myMaven=""
-@groovy.transform.Field
-def mavenVersion=""
-@groovy.transform.Field
-def jdktool = ""
-@groovy.transform.Field
 def versionpath = ""
 @groovy.transform.Field
 def apidocurl = ""
-@groovy.transform.Field
-def myAnt = ""
 @groovy.transform.Field
 def date  = ""
 @groovy.transform.Field
@@ -74,8 +66,6 @@ def call(Map params = [:]) {
                         sh 'rm -f netbeansrelease.json'
                         def branch = env.BRANCH_NAME 
                         def githash = env.GIT_COMMIT
-                        // not merge testing purpose
-                        branch = 'release113'
                         
                         println githash
                         println branch
@@ -104,8 +94,6 @@ def call(Map params = [:]) {
                         case '12':month  = 'Dec'; break;
                         default: month ='Invalid';
                         }
-                        // not merge testing purpose
-                        month='Invalid'
                         date  = releaseInformation[branch].releasedate['day'] + ' '+ month + ' '+releaseInformation[branch].releasedate['year']
                         //2018-07-29T12:00:00Z
                         atomdate = releaseInformation[branch].releasedate['year']+'-'+releaseInformation[branch].releasedate['month']+'-'+releaseInformation[branch].releasedate['day']+'T12:00:00Z'
@@ -150,7 +138,7 @@ def call(Map params = [:]) {
                                 sh "rm -rf ${env.WORKSPACE}/repoindex/"
                                 sh "rm -rf ${env.WORKSPACE}/.repository"
                                 def localRepo = "${env.WORKSPACE}/.repository"
-                                withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
+                                withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
                                 {
                                     //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
@@ -170,13 +158,10 @@ def call(Map params = [:]) {
                                 if (votecandidate) {
                                     versionpath = "${version}/vc${vote}"
                                 }
-                                doParallelClusters(clusterconfigs);
-                                                                
+                                doParallelClusters(clusterconfigs);                                                                
                             }
                         }                       
-                    }
-                    
-                    
+                    }                   
                 }
             }
         }
@@ -194,7 +179,7 @@ def call(Map params = [:]) {
         }
     }
 }
-
+// in fact not parallel otherwise workspace not cleaned
 def doParallelClusters(cconfigs) {
     for (cluster in cconfigs) {
         def clustername = cluster[0]
@@ -214,18 +199,23 @@ def doParallelClusters(cconfigs) {
                         if (target=="build" && env.BRANCH_NAME!="release90") {
                             add=" -Ddo.build.windows.launchers=true"
                         }
+                        
+                        // build the target on the cluster defined common to all
                         sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
                             
+                        // for verify-libs-and-licenses we only want the reports
                         if (target=='verify-libs-and-licenses') {
                             junit "verify-libs-and-licenses-${clustername}-temp/nbbuild/build/verifylibsandlicenses.xml"   
                         }
-                                
+                          
+                        // for rat we only want the reports (junit fail at the moment empty test)
                         if (target=='rat') {
                             // save report and test for rat and verify..
                             archiveArtifacts "rat-${clustername}-temp/nbbuild/build/rat-report.txt"
                             junit testResults: "rat-${clustername}-temp/nbbuild/build/rat/*.xml" , allowEmptyResults:true 
                         }
-                                
+                        
+                        // build target is more complex,
                         if (target=='build') {
                             // prepare versionned path
                             def versionnedpath = "/${path}/${versionpath}"
@@ -236,16 +226,17 @@ def doParallelClusters(cconfigs) {
                             // binaries
                             sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                 
-                            // special case for release
+                            // special case for release prepare bits, maven, javadoc installer
                             if (clustername == "release") {
                                         
+                                // installer we prepare a folder so that release manager can build mac os on his own
                                 sh "mkdir -p dist${versionnedpath}nbms"
                                 sh "mkdir -p dist/installers"
                                 sh "mkdir -p distpreparation${versionnedpath}installer"
                                         
                                 def installer =  libraryResource 'org/apache/netbeans/installer.sh'
                                 writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
-                                //sh "echo ${script} > dist${versionnedpath}installer/build.sh"
+                                
                                 def installermac =  libraryResource 'org/apache/netbeans/installermac.sh'
                                 writeFile file: "distpreparation${versionnedpath}installer/installermac.sh", text: installermac
                                         
@@ -264,9 +255,13 @@ def doParallelClusters(cconfigs) {
                                 sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                 sh "cp distpreparation${versionnedpath}installer/dist/bundles/* dist/installers/ "
                                 sh "rm -rf distpreparation${versionnedpath}installer/dist"
-                                    
-                                // enough to populate maven repo
-                                        
+                                archiveArtifacts 'distpreparation/**' 
+                                
+                                // the installer phase is ok we should have installer for linux / windows + scripts and a bit of source to build macos later
+                                
+                                
+                                // additionnal target to have maven ready
+                                // javadoc build
                                 sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
                                 sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
                                 sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
@@ -284,10 +279,7 @@ def doParallelClusters(cconfigs) {
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                 }                            
                                 archiveArtifacts 'mavenrepository/**'
-                            
-                                
-                                        
-                                archiveArtifacts 'distpreparation/**' 
+                                                   
                             }
                        
                             // do checksum
