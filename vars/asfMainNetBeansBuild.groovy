@@ -39,7 +39,8 @@ def month=""
 def votecandidate=false
 @groovy.transform.Field
 def vote=""
-
+@groovy.transform.Field
+def mavenVersion=""
 @groovy.transform.Field
 def tooling=[:]
 
@@ -77,7 +78,7 @@ def call(Map params = [:]) {
                         }
                         tooling.myAnt = releaseInformation[branch].ant;
                         apidocurl = releaseInformation[branch].apidocurl
-                        tooling.mavenVersion=releaseInformation[branch].mavenversion
+                        mavenVersion=releaseInformation[branch].mavenversion
                         
                         switch (releaseInformation[branch].releasedate['month']) {
                         case '01':month  = 'Jan'; break;
