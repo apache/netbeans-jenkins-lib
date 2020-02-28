@@ -48,6 +48,10 @@ def votecandidate=false
 @groovy.transform.Field
 def vote=""
 
+@groovy.transform.Field
+def tooling=[:]
+
+
 def call(Map params = [:]) {
     // variable needed for apidoc
     
@@ -81,9 +85,9 @@ def call(Map params = [:]) {
                             currentBuild.result = "FAILURE"
                             throw new Exception("No entry in json for $branch")
                         }
-                        myAnt = releaseInformation[branch].ant;
+                        tooling.myAnt = releaseInformation[branch].ant;
                         apidocurl = releaseInformation[branch].apidocurl
-                        mavenVersion=releaseInformation[branch].mavenversion
+                        tooling.mavenVersion=releaseInformation[branch].mavenversion
                         
                         switch (releaseInformation[branch].releasedate['month']) {
                         case '01':month  = 'Jan'; break;
@@ -105,8 +109,8 @@ def call(Map params = [:]) {
                         date  = releaseInformation[branch].releasedate['day'] + ' '+ month + ' '+releaseInformation[branch].releasedate['year']
                         //2018-07-29T12:00:00Z
                         atomdate = releaseInformation[branch].releasedate['year']+'-'+releaseInformation[branch].releasedate['month']+'-'+releaseInformation[branch].releasedate['day']+'T12:00:00Z'
-                        jdktool = releaseInformation[branch].jdk
-                        myMaven = releaseInformation[branch].maven
+                        tooling.jdktool = releaseInformation[branch].jdk
+                        tooling.myMaven = releaseInformation[branch].maven
                         version = releaseInformation[branch].versionName;
                         
                         rmversion = version
@@ -131,10 +135,10 @@ def call(Map params = [:]) {
             }
             stage ("Main build") {
                 tools {
-                    jdk jdktool
+                    jdk tooling.jdktool
                 }
                 steps {
-                    withAnt(installation: myAnt) {
+                    withAnt(installation: tooling.myAnt) {
                         script {
                             //sh 'ant'
                             if (env.BRANCH_NAME=="master") {
@@ -162,12 +166,6 @@ def call(Map params = [:]) {
                                 // we want to setup for release
                                 // apidoc + repomaven + dist bundle
                                 def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
-                                //def targets = ['verify-libs-and-licenses','rat','build']
-                                
-                                
-                                //stash 'sources'
-                                //stash includes: '**/.gitignore',useDefaultExcludes:false,name: 'gitignore'
-                                
                                 
                                 if (votecandidate) {
                                     versionpath = "${version}/vc${vote}"
@@ -198,16 +196,10 @@ def call(Map params = [:]) {
 }
 
 def doParallelClusters(cconfigs) {
-    //jobs  = [:]
     for (cluster in cconfigs) {
         def clustername = cluster[0]
         def path = cluster[1]
-        //jobs["${clustername}"] = {
-        //node {
         stage("prepare ${clustername}") {
-            // pristine source
-            //unstash 'sources'
-            //unstash 'gitignore'
             sh "rm -rf nbbuild/build"
                                 
             sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
@@ -237,7 +229,7 @@ def doParallelClusters(cconfigs) {
                         if (target=='build') {
                             // prepare versionned path
                             def versionnedpath = "/${path}/${versionpath}"
-                            //                              sh "rm -rf dist"
+                          
                             sh "mkdir -p dist${versionnedpath}"
                             // source
                             sh "cp nbbuild/build/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-source.zip"
@@ -281,12 +273,10 @@ def doParallelClusters(cconfigs) {
                                 
                                 archiveArtifacts 'WEBZIP.zip'
                             
-                                //                                sh "rm -rf repoindex"
-                                //                                sh "rm -rf .repository"
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
                                         
-                                withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
+                                withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                 {
                                     //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
                                     def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
@@ -295,15 +285,12 @@ def doParallelClusters(cconfigs) {
                                 }                            
                                 archiveArtifacts 'mavenrepository/**'
                             
-                                //                              sh "rm -rf mavenrepository"
-                            
-                                //                              sh "rm -rf repoindex"
-                                //                              sh "rm -rf .repository"
+                                
                                         
                                 archiveArtifacts 'distpreparation/**' 
                             }
                        
-                            // do signature
+                            // do checksum
                             def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
                             for (String extension in extensions) {                                
                                 sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
@@ -311,16 +298,12 @@ def doParallelClusters(cconfigs) {
                                     
                             archiveArtifacts 'dist/**' 
                                     
-                            // remove create folder
-                            //sh "rm -rf dist"
+                           
                         }              
                     }
                 }
             }
         }
     } 
-    //    }
-    //}
 
-    //parallel jobs
 }

@@ -44,7 +44,6 @@ rm -rf NBI-cache
 mkdir -p $DIST/zip/moduleclusters
 mkdir -p $DIST/logs
 
-ARTIFACT=netbeans-*-bin
 BIN_NAME=`basename $1`
 BINARY_NAME=`echo "${BIN_NAME%%.zip*}"`
 
