@@ -203,7 +203,7 @@ def doParallelClusters(cconfigs) {
     for (cluster in cconfigs) {
         def clustername = cluster[0]
         def path = cluster[1]
-        jobs["${clustername}"] = {
+        //jobs["${clustername}"] = {
             //node {
                 stage("prepare ${clustername}") {
                     // pristine source
@@ -287,10 +287,10 @@ def doParallelClusters(cconfigs) {
                                         
                                         withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                         {
-                                        //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                        def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
-                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                            //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                            def commonparam = "-DnexusIndexDirectory=repoindex -Dmaven.repo.local=.repository"
+                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                         }                            
                                         archiveArtifacts 'mavenrepository/**'
                             
@@ -319,8 +319,8 @@ def doParallelClusters(cconfigs) {
                     }
                 }
             } 
-        //}
-    }
+    //    }
+    //}
 
-    parallel jobs
-    }
+    //parallel jobs
+}
