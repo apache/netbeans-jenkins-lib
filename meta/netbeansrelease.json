@@ -195,7 +195,7 @@
         },   
         "releasedate": {
             "day": "24",
-            "month": "02",
+            "month": "-",
             "year": "2020"
         },
         "previousreleasedate": {
