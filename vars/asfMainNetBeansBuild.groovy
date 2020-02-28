@@ -162,7 +162,7 @@ def call(Map params = [:]) {
                                 // we want to setup for release
                                 // apidoc + repomaven + dist bundle
                                 def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
-                                //def targets = ['verify-libs-and-licenses','rat','build']
+                                def targets = ['verify-libs-and-licenses','rat','build']
                                 sh "rm -rf ${env.WORKSPACE}/nbbuild/build"
                                 
                                 
@@ -174,86 +174,7 @@ def call(Map params = [:]) {
                                     versionpath = "${version}/vc${vote}"
                                 }
                                 doParallelClusters(clusterconfigs);
-                                
-                                //for (String clusterconfig in clusterconfigs) {
-                                // force a build num for build-source-config
-                                /*sh "ant build-source-config -Dcluster.config=${clusterconfig} -Dbuildnum=666"
-                                for (String target in targets){
-                                sh "rm -rf ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                sh "mkdir  ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                sh "unzip ${env.WORKSPACE}/nbbuild/build/${clusterconfig}*.zip -d ${env.WORKSPACE}/${target}-${clusterconfig}-temp "
-                                sh "cp ${env.WORKSPACE}/.gitignore ${env.WORKSPACE}/${target}-${clusterconfig}-temp"
-                                def add = "";
-                                // 
-                                if (target=="build" && env.BRANCH_NAME!="release90") {
-                                add=" -Ddo.build.windows.launchers=true"
-                                }
-                                sh "ant -f ${env.WORKSPACE}/${target}-${clusterconfig}-temp/build.xml ${target} -Dcluster.config=${clusterconfig} ${add}"
-                                }
-                                 */
-                                //}
-                                                               
-                                
-                                //sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
-                                //sh "ant -f ${env.WORKSPACE}/build-release-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
-                               
-                                // remove folders
-                                //sh "rm -rf ${env.WORKSPACE}/dist"
-                                //sh "rm -rf ${env.WORKSPACE}/mavenrepository"
-                                
-                                // create dist folder and content
-                                //def versionpath = "";
-                                //def platformpath = "/";
-                                //def releasepath = "/";
-                                /*        if (votecandidate) {
-                                versionpath = "/${version}/vc${vote}"
-                                platformpath = "netbeans-platform${versionpath}"
-                                releasepath = "netbeans${versionpath}";
-                                }*/
-                                
-                                /*sh "mkdir -p ${env.WORKSPACE}/dist${platformpath}"
-                                // source
-                                sh "cp ${env.WORKSPACE}/nbbuild/build/*platform*.zip ${env.WORKSPACE}/dist${platformpath}netbeans-platform-${rmversion}-source.zip"
-                                // binaries
-                                sh "cp ${env.WORKSPACE}/build-platform-temp/nbbuild/*.zip ${env.WORKSPACE}/dist${platformpath}netbeans-platform-${rmversion}-bin.zip"
-                                
-                                
-                                sh "mkdir -p ${env.WORKSPACE}/dist${releasepath}"
-                                
-                                sh "cp ${env.WORKSPACE}/nbbuild/build/release*.zip ${env.WORKSPACE}/dist${releasepath}netbeans-${rmversion}-source.zip"
-                                sh "cp ${env.WORKSPACE}/build-release-temp/nbbuild/*-release.zip ${env.WORKSPACE}/dist${releasepath}netbeans-${rmversion}-bin.zip"
-                                 */
-                                /*                               sh "mkdir ${env.WORKSPACE}/dist${releasepath}nbms"
-                                 
-                                // create maven repository folder and content
-                                 */
-                                //sh "mkdir ${env.WORKSPACE}/mavenrepository"
-                                
-                                //                           sh "cp -r ${env.WORKSPACE}/build-release-temp/nbbuild/nbms/** ${env.WORKSPACE}/dist${releasepath}nbms/"
-                                
-                                //checksums
-                                
-                                /*                         def extensions = ['*.zip','*.nbm','*.gz','*.jar','*.xml','*.license']
-                                for (String extension in extensions) {
-                                
-                                sh "cd ${env.WORKSPACE}/dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
-                                
-                                }
-                                archiveArtifacts 'dist/**'
-                                 */                       
-                                //prepare a maven repository to be used by RM 
-                                /* 
-                                sh "rm -rf ${env.WORKSPACE}/repoindex/"
-                                sh "rm -rf ${env.WORKSPACE}/.repository"
-                                def localRepo = "${env.WORKSPACE}/.repository"
-                                def netbeansbase = "${env.WORKSPACE}/build-release-temp/nbbuild"
-                                withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
-                                {
-                                //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:populate -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -Dmaven.repo.local=${env.WORKSPACE}/.repository -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
-                                }                            
-                                archiveArtifacts 'mavenrepository/**'*/
+                                                                
                             }
                         }                       
                     }
@@ -352,7 +273,7 @@ def doParallelClusters(cconfigs) {
                                         sh "rm -rf distpreparation${versionnedpath}installer/dist"
                                     
                                         // enough to populate maven repo
-                                        /*
+                                        
                                         sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
                                         sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"                              
                                         sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}/nbms/"
@@ -363,6 +284,7 @@ def doParallelClusters(cconfigs) {
                                         sh "rm -rf .repository"
                                         def localRepo = ".repository"
                                         def netbeansbase = "build-${clustername}-temp/nbbuild"
+                                        
                                         withMaven(maven:myMaven,jdk:jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                         {
                                         //sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.5-SNAPSHOT -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
@@ -376,7 +298,7 @@ def doParallelClusters(cconfigs) {
                             
                                         sh "rm -rf repoindex"
                                         sh "rm -rf .repository"
-                                         */
+                                        
                                         archiveArtifacts 'distpreparation/**' 
                                     }
                        
@@ -401,4 +323,4 @@ def doParallelClusters(cconfigs) {
     }
 
     parallel jobs
-}
+    }
