@@ -53,13 +53,14 @@ def call(Map params = [:]) {
         options {
             buildDiscarder(logRotator(numToKeepStr: '2'))
             disableConcurrentBuilds() 
+            timeout(time: 180, unit: 'MINUTES')
         }
         agent { node { label 'ubuntu' } }
-        stages{
-            stage("Preparing Variable"){
-                agent { node { label 'ubuntu' } }
-                options { timeout(time: 180, unit: 'MINUTES') }
-                steps{
+        
+        stages {
+            stage("Preparing Variable") {
+                //agent { node { label 'ubuntu' } }
+                steps {
                     script {
                         // test if we can do that 
                         sh 'curl "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" -o netbeansrelease.json'
@@ -120,56 +121,125 @@ def call(Map params = [:]) {
                             }
                         } 
                     }
-                }
+                }            
             }
-            stage ("Main build") {
+            stage ('Master build') {
                 tools {
                     jdk tooling.jdktool
+                }        
+                when {
+                    branch 'master'
                 }
-                steps {
-                    withAnt(installation: tooling.myAnt) {
-                        script {
-                            //sh 'ant'
-                            if (env.BRANCH_NAME=="master") {
-                                // on master we build apidoc + populating snapshot repository
-                                // should be on line for each otherwise cluster are wrong
+                stages {
+                    stage ('build javadoc') {
+                        steps {
+                            withAnt(installation: tooling.myAnt) {                
                                 sh "ant download-all-extbins"
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
-                                //sh "rm -rf ${env.WORKSPACE}/repoindex/"
-                                sh "rm -rf ${env.WORKSPACE}/.repository"
-                                def localRepo = "${env.WORKSPACE}/.repository"
-                                def netbeansbase = "nbbuild"
-                                withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
-                                {
-                                    sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.6-SNAPSHOT -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                    def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
-                                    
-                                    //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.6-SNAPSHOT:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
-                                }
                                 archiveArtifacts 'WEBZIP.zip'
-                            } else if (month !='Invalid') {
-                                // we have a valid month, this package is already released. Build only javadoc
+                            }    
+                        }
+                    }
+                    stage (' Populate Snapshots') {                                                                
+                        when {
+                            // thursday
+                            expression { return Calendar.instance.get(Calendar.HOUR_OF_DAY) == 1 && Calendar.instance.get(Calendar.DAY_OF_WEEK) == 3}
+                        }
+                        steps {
+                            withAnt(installation: tooling.myAnt) {                
+                                script {
+                                    def localRepo = "${env.WORKSPACE}/.repository"
+                                    def netbeansbase = "nbbuild"
+                                    def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
+                                
+                                    sh "rm -rf ${env.WORKSPACE}/.repository"
+                                    withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
+                                    {
+                                        sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:1.6-SNAPSHOT -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                    
+                                        //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.6-SNAPSHOT:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
+                                    }                         
+                                }
+                            }
+                        }
+                    
+                    }
+                    //}
+                }
+            
+            }
+            stage ('Released javadoc rebuild') {
+                tools {
+                    jdk tooling.jdktool
+                }
+                when {
+                    allOf {
+                        branch pattern : "release\\d+",comparator:"REGEXP"
+                        expression { month !='Invalid'}
+                    }
+                    
+                }
+                stages {
+                    stage ('Archive Javadoc') {
+                        steps {
+                
+                            withAnt(installation: tooling.myAnt) {                
                                 sh "ant"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
-                                archiveArtifacts 'WEBZIP.zip'
-                            } else {
-                                // we want to setup for release
-                                // apidoc + repomaven + dist bundle
-                                def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
-                                
-                                if (votecandidate) {
-                                    versionpath = "${version}/vc${vote}"
-                                }
-                                doParallelClusters(clusterconfigs);                                                                
                             }
-                        }                       
-                    }                   
+                            archiveArtifacts 'WEBZIP.zip'
+                        
+                        }
+                    }
+                }
+                
+            }
+            stage ('Release preparation') {
+                tools {
+                    jdk tooling.jdktool
+                }
+                when {
+                    allOf {
+                        branch pattern : "release\\d+",comparator:"REGEXP"
+                        expression { month =='Invalid' }
+                    }
+                }
+                steps {
+                    script {
+                        
+                        def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
+                                
+                        if (votecandidate) {
+                            versionpath = "${version}/vc${vote}"
+                        }
+                        doParallelClusters(clusterconfigs);
+                    }
                 }
             }
+            /*steps {
+            withAnt(installation: tooling.myAnt) {
+            script {
+            //sh 'ant'
+            if (env.BRANCH_NAME=="master") {
+            // on master we build apidoc + populating snapshot repository
+            // should be on line for each otherwise cluster are wrong
+            //sh "rm -rf ${env.WORKSPACE}/repoindex/"
+            } else if (month !='Invalid') {
+            // we have a valid month, this package is already released. Build only javadoc
+            } else {
+            // we want to setup for release
+            // apidoc + repomaven + dist bundle
+                                                                                            
+            }
+            }                       
+            }                   
+            }*/
         }
+            
+    
         post {
             cleanup {
                 cleanWs() // deleteDirs: true, notFailBuild: true, patterns: [[pattern: '**/.repository/**', type: 'INCLUDE']]
