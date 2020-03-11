@@ -177,7 +177,8 @@ def call(Map params = [:]) {
                 }
                 when {
                     allOf {
-                        branch pattern : "release\\d+",comparator:"REGEXP"
+                        expression { BRANCH_NAME ==~ /release\/[0-9]+/ }
+                        //branch pattern : "release\\d+",comparator:"REGEXP" wait for modern 1.4.1
                         expression { month !='Invalid'}
                     }
                     
@@ -203,7 +204,8 @@ def call(Map params = [:]) {
                 }
                 when {
                     allOf {
-                        branch pattern : "release\\d+",comparator:"REGEXP"
+                        expression { BRANCH_NAME ==~ /release\/[0-9]+/ }
+                        //branch pattern : "release\\d+",comparator:"REGEXP" wait for modern 1.4.1
                         expression { month =='Invalid' }
                     }
                 }
