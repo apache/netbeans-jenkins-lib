@@ -10,7 +10,7 @@
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/9.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/9.0/updates.xml.gz",
-        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/9.0/catalog.xml.gz",        
+        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/9.0/catalog.xml.gz",
         "releasedate": {
             "day": "29",
             "month": "07",
@@ -33,7 +33,7 @@
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/10.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/10.0/updates.xml.gz",
-        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/10.0/catalog.xml.gz",        
+        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/10.0/catalog.xml.gz",
         "releasedate": {
             "day": "27",
             "month": "12",
@@ -56,7 +56,7 @@
         "tlp": "false",
         "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/11.0/updates.xml.gz",
-        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/11.0/catalog.xml.gz",        
+        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/11.0/catalog.xml.gz",
         "releasedate": {
             "day": "04",
             "month": "04",
@@ -191,8 +191,8 @@
             "6b879cb782eaa4f13a731aff82eada11289a66f7": {
                 "vote": "2",
                 "position": "5"
-            }            
-        },   
+            }
+        },
         "releasedate": {
             "day": "24",
             "month": "02",
@@ -202,6 +202,35 @@
             "day": "25",
             "month": "10",
             "year": "2019"
+        }
+    },
+    "release120": {
+        "position": "7",
+        "ant": "Ant (latest)",
+        "jdk": "JDK 1.8 (latest)",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "Maven 3.3.9",
+        "versionName": "12.0",
+        "mavenversion": "RELEASE120",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.0/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.0/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.0/catalog.xml.gz",
+        "milestones": {
+            "96c12bc480bb621f05e40978fced87f99768873f": {
+                "version": "beta1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "-",
+            "month": "-",
+            "year": "-"
+        },
+        "previousreleasedate": {
+            "day": "24",
+            "month": "02",
+            "year": "2020"
         }
     },
     "master": {
