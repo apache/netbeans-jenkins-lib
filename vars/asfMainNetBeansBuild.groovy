@@ -44,7 +44,7 @@ def mavenVersion=""
 @groovy.transform.Field
 def tooling=[:]
 @groovy.transform.Field
-def repopluginversion="1.6-SNAPSHOT"
+def repopluginversion="1.7-SNAPSHOT"
 
 def call(Map params = [:]) {
     // variable needed for apidoc
