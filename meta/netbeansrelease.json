@@ -220,7 +220,11 @@
             "96c12bc480bb621f05e40978fced87f99768873f": {
                 "version": "beta1",
                 "position": "1"
-            }
+            },
+            "e47e1f7e8ab746020425adcbf05d810fb99540bb": {
+                "version": "beta2",
+                "position": "2"
+            }            
         },
         "releasedate": {
             "day": "-",
