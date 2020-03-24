@@ -135,7 +135,7 @@ def call(Map params = [:]) {
                     stage ('build javadoc') {
                         steps {
                             withAnt(installation: tooling.myAnt) {                
-                                sh "ant download-all-extbins"
+                                sh "ant getallmavencoordinates"
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
@@ -348,7 +348,7 @@ def doParallelClusters(cconfigs) {
                             
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
-                                sh "ant -f build-${clustername}-temp/build.xml download-all-extbins"
+                                sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates"
                                         
                                 withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                 {
