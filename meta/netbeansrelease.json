@@ -224,7 +224,11 @@
             "e47e1f7e8ab746020425adcbf05d810fb99540bb": {
                 "version": "beta2",
                 "position": "2"
-            }            
+            },
+            "1098dd9e85868080c434c2f5136f43076d8d8c95": {
+                "version": "beta3",
+                "position": "3"
+            }
         },
         "releasedate": {
             "day": "-",
