@@ -244,9 +244,9 @@
             }            
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "04",
+            "month": "06",
+            "year": "2020"
         },
         "previousreleasedate": {
             "day": "24",
@@ -272,8 +272,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "24",
-            "month": "02",
+            "day": "04",
+            "month": "06",
             "year": "2020"
         }
     }
