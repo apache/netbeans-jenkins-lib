@@ -278,6 +278,10 @@
             "95e4be413811ba9206721bb39c97523022a0180c": {
                 "version": "beta2",
                 "position": "2"
+            },
+            "26e6ce805bae6d79990354fb9bdc4971228f28ad": {
+                "version": "beta3",
+                "position": "3"
             }
         },
         "releasedate": {
