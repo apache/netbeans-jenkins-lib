@@ -20,18 +20,19 @@
 ## param 1 workspace filename for binaries-zip 
 ## param 2 version number xx.y (mandatory)
 ## param 3 timestamp  YYMMDD
+## param 4 absolute file path to Apple Developer ID Certificate text file
 
 BASE_DIR=`pwd`
 NB_ALL=$BASE_DIR
 export BASE_DIR NB_ALL
 
-DIST=$BASE_DIR/dist
-export DIST
-
 if [[ "$4" ]]; then 
   echo 'I need 4 arguments:'
   echo 'usage: installer usage [file path to Apache NetBeans binaries-zip] [versionumber formated xx.y] [timestamp YYMMDD] [path to a certificate]'
 fi
+
+DIST=$BASE_DIR/dist
+export DIST
 
 if [ -d $DIST ] ; then
 rm -rf $DIST
@@ -130,9 +131,6 @@ NB_VER_NUMBER=$2
 BASENAME_PREFIX=Apache-NetBeans-$NB_VER_NUMBER-bin
 BUILD_DESC=$BASENAME_PREFIX
 export NB_VER_NUMBER BUILDNUMBER BASENAME_PREFIX NB_BUILD_NUMBER DATESTAMP BUILD_DESC
-
-MAC_PATH=$DIST
-#export MAC_PATH
 
 #To build MAC installer on mac host set BUILD_MAC to 1
 BUILD_MAC=1
