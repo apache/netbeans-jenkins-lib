@@ -323,6 +323,8 @@ def doParallelClusters(cconfigs) {
                                 sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* distpreparation${versionnedpath}installer/nbbuild/newbuild "
                                 sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer distpreparation${versionnedpath}installer/nbbuild "
                                 sh "mkdir -p distpreparation${versionnedpath}installer/nbi && cp -r build-${clustername}-temp/nbi distpreparation${versionnedpath}installer "
+                                sh "cp build-${clustername}-temp/nbbuild/binaries-default-properties.xml distpreparation${versionnedpath}installer/nbbuild/binaries-default-properties.xml "
+                                sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/build/ && cp -r build-${clustername}-temp/nbbuild/build/antclasses distpreparation${versionnedpath}installer/nbbuild/build/antclasses "
                                         
                                         
                                         
