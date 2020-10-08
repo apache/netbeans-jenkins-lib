@@ -43,7 +43,7 @@ def call(Map params = [:]) {
                         // https://github.com/jenkinsci/pipeline-github-plugin#commit
                         
                         for (commit in pullRequest.commits) {
-                            message += "${commit.author}" + NL
+                            message += "${commit.author}" + " " + "${commit.committer}" + NL
                         }
                         
                         // Check the existing comments of the PR, which are marked to come from this job
