@@ -23,7 +23,7 @@ def call(Map params = [:]) {
     pipeline {
         agent { node { label 'ubuntu' } }
         stages {
-            stage("Commit Summary comment") {
+            stage("ICLA Checker") {
                 when { changeRequest() }
                 steps {
                     script {
@@ -31,14 +31,17 @@ def call(Map params = [:]) {
                         String NL = "\r\n";
                    
                         // Mark the comments we create
-                        String MARKER_COMMENT = "<!-- Autocomment Commit Summary Bot -->"
+                        String MARKER_COMMENT = "<!-- Autocomment ICLA Checker Bot -->"
                         
                         //Message start
                         String message = MARKER_COMMENT + NL
                                         
-                        message += "Public Information PR requestor: ${env.CHANGE_AUTHOR_DISPLAY_NAME} \\<${env.CHANGE_AUTHOR_EMAIL}\\>" + NL //TODO: Get author email
+                        message += "ICLA Checker" + NL
+                     
+                        def response = sh(script: "curl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans/pulls/${pullRequest.id}", returnStdout: true)
+                        message += response + NL
                                     
-                        message += "Summary generation date: ${sh(returnStdout: true, script: "date '+%Y-%m-%d %H:%M:%S'").trim()}" + NL
+                        message += "Generation date: ${sh(returnStdout: true, script: "date '+%Y-%m-%d %H:%M:%S'").trim()}" + NL
                         
                         // https://github.com/jenkinsci/pipeline-github-plugin#commit
                         
