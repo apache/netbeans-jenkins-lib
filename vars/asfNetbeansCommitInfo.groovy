@@ -46,8 +46,7 @@ def call(Map params = [:]) {
                             //def response = sh(script: "curl -H \"authorization: Bearer ${GITHUB_ACCESS_TOKEN}\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans-jenkins-lib/pulls/${pullRequest.number}", returnStdout: true)
                             //def props = readJSON text: '{ "key": "value" }'
                             
-                            def response = sh(script: "curl -H \"authorization: Bearer ${GITHUB_ACCESS_TOKEN}\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans-jenkins-lib/pulls/${pullRequest.number}", returnStdout: true)
-                            
+                            def response = sh(script: "curl -H \"authorization: Bearer ${GITHUB_ACCESS_TOKEN}\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/users/${CHANGE_AUTHOR}", returnStdout: true)
                             
                             message += response + NL
                         }
