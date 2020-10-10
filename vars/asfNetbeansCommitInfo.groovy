@@ -26,6 +26,7 @@ def call(Map params = [:]) {
             stage("Netbeans ICLA Info") {
                 when { changeRequest() }
                 steps {
+                    sh 'printenv'
                     script {
                         // GitHub requires new lines in comments to be windows style
                         String NL = "\r\n";
@@ -41,7 +42,13 @@ def call(Map params = [:]) {
                         withCredentials([usernamePassword(credentialsId: 'ASF_Cloudbees_Jenkins_ci-builds',
                                           usernameVariable: 'GITHUB_APP',
                                           passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
+                                  
+                            //def response = sh(script: "curl -H \"authorization: Bearer ${GITHUB_ACCESS_TOKEN}\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans-jenkins-lib/pulls/${pullRequest.number}", returnStdout: true)
+                            //def props = readJSON text: '{ "key": "value" }'
+                            
                             def response = sh(script: "curl -H \"authorization: Bearer ${GITHUB_ACCESS_TOKEN}\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans-jenkins-lib/pulls/${pullRequest.number}", returnStdout: true)
+                            
+                            
                             message += response + NL
                         }
                                              
