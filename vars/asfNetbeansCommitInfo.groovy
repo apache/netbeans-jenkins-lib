@@ -23,7 +23,7 @@ def call(Map params = [:]) {
     pipeline {
         agent { node { label 'ubuntu' } }
         stages {
-            stage("ICLA Checker") {
+            stage("Netbeans ICLA Info") {
                 when { changeRequest() }
                 steps {
                     script {
@@ -31,16 +31,14 @@ def call(Map params = [:]) {
                         String NL = "\r\n";
                    
                         // Mark the comments we create
-                        String MARKER_COMMENT = "<!-- Autocomment ICLA Checker Bot -->"
+                        String MARKER_COMMENT = "<!-- Autocomment Netbeans ICLA Info Job-->"
                         
                         //Message start
                         String message = MARKER_COMMENT + NL
                                         
-                        message += "ICLA Checker" + NL
-                        
-                        message += pullRequest.id + NL
-                     
-                        def response = sh(script: "curl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans/pulls/${pullRequest.id}", returnStdout: true)
+                        message += "Netbeans ICLA Info" + NL
+                                             
+                        def response = sh(script: "curl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans/pulls/${pullRequest.number}", returnStdout: true)
                         message += response + NL
                                     
                         message += "Generation date: ${sh(returnStdout: true, script: "date '+%Y-%m-%d %H:%M:%S'").trim()}" + NL
