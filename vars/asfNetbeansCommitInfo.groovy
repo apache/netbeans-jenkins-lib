@@ -37,6 +37,8 @@ def call(Map params = [:]) {
                         String message = MARKER_COMMENT + NL
                                         
                         message += "ICLA Checker" + NL
+                        
+                        message += pullRequest.id + NL
                      
                         def response = sh(script: "curl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans/pulls/${pullRequest.id}", returnStdout: true)
                         message += response + NL
