@@ -37,9 +37,14 @@ def call(Map params = [:]) {
                         String message = MARKER_COMMENT + NL
                                         
                         message += "Netbeans ICLA Info" + NL
+                        
+                        withCredentials([usernamePassword(credentialsId: 'ASF_Cloudbees_Jenkins_ci-builds',
+                                          usernameVariable: 'GITHUB_APP',
+                                          passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
+                            def response = sh(script: "curl -H \"authorization: Bearer ${GITHUB_ACCESS_TOKEN}\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans-jenkins-lib/pulls/${pullRequest.number}", returnStdout: true)
+                            message += response + NL
+                        }
                                              
-                        def response = sh(script: "curl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/apache/netbeans/pulls/${pullRequest.number}", returnStdout: true)
-                        message += response + NL
                                     
                         message += "Generation date: ${sh(returnStdout: true, script: "date '+%Y-%m-%d %H:%M:%S'").trim()}" + NL
                         
