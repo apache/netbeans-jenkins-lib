@@ -290,13 +290,42 @@
             }
         },
         "releasedate": {
+            "day": "15",
+            "month": "09",
+            "year": "2020"
+        },
+        "previousreleasedate": {
+            "day": "04",
+            "month": "06",
+            "year": "2020"
+        }
+    },
+    "release122": {
+        "position": "9",
+        "ant": "Ant (latest)",
+        "jdk": "JDK 1.8 (latest)",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "Maven 3.3.9",
+        "versionName": "12.2",
+        "mavenversion": "RELEASE122",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.2/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.2/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.2/catalog.xml.gz",
+        "milestones": {
+            "249b77ca133341ef08ae019e1b71a6cba373a422": {
+                "version": "beta1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
             "day": "-",
             "month": "-",
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "04",
-            "month": "06",
+            "day": "15",
+            "month": "09",
             "year": "2020"
         }
     },
