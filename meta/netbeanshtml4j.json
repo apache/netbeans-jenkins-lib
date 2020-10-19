@@ -1,7 +1,7 @@
 {
     "release-1.5": {
         "position": "1",
-        "jdk": "JDK 1.8 (latest)",
+        "jdk": "jdk_1.8_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "version": "1.5",
         "tlp": "false",
@@ -9,7 +9,7 @@
     },
     "release-1.5.1": {
         "position": "2",
-        "jdk": "JDK 1.8 (latest)",
+        "jdk": "jdk_1.8_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "version": "1.5.1",
         "tlp": "false",
@@ -17,7 +17,7 @@
     },
     "release-1.6": {
         "position": "3",
-        "jdk": "JDK 1.8 (latest)",
+        "jdk": "jdk_1.8_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "version": "1.6",
         "tlp": "false",
@@ -25,7 +25,7 @@
     },
     "release-1.6.1": {
         "position": "4",
-        "jdk": "JDK 1.8 (latest)",
+        "jdk": "jdk_1.8_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "version": "1.6.1",
         "tlp": "false",
@@ -33,7 +33,7 @@
     },
     "release-1.7": {
         "position": "5",
-        "jdk": "JDK 1.8 (latest)",
+        "jdk": "jdk_1.8_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "version": "1.7",
         "tlp": "true",
@@ -41,7 +41,7 @@
     },
     "master": {
         "position": "40000",
-        "jdk": "JDK 1.8 (latest)",
+        "jdk": "jdk_1.8_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "version": "dev",
         "tlp": "true",
