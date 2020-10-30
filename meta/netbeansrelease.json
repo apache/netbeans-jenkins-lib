@@ -320,6 +320,10 @@
             "45bf3b3beec5ee7bb1c41778a2be8ebb8b3a2f95": {
                 "version": "beta2",
                 "position": "2"
+            },
+            "50cc57430a8ca3f87ecaed9c978b0c12a8ce7cfb": {
+                "version": "beta3",
+                "position": "3"
             }
         },
         "releasedate": {
