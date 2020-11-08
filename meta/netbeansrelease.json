@@ -324,6 +324,10 @@
             "50cc57430a8ca3f87ecaed9c978b0c12a8ce7cfb": {
                 "version": "beta3",
                 "position": "3"
+            },
+            "f556f4b88826521d18181854f5ccd3be922a0283": {
+                "version": "rc1"
+                "position": "4"
             }
         },
         "releasedate": {
