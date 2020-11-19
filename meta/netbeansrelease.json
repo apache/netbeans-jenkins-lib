@@ -333,6 +333,10 @@
                 "version": "rc2",
                 "vote": "1",
                 "position": "5"
+            },
+            "d73d3dd898acc440c460924dabf8ad5feb90369f": {
+                "version": "rc3",
+                "position": "6"
             }
         },
         "releasedate": {
