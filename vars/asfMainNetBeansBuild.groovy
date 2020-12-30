@@ -326,6 +326,7 @@ def doParallelClusters(cconfigs) {
                                 sh "cp build-${clustername}-temp/nbbuild/binaries-default-properties.xml distpreparation${versionnedpath}installer/nbbuild/binaries-default-properties.xml "
                                 sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/build/ && cp -r build-${clustername}-temp/nbbuild/build/antclasses distpreparation${versionnedpath}installer/nbbuild/build/antclasses "
                                         
+                                sh "mkdir -p distpreparation${versionnedpath}installer/nb/ide.launcher && cp -r build-${clustername}-temp/nb/ide.launcher/macosx distpreparation${versionnedpath}installer/nb/ide.launcher "
                                         
                                         
                                 sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
