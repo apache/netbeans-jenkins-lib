@@ -211,7 +211,7 @@
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "maven": "maven_3.3.9",
         "versionName": "12.0",
-        "mavenversion": "RELEASE120-u1",
+        "mavenversion": "RELEASE120-u2",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/12.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.0/updates.xml.gz?{$netbeans.hash.code}",
@@ -245,6 +245,10 @@
             "efd543aaefdb0a9f8f0073896cb12c82fe4ef9c8": {
                 "version": "u1",
                 "position": "7"
+            },
+            "839fcbe8438c1d0dd02a68ae15b5ee722bb7b936": {
+                "version": "u2",
+                "position": "8"
             }
         },
         "releasedate": {
