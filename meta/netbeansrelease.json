@@ -368,7 +368,7 @@
         "update_url": "https://netbeans.apache.org/nb/updates/12.3/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.3/catalog.xml.gz",
         "milestones": {
-            "9b5068b1c8d55884a920e3a0fc1ca6756a8a8332": {
+            "5a5be189e2989e308e41d88835ca9db3f40f1683": {
                 "version": "beta1",
                 "position": "1"
             }
