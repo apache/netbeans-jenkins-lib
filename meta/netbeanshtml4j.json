@@ -39,6 +39,14 @@
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/html+java/1.7"
     },
+    "release-1.7.1": {
+        "position": "6",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "version": "1.7",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/html+java/1.7.1"
+    },
     "master": {
         "position": "40000",
         "jdk": "jdk_1.8_latest",
