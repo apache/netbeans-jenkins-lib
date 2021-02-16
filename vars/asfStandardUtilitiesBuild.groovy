@@ -49,28 +49,23 @@ def call(Map params = [:]) {
             pollSCM('H/5 * * * * ')
 	}
         stages{
-            stage("Build with xvfb") {
+            stage("Build with jdk 8 ") {
                 agent { node { label 'ubuntu' } }
-                options { timeout(time: 120, unit: 'MINUTES') }
-                when {expression {
-                        return xvfb
-                    }
-                }
+                options { timeout(time: 120, unit: 'MINUTES') }                
                 steps{
-                    wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayNameOffset: 0, installationName: 'Xvfb', parallelBuild: true, screen: '']) {
-                        mavenBuild( jdk, cmdline, mvnName, publishers)
-                    }
+                    mavenBuild( 'jdk_1.8_latest', cmdline, mvnName, publishers,true)        
                 }
             }
-            stage("Build") {
+            stage("Build on recent jdk") {
                 agent { node { label 'ubuntu' } }
-                options { timeout(time: 120, unit: 'MINUTES') }
-                when {expression {
-                        return !xvfb
-                    }
-                }
+                options { timeout(time: 120, unit: 'MINUTES') }               
                 steps{
-                    mavenBuild( jdk, cmdline, mvnName, publishers)
+		    def jdklist = ['jdk_11_latest','jdk_12_latest','jdk_13_latest','jdk_14_latest','jdk_15_latest']
+		    for (ajdk in jdklist) {
+			stage("build on $ajdk") {    
+				mavenBuild( ajdk, cmdline, mvnName, publishers,false)
+			}
+		    }
                     
                 }
             }
@@ -112,7 +107,7 @@ def call(Map params = [:]) {
  * @param publishers array of publishers to configure (need to be defined as we publisherStrategy: 'EXPLICIT')
  * @return the Jenkinsfile step representing a maven build
  */
-def mavenBuild(jdk, cmdline, mvnName, publishers) {
+def mavenBuild(jdk, cmdline, mvnName, publishers,archive) {
     def localRepo = "../.maven_repositories/${env.EXECUTOR_NUMBER}" // ".repository" //
     //def settingsName = 'archiva-uid-jenkins'
     def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true'
@@ -129,7 +124,9 @@ def mavenBuild(jdk, cmdline, mvnName, publishers) {
         sh "mvn -V -B -U -e -DskipBrowserTests -Dmaven.test.failure.ignore=true $cmdline "
 	sh "mv target/*-site.jar WEBSITE.zip"
     }
-    archiveArtifacts 'WEBSITE.zip'
+    if (archive) {
+	archiveArtifacts 'WEBSITE.zip'
+    }
 }
 
 def notifyBuild(String buildStatus) {
