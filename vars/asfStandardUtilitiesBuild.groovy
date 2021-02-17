@@ -63,8 +63,9 @@ def call(Map params = [:]) {
 	            script {	
 		        def jdklist = ['jdk_11_latest','jdk_12_latest','jdk_13_latest','jdk_14_latest','jdk_15_latest','jdk_16_latest']
 		        for (ajdk in jdklist) {
-			    stage("build on $ajdk") {    
-			    	mavenBuild( ajdk, cmdline, mvnName, publishers,false)
+			    stage("build on $ajdk") {
+				// do not deploy for recent jdk
+			    	mavenBuild( ajdk, 'clean install site:jar', mvnName, publishers,false)
 			    }
 		        }
 		    }
