@@ -61,7 +61,7 @@ def call(Map params = [:]) {
                 options { timeout(time: 120, unit: 'MINUTES') }               
                 steps{
 	            script {	
-		        def jdklist = ['jdk_11_latest','jdk_12_latest','jdk_13_latest','jdk_14_latest','jdk_15_latest']
+		        def jdklist = ['jdk_11_latest','jdk_12_latest','jdk_13_latest','jdk_14_latest','jdk_15_latest','jdk_16_latest']
 		        for (ajdk in jdklist) {
 			    stage("build on $ajdk") {    
 			    	mavenBuild( ajdk, cmdline, mvnName, publishers,false)
