@@ -405,7 +405,7 @@
         "update_url": "https://netbeans.apache.org/nb/updates/12.4/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
         "milestones": {
-            "5a9c949": {
+            "5a9c949e8e4e2820109de064f4c2b501dcb49242": {
                 "version": "beta1",
                 "position": "1"
             }
