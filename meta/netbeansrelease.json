@@ -408,6 +408,10 @@
             "5a9c949e8e4e2820109de064f4c2b501dcb49242": {
                 "version": "beta1",
                 "position": "1"
+            },
+            "ed64962cfe2f0441fe18d2ca7f862ba30d392151": {
+                "version": "beta2",
+                "position": "2"
             }
         },
         "releasedate": {
