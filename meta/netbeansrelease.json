@@ -420,6 +420,10 @@
             "8feac4cb7e2e4fed45f4bc20ef916a27e794e535": {
                 "version": "rc2",
                 "position": "4"
+            },
+            "064136c61386b371259a4275173eacb745464224": {
+                "version": "rc3",
+                "position": "5"
             } 
         },
         "releasedate": {
