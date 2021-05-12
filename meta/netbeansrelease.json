@@ -424,7 +424,11 @@
             "064136c61386b371259a4275173eacb745464224": {
                 "version": "rc3",
                 "position": "5"
-            } 
+            },
+            "21726744165c946ba6619bff89e98d5863f26e22": {
+                "version": "rc4",
+                "position": "6"
+            }  
         },
         "releasedate": {
             "day": "-",
