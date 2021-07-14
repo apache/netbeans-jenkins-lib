@@ -454,7 +454,7 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
         "milestones": {
             "d26abee5706b6a1c7cd8ae6589d059b45144576a": {
-                "version": "vc1",
+                "vote": "1",
                 "position": "1"
             }
         },
