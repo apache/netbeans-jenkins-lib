@@ -19,7 +19,7 @@
  * under the License.
  */
 
-pipelineJob('native-launchers') {
+pipelineJob('NetBeans/native-launchers') {
     definition {
         cpsScm {
             scm {
@@ -37,8 +37,8 @@ pipelineJob('native-launchers') {
 }
 
 
-listView('natvie') {
+listView('NetBeans/native') {
     jobs {
-        name('native-launchers')
+        name('NetBeans/native-launchers')
     }
 }
