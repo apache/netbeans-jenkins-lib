@@ -39,6 +39,6 @@ pipelineJob('NetBeans/native-launchers') {
 
 listView('NetBeans/native') {
     jobs {
-        name('native-launchers')
+        name('NetBeans/native-launchers')
     }
 }
