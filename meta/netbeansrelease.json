@@ -489,7 +489,11 @@
             "0067d3cd693282f4bf7d6e407665a4c2ebcab8dd": {
                 "version": "beta2",
                 "position": "2"
-            }           
+            },
+            "fd523ddc12d6156412d7b81f0c8663d8913d1021": {
+                "version": "beta3",
+                "position": "3"
+            }     
         },
         "releasedate": {
             "day": "-",
