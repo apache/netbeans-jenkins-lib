@@ -496,9 +496,9 @@
             }     
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "13",
+            "month": "09",
+            "year": "2021"
         },
         "previousreleasedate": {
             "day": "19",
@@ -524,8 +524,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "19",
-            "month": "05",
+            "day": "13",
+            "month": "09",
             "year": "2021"
         }
     }
