@@ -22,7 +22,7 @@ pipeline {
                 sh 'ant build -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 sh 'ant build-test-dist -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 stash includes: 'nbbuild/build/testdist.zip', name: 'testbuildzip'
-                sh 'mv nbbuild/NetBeans**/NetBeans*.zip nbbuild/NetBeansIDE.zip '
+                sh 'mv nbbuild/netBeans**/NetBeans*.zip nbbuild/NetBeansIDE.zip '
                 stash includes: 'nbbuild/NetBeansIDE.zip', name: 'idebuildzip'
             }
         }
