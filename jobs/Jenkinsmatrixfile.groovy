@@ -17,7 +17,7 @@ pipeline {
      
                 git 'https://github.com/apache/netbeans'
                 sh 'rm -f *.json* '
-                sh 'rm -f nbbuild/NetBeans-dev-NetBeans/*.zip'
+                sh 'rm -f nbbuild/NetBeans-dev-Netbeans/*.zip'
                 sh 'wget -Onetbeansrelease.json "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" '
                 sh 'ant build -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 sh 'ant build-test-dist -Dmetabuild.jsonurl=file:netbeansrelease.json'
@@ -55,8 +55,8 @@ pipeline {
                                 sh 'java -version'
                                 sh 'ant -version'
                                 // this is not finished
-                                sh "ant -f testdist/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=unit -Dnetbeans.dest.dir=${WORKSPACE}/netbeans"
-                                sh "ant -f testdist/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=qa-functional -Dnetbeans.dest.dir=${WORKSPACE}/netbeans"
+                                sh "ant -f ${WORKSPACE}/testdist/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=unit -Dnetbeans.dest.dir=${WORKSPACE}/netbeans"
+                                sh "ant -f ${WORKSPACE}/testdist/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=qa-functional -Dnetbeans.dest.dir=${WORKSPACE}/netbeans"
                                 
                             }
                         }
