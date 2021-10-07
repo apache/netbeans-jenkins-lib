@@ -23,7 +23,7 @@ pipelineJob('NetBeans/netbeans-matrix') {
     definition {
         cps {
             
-            script(readFileFromWorkspace('Jenkinsmatrixfile.groovy'))
+            script(readFileFromWorkspace('jobs/Jenkinsmatrixfile.groovy'))
         }
     }    
 }
