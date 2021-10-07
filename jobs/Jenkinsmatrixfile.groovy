@@ -22,7 +22,7 @@ pipeline {
                 sh 'ant build -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 sh 'ant build-test-dist -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 stash includes: 'nbbuild/build/testdist.zip', name: 'testbuildzip'
-                sh 'mv nbbuild/NetBeans-dev-NetBeans/netbeans*.zip nbbuild/NetBeansIDE.zip '
+                sh 'mv nbbuild/NetBeans-dev-Netbeans/netbeans*.zip nbbuild/NetBeansIDE.zip '
                 stash includes: 'nbbuild/NetBeansIDE.zip', name: 'idebuildzip'
             }
         }
@@ -54,8 +54,9 @@ pipeline {
                                 unzip  zipFile: 'nbbuild/NetBeansIDE.zip', dir:'netbeans'
                                 sh 'java -version'
                                 sh 'ant -version'
-                                // this is not good
-                                sh 'ant -f testdist/unit/unit-all-unit.xml runtests -Dnetbeans.dest.dir=./netbeans'
+                                // this is not finished
+                                sh "ant -f testdist/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=unit -Dnetbeans.dest.dir=${WORKSPACE}/netbeans"
+                                sh "ant -f testdist/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=qa-functional -Dnetbeans.dest.dir=${WORKSPACE}/netbeans"
                                 
                             }
                         }
