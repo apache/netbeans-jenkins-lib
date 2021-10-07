@@ -24,6 +24,7 @@ pipelineJob('NetBeans/netbeans-matrix') {
         cps {
             
             script(readFileFromWorkspace('jobs/Jenkinsmatrixfile.groovy'))
+            sandbox()
         }
     }    
 }
