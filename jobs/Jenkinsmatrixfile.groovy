@@ -17,12 +17,12 @@ pipeline {
      
                 git 'https://github.com/apache/netbeans'
                 sh 'rm -f *.json* '
-                sh 'rm -f nbbuild/*.zip'
+                sh 'rm -f nbbuild/NetBeans-dev-NetBeans/*.zip'
                 sh 'wget -Onetbeansrelease.json "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" '
                 sh 'ant build -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 sh 'ant build-test-dist -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 stash includes: 'nbbuild/build/testdist.zip', name: 'testbuildzip'
-                sh 'mv nbbuild/netbeans**/NetBeans*.zip nbbuild/NetBeansIDE.zip '
+                sh 'mv nbbuild/NetBeans-dev-NetBeans/netbeans*.zip nbbuild/NetBeansIDE.zip '
                 stash includes: 'nbbuild/NetBeansIDE.zip', name: 'idebuildzip'
             }
         }
