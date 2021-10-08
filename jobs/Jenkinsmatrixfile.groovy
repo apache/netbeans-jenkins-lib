@@ -52,7 +52,7 @@ pipeline {
                                 unstash 'testbuildzip'
                                 unstash 'idebuildzip'
                                 unzip  zipFile: 'nbbuild/build/testdist.zip', dir:'testdir'
-                                unzip  zipFile: 'nbbuild/NetBeansIDE.zip', dir:'netbeans'
+                                unzip  zipFile: 'zip/NetBeansIDE.zip', dir:'netbeans'
                                 sh 'java -version'
                                 sh 'ant -version'
                                 // this is not finished
