@@ -53,16 +53,16 @@ pipeline {
                                 unstash 'idebuildzip'
                                 unzip  zipFile: 'nbbuild/build/testdist.zip', dir:'testdir'
                                 unzip  zipFile: 'zip/NetBeansIDE.zip', dir:'netbeans'
-                                mkdir "-p ${WORKSPACE}/result/unit/${JDK}/${MODULE} "
+                                sh "mkdir -p ${WORKSPACE}/result/unit/${env.JDK}/${env.MODULE} "
                                 sh 'java -version'
                                 sh 'ant -version'
                                 // this is not finished
                                 wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayNameOffset: 0, autoDisplayName:true, installationName: 'Xvfb', parallelBuild: true, screen: '']) {
-                                    sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.result.dir=${WORKSPACE}/result/unit/${JDK}/${MODULE} -Dtest.clusters=${env.MODULE} -Dtest.types=unit -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans "
+                                    sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.result.dir=${WORKSPACE}/result/unit/${env.JDK}/${env.MODULE} -Dtest.clusters=${env.MODULE} -Dtest.types=unit -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans "
                                 }
-                                junit "${WORKSPACE}/result/unit/${JDK}/${MODULE}/**/*.xml"
+                                junit "${WORKSPACE}/result/unit/${env.JDK}/${env.MODULE}/**/*.xml"
                                 //sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=qa-functional -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans"
-                                archiveArtifacts artifacts: "${WORKSPACE}/result/unit/${JDK}/${MODULE}/**"
+                                archiveArtifacts artifacts: "${WORKSPACE}/result/unit/${env.JDK}/${env.MODULE}/**"
                             }
                         }
 
