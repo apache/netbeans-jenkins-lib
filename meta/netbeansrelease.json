@@ -537,7 +537,7 @@
     "release126": {
         "position": "15",
         "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
+        "jdk": "jdk_11_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "maven": "maven_3.3.9",
         "versionName": "12.6",
@@ -547,6 +547,10 @@
         "update_url": "https://netbeans.apache.org/nb/updates/12.6/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.6/catalog.xml.gz",
         "milestones": {
+            "8388dd194ac7ea7dfdaf1235742ecf987a5c268d": {
+                "version": "rc1",
+                "position": "1"
+            }
         },
         "releasedate": {
             "day": "-",
