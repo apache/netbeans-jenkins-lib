@@ -550,6 +550,10 @@
             "8388dd194ac7ea7dfdaf1235742ecf987a5c268d": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "22aebab0c6dc643e861a7af3d71aea7b7644e4bd": {
+                "version": "rc2",
+                "position": "2"
             }
         },
         "releasedate": {
