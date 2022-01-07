@@ -239,7 +239,7 @@
             },
             "631bd69cd6112b1cc4c892c24e3e605b1ba04241": {
                 "version": "beta6",
-                "vote":"1",
+                "vote": "1",
                 "position": "6"
             },
             "efd543aaefdb0a9f8f0073896cb12c82fe4ef9c8": {
@@ -379,7 +379,7 @@
             "c3d4f6fa6c956cf1b5a35e8da4f44a96ab76f6a9": {
                 "vote": "1",
                 "position": "3"
-            }    
+            }
         },
         "releasedate": {
             "day": "03",
@@ -428,7 +428,7 @@
             "21726744165c946ba6619bff89e98d5863f26e22": {
                 "vote": "1",
                 "position": "6"
-            }  
+            }
         },
         "releasedate": {
             "day": "19",
@@ -493,7 +493,7 @@
             "fd523ddc12d6156412d7b81f0c8663d8913d1021": {
                 "vote": "1",
                 "position": "3"
-            }     
+            }
         },
         "releasedate": {
             "day": "13",
@@ -582,7 +582,7 @@
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/dev/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/dev/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/dev/catalog.xml.gz",        
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/dev/catalog.xml.gz",
         "releasedate": {
             "day": "-",
             "month": "-",
