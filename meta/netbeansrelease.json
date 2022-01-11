@@ -11,6 +11,7 @@
         "apidocurl": "https://bits.netbeans.org/9.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/9.0/updates.xml.gz",
         "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/9.0/catalog.xml.gz",
+        "publish_apidoc":"true",
         "releasedate": {
             "day": "29",
             "month": "07",
@@ -34,6 +35,7 @@
         "apidocurl": "https://bits.netbeans.org/10.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/10.0/updates.xml.gz",
         "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/10.0/catalog.xml.gz",
+        "publish_apidoc":"true",
         "releasedate": {
             "day": "27",
             "month": "12",
@@ -57,6 +59,7 @@
         "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/11.0/updates.xml.gz",
         "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/11.0/catalog.xml.gz",
+        "publish_apidoc":"true",
         "releasedate": {
             "day": "04",
             "month": "04",
@@ -80,6 +83,7 @@
         "apidocurl": "https://bits.netbeans.org/11.1/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/11.1/updates.xml.gz",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/11.1/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "13437000bfb94d22a3a6fa2ba8f600e53ffd3cdd": {
                 "version": "beta1",
@@ -126,6 +130,7 @@
         "apidocurl": "https://bits.netbeans.org/11.2/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/11.2/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/11.2/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "fc82d6fe44bb3557f757bc520b7bc95fade01ebd": {
                 "version": "beta1",
@@ -171,6 +176,7 @@
         "apidocurl": "https://bits.netbeans.org/11.3/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/11.3/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/11.3/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "e9111499a7b3d71fce5496a633116574f617067b": {
                 "version": "beta1",
@@ -216,6 +222,7 @@
         "apidocurl": "https://bits.netbeans.org/12.0/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.0/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.0/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "96c12bc480bb621f05e40978fced87f99768873f": {
                 "version": "beta1",
@@ -274,6 +281,7 @@
         "apidocurl": "https://bits.netbeans.org/12.1/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.1/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.1/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "08d65f163be3bb1232098cc66b558438e90ddc01": {
                 "version": "beta1",
@@ -316,6 +324,7 @@
         "apidocurl": "https://bits.netbeans.org/12.2/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.2/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.2/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "249b77ca133341ef08ae019e1b71a6cba373a422": {
                 "version": "beta1",
@@ -367,6 +376,7 @@
         "apidocurl": "https://bits.netbeans.org/12.3/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.3/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.3/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "5a5be189e2989e308e41d88835ca9db3f40f1683": {
                 "version": "beta1",
@@ -404,6 +414,7 @@
         "apidocurl": "https://bits.netbeans.org/12.4/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.4/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "5a9c949e8e4e2820109de064f4c2b501dcb49242": {
                 "version": "beta1",
@@ -452,6 +463,7 @@
         "apidocurl": "",
         "update_url": "https://netbeans.apache.org/nb/updates/12.4/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
+        "publish_apidoc":"false",
         "milestones": {
             "cd6bfbc00a8ae58191e3c442492aa9e4fd5137bb": {
                 "vote": "1",
@@ -481,6 +493,7 @@
         "apidocurl": "https://bits.netbeans.org/12.5/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.5/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.5/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "c0f4399cbf5c4ea5083f4b5d4dde0193065aff79": {
                 "version": "beta1",
@@ -517,6 +530,7 @@
         "apidocurl": "https://bits.netbeans.org/12.5/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.5/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.5/catalog.xml.gz",
+        "publish_apidoc":"false",
         "milestones": {
             "b19730846d986575f26b3b70236d2142dde18157": {
                 "vote": "1",
@@ -546,6 +560,7 @@
         "apidocurl": "https://bits.netbeans.org/12.6/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/12.6/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/12.6/catalog.xml.gz",
+        "publish_apidoc":"true",
         "milestones": {
             "8388dd194ac7ea7dfdaf1235742ecf987a5c268d": {
                 "version": "rc1",
@@ -574,7 +589,7 @@
     "master": {
         "position": "50000",
         "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
+        "jdk": "jdk_1.11_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "maven": "maven_3.3.9",
         "mavenversion": "dev-SNAPSHOT",
@@ -583,6 +598,7 @@
         "apidocurl": "https://bits.netbeans.org/dev/javadoc",
         "update_url": "https://netbeans.apache.org/nb/updates/dev/updates.xml.gz?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/dev/catalog.xml.gz",
+        "publish_apidoc":"true",
         "releasedate": {
             "day": "-",
             "month": "-",
