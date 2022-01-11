@@ -576,9 +576,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "29",
+            "month": "11",
+            "year": "2021"
         },
         "previousreleasedate": {
             "day": "13",
@@ -589,7 +589,7 @@
     "master": {
         "position": "50000",
         "ant": "ant_latest",
-        "jdk": "jdk_1.11_latest",
+        "jdk": "jdk_11_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "maven": "maven_3.3.9",
         "mavenversion": "dev-SNAPSHOT",
@@ -605,8 +605,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "13",
-            "month": "09",
+            "day": "29",
+            "month": "11",
             "year": "2021"
         }
     }
