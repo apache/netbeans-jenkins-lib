@@ -615,6 +615,32 @@
             "year": "2021"
         }
     },
+    "release130": {
+        "position": "17",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "13",
+        "mavenversion": "RELEASE130",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/13/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/13/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/13/catalog.xml.gz",
+        "publish_apidoc":"true",
+        "milestones": {
+        },
+        "releasedate": {
+            "day": "-",
+            "month": "-",
+            "year": "-"
+        },
+        "previousreleasedate": {
+            "day": "29",
+            "month": "11",
+            "year": "2021"
+        }
+    },
     "master": {
         "position": "50000",
         "ant": "ant_latest",
