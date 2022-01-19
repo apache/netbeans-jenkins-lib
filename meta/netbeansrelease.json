@@ -629,6 +629,10 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/13/catalog.xml.gz",
         "publish_apidoc":"true",
         "milestones": {
+            "d77f0692fbc94e546fba48454beca58765e6e93a": {
+                "version": "rc1",
+                "position": "1"
+            }
         },
         "releasedate": {
             "day": "-",
