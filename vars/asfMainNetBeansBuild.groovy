@@ -372,7 +372,7 @@ def doParallelClusters(cconfigs) {
                                 archiveArtifacts 'mavenrepository/**'
 
                                 // make vsix available to dist to pickup (only for main release) 
-                                sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=vsixversion"
+                                sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion}"
                                 sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
                             }
 
