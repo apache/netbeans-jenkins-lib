@@ -628,6 +628,7 @@
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "maven": "maven_3.3.9",
         "versionName": "13",
+        "vsixVersion": "13.0.0",
         "mavenversion": "RELEASE130",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/13/javadoc",
