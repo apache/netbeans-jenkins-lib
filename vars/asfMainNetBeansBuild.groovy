@@ -368,12 +368,14 @@ def doParallelClusters(cconfigs) {
                                     def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
                                     //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                    
+                                   // make vsix available to dist to pickup (only for main release) need a maven setup
+                                   sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion}"
+                                   sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
                                 }
                                 archiveArtifacts 'mavenrepository/**'
 
-                                // make vsix available to dist to pickup (only for main release) 
-                                sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion}"
-                                sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
+                                
                             }
 
                             // do checksum
