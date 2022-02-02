@@ -643,6 +643,10 @@
             "321d779a21b1cc303f043f87d3ed7b5e4186ee7c": {
                 "version": "rc2",
                 "position": "2"
+            },
+            "b3553a6fb9b350ec936670a5f211408c442eac24": {
+                "version": "rc3",
+                "position": "3"
             }
         },
         "releasedate": {
