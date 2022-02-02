@@ -223,9 +223,6 @@ def call(Map params = [:]) {
 
                         def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
 
-                        if (votecandidate) {
-                            versionpath = "${version}/vc${vote}/"
-                        }
                         doParallelClusters(clusterconfigs);
                     }
                 }
