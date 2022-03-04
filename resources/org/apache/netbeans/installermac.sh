@@ -21,7 +21,7 @@
 ## param 2 version number xx.y (mandatory)
 ## param 3 timestamp  YYMMDD
 ## param 4 absolute file path to Apple Developer ID Installer Certificate text file
-## param 4 absolute file path to Apple Developer ID Application Certificate text file
+## param 5 absolute file path to Apple Developer ID Application Certificate text file
 
 BASE_DIR=`pwd`
 NB_ALL=$BASE_DIR
@@ -46,7 +46,6 @@ mkdir -p $DIST/logs
 
 BIN_NAME=`basename $1`
 BINARY_NAME=`echo "${BIN_NAME%%.zip*}"`
-
 
 #create cluster zip files
 rm -rf temp
@@ -136,10 +135,10 @@ export NB_VER_NUMBER BUILDNUMBER BASENAME_PREFIX NB_BUILD_NUMBER DATESTAMP BUILD
 #To build MAC installer on mac host set BUILD_MAC to 1
 BUILD_MAC=1
 export BUILD_MAC
-MAC_INSTALLER_SIGN_IDENTITY_NAME=$4
-export MAC_INSTALLER_SIGN_IDENTITY_NAME
-MAC_APPLICATION_SIGN_IDENTITY_NAME=$5
-export MAC_APPLICATION_SIGN_IDENTITY_NAME
+INSTALLER_SIGN_IDENTITY_NAME=$4
+export INSTALLER_SIGN_IDENTITY_NAME
+APPLICATION_SIGN_IDENTITY_NAME=$5
+export APPLICATION_SIGN_IDENTITY_NAME
 
 BUILD_NB=0
 BUILD_NETBEANS=0
