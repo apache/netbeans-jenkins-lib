@@ -39,7 +39,7 @@ pipeline {
                 sh 'rm -f nbbuild/NetBeans-dev-Netbeans/*.zip'
                 sh 'wget -Onetbeansrelease.json "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" '
                 sh "ant build -Dmetabuild.jsonurl=file:netbeansrelease.json -Dzip.dir=${WORKSPACE}/zip"
-                sh "cd ${WORKSPACE}/zip/ && cd * && mv *.zip ${WORKSPACE}/zip/NetBeansIDE.zip "
+                sh "cd ${WORKSPACE}/zip/ && mv *.zip ${WORKSPACE}/zip/NetBeansIDE.zip "
                 stash includes: "zip/NetBeansIDE.zip", name: 'idebuildzip'
                 sh 'ant build-test-dist -Dmetabuild.jsonurl=file:netbeansrelease.json'
                 stash includes: 'nbbuild/build/testdist.zip', name: 'testbuildzip'
