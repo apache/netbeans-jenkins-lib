@@ -28,7 +28,7 @@ pipeline {
 
         stage("clone and prepare build") {
             tools {
-                jdk 'jdk_1.8_latest'
+                jdk 'jdk_11_latest'
                 ant 'ant_latest'
             }
             steps {
