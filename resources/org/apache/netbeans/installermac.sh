@@ -20,15 +20,16 @@
 ## param 1 workspace filename for binaries-zip 
 ## param 2 version number xx.y (mandatory)
 ## param 3 timestamp  YYMMDD
-## param 4 absolute file path to Apple Developer ID Certificate text file
+## param 4 absolute file path to Apple Developer ID Installer Certificate text file
+## param 5 absolute file path to Apple Developer ID Application Certificate text file
 
 BASE_DIR=`pwd`
 NB_ALL=$BASE_DIR
 export BASE_DIR NB_ALL
 
-if [[ "$4" ]]; then 
-  echo 'I need 4 arguments:'
-  echo 'usage: installer usage [file path to Apache NetBeans binaries-zip] [versionumber formated xx.y] [timestamp YYMMDD] [path to a certificate]'
+if [[ "$5" ]]; then 
+  echo 'I need 5 arguments:'
+  echo 'usage: installer usage [file path to Apache NetBeans binaries-zip] [versionumber formated xx.y] [timestamp YYMMDD] [path to installer certificate] [path to application certificate]'
 fi
 
 DIST=$BASE_DIR/dist
@@ -45,7 +46,6 @@ mkdir -p $DIST/logs
 
 BIN_NAME=`basename $1`
 BINARY_NAME=`echo "${BIN_NAME%%.zip*}"`
-
 
 #create cluster zip files
 rm -rf temp
@@ -135,9 +135,10 @@ export NB_VER_NUMBER BUILDNUMBER BASENAME_PREFIX NB_BUILD_NUMBER DATESTAMP BUILD
 #To build MAC installer on mac host set BUILD_MAC to 1
 BUILD_MAC=1
 export BUILD_MAC
-MAC_SIGN_IDENTITY_NAME=$4
-##/Users/aksinsin/Documents/mac-installer-sign/certificate.txt
-export MAC_SIGN_IDENTITY_NAME
+INSTALLER_SIGN_IDENTITY_NAME=$4
+export INSTALLER_SIGN_IDENTITY_NAME
+APPLICATION_SIGN_IDENTITY_NAME=$5
+export APPLICATION_SIGN_IDENTITY_NAME
 
 BUILD_NB=0
 BUILD_NETBEANS=0
