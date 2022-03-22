@@ -26,7 +26,16 @@ pipelineJob('NetBeans/netbeans-matrix') {
             script(readFileFromWorkspace('jobs/Jenkinsmatrixfile.groovy'))
             sandbox()
         }
-    }    
+    }
+    properties {
+        pipelineTriggers {
+            triggers {
+                cron { 
+                    spec ('@weekly')
+                }
+            }
+        }
+    }
 }
 
 
