@@ -46,7 +46,7 @@ pipeline {
 
             }
         }
-        stage ("EffectiveMatrix")
+        stage ("EffectiveMatrixClustersUNITQA")
         {
             matrix {
                 agent { node { label 'ubuntu' } }
@@ -57,7 +57,7 @@ pipeline {
                         values 'jdk_1.8_latest', 'jdk_11_latest', 'jdk_17_latest'
                     }
                     axis {
-                        name 'MODULE'
+                        name 'CLUSTER'
                         values 'platform', 'ide'
                     }
                 }
@@ -72,19 +72,20 @@ pipeline {
                                 unstash 'idebuildzip'
                                 unzip  zipFile: 'nbbuild/build/testdist.zip', dir:'testdir'
                                 unzip  zipFile: 'zip/NetBeansIDE.zip', dir:'netbeans'
-                                sh "mkdir -p ${WORKSPACE}/result/unit/${env.JDK}/${env.MODULE} "
+                                sh "mkdir -p ${WORKSPACE}/result/unit/${env.JDK}/${env.CLUSTER} "
                                 sh 'java -version'
                                 //sh 'ant -version'
                                 // this is not finished
                                 wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayNameOffset: 0, autoDisplayName:true, installationName: 'Xvfb', parallelBuild: true, screen: '']) {
                                     // echo to return 0 and go further
-                                    sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.results.dir=${WORKSPACE}/result/unit/${env.JDK}/${env.MODULE} -Dtest.clusters=${env.MODULE} -Dtest.types=unit -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans || echo Failed "
+                                    // do unit ant put in result folder
+                                    sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.results.dir=${WORKSPACE}/result/unit/${env.JDK}/${env.CLUSTER} -Dtest.types=unit -Dtest.clusters=${env.CLUSTER} -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans || echo Failed "
+                                    // do qa-functional and put in result folder
+                                    sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.results.dir=${WORKSPACE}/result/qa-functional/${env.JDK}/${env.CLUSTER} -Dtest.types=qa-functional -Dtest.clusters=${env.CLUSTER} -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans || echo Failed "
+                                
                                 }
-                                // do not use TESTS- as it's redundant with TEST- (inverted to check report readability)
-                                junit "result/unit/${env.JDK}/${env.MODULE}/**/TESTS-*.xml"
-                                //sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest.clusters=${env.MODULE} -Dtest.types=qa-functional -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans"
-                                // html can be done but unusable from jenkins
-                                //archiveArtifacts artifacts: "result/unit/${env.JDK}/${env.MODULE}/**/*"
+                                archiveArtifacts artifacts: "result/unit/${env.JDK}/${env.CLUSTER}/**/*"
+                                archiveArtifacts artifacts: "result/qa-functional/${env.JDK}/${env.CLUSTER}/**/*"
                             }
                         }
 
@@ -93,6 +94,8 @@ pipeline {
 
             }
         }
+        
+      /* */
     }
     post {
         cleanup {
