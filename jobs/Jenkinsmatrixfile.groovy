@@ -33,7 +33,6 @@ pipeline {
             }
             steps {
 
-
                 git 'https://github.com/apache/netbeans'
                 sh 'rm -f *.json* '
                 sh 'rm -f nbbuild/NetBeans-dev-Netbeans/*.zip'
@@ -58,7 +57,7 @@ pipeline {
                     }
                     axis {
                         name 'CLUSTER'
-                        values 'platform', 'ide'
+                        values 'platform','ide'
                     }
                 }
                 stages {
@@ -78,14 +77,15 @@ pipeline {
                                 // this is not finished
                                 wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', displayNameOffset: 0, autoDisplayName:true, installationName: 'Xvfb', parallelBuild: true, screen: '']) {
                                     // echo to return 0 and go further
-                                    // do unit ant put in result folder
                                     sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.results.dir=${WORKSPACE}/result/unit/${env.JDK}/${env.CLUSTER} -Dtest.types=unit -Dtest.clusters=${env.CLUSTER} -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans || echo Failed "
-                                    // do qa-functional and put in result folder
-                                    sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.results.dir=${WORKSPACE}/result/qa-functional/${env.JDK}/${env.CLUSTER} -Dtest.types=qa-functional -Dtest.clusters=${env.CLUSTER} -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans || echo Failed "
+                                    sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest-sys-prop.ignore.random.failures=true -Dtest.results.dir=${WORKSPACE}/result/unit/qa/${env.JDK}/${env.CLUSTER} -Dtest.types=qa-functional -Dtest.clusters=${env.CLUSTER} -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans || echo Failed "
                                 
                                 }
+                                // do not use TESTS- as it's redundant with TEST- (inverted to check report readability)
+                                //sh "ant -f ${WORKSPACE}/testdir/build.xml -Dtest.clusters=${env.CLUSTER} -Dtest.types=qa-functional -Dnetbeans.dest.dir=${WORKSPACE}/netbeans/netbeans"
+                                // html can be done but unusable from jenkins
                                 archiveArtifacts artifacts: "result/unit/${env.JDK}/${env.CLUSTER}/**/*"
-                                archiveArtifacts artifacts: "result/qa-functional/${env.JDK}/${env.CLUSTER}/**/*"
+                                archiveArtifacts artifacts: "result/unit/qa/${env.JDK}/${env.CLUSTER}/**/*"
                             }
                         }
 
@@ -94,8 +94,44 @@ pipeline {
 
             }
         }
-        
-      /* */
+        stage ("html index") {
+
+            steps {
+                script { 
+                    // generate an index 
+                    // matrix axis  (jdk and cluster) should be copied here matrix do not allow variable
+                    def jdk = ['jdk_1.8_latest', 'jdk_11_latest', 'jdk_17_latest']
+                    def cluster = ['platform','ide']
+                    
+                    def content = '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>testing website</title></head><body><h1>Unit and QA functional testing for Apache NetBeans</h1>'
+                    content += '<h2>Unit test</h2>'
+                    
+                    content += '<ul>'
+                    for (int i = 0; i < cluster.size(); ++i) {
+                        content += '<li>'+cluster[i]+'<ul>'
+                        for (int j = 0; j < jdk.size(); ++j) {
+                            content += '<li>'+'<a href="./'+jdk[j]+'/'+cluster[i]+'/html/index.html"'+' target="_blank" rel="noopener noreferrer" >'+cluster[i]+' on jdk "'+jdk[j]+'"<a/></li>'
+                        }
+                        content += '</ul></li>'     
+                    }
+                    content += '</ul>' 
+                    content += '<h2>QA functional</h2>' 
+                    content += '<ul>' 
+                    for (int i = 0; i < cluster.size(); ++i) {
+                        content += '<li>'+cluster[i]+'<ul>'
+                        for (int j = 0; j < jdk.size(); ++j) {
+                            content += '<li>'+'<a href="./qa/'+jdk[j]+'/'+cluster[i]+'/html/index.html"'+' target="_blank" rel="noopener noreferrer">'+cluster[i]+' on jdk "'+jdk[j]+'"<a/></li>'
+                        }
+                        content += '</ul></li>'     
+                    }
+                    content += '</body></html>'
+                    writeFile file: 'result/unit/index.html', text:   content 
+                    archiveArtifacts artifacts: "result/unit/*.html"
+                }
+                
+            }
+        }
+        /* */
     }
     post {
         cleanup {
