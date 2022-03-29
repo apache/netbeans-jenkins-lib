@@ -28,11 +28,12 @@ def call(Map params = [:]) {
             buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '3'))
         ])
 
-    // now determine params
+    // now determine params 
+    // jdk 8 is baseline for maven be sure to maintain
     def jdk = params.containsKey('jdk') ? params.jdk : 'jdk_1.8_latest'
     // use the cmdLine parameter otherwise default depending on current branch
     def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy site:jar":"clean install")
-    def mvnName = params.containsKey('mvnName') ? params.mvnName : 'maven_3.6.3'
+    def mvnName = params.containsKey('mvnName') ? params.mvnName : 'maven_3.8.5'
     def xvfb = params.containsKey('xvfb') ? true : false
 
     def defaultPublishers = [artifactsPublisher(disabled: false), junitPublisher(ignoreAttachments: false, disabled: false),
@@ -61,7 +62,7 @@ def call(Map params = [:]) {
                 options { timeout(time: 120, unit: 'MINUTES') }               
                 steps{
 	            script {	
-		        def jdklist = ['jdk_11_latest','jdk_12_latest','jdk_13_latest','jdk_14_latest','jdk_15_latest','jdk_16_latest']
+		        def jdklist = ['jdk_11_latest','jdk_12_latest','jdk_13_latest','jdk_14_latest','jdk_15_latest','jdk_16_latest','jdk_17_latest','jdk_18_latest']
 		        for (ajdk in jdklist) {
 			    stage("build on $ajdk") {
 				// do not deploy for recent jdk
