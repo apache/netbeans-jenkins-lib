@@ -117,7 +117,7 @@ def call(Map params = [:]) {
                         version = releaseInformation[branch].versionName;
                         vsixversion = releaseInformation[branch].vsixVersion;
                         // make a new attribute in json for this.
-                        heavyrelease = releaseInformation[branch].publish_apidoc;
+                        heavyrelease = releaseInformation[branch].publish_apidoc == 'true';
                         rmversion = version
                         //
                         if (releaseInformation[branch].milestones) {
