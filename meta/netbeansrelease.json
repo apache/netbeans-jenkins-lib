@@ -666,7 +666,7 @@
     },"release1303": {
         "position": "18",
         "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
+        "jdk": "jdk_1.8_latest",
         "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
         "maven": "maven_3.3.9",
         "versionName": "13.0.301",
