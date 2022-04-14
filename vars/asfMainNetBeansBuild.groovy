@@ -47,6 +47,8 @@ def mavenVersion=""
 def tooling=[:]
 @groovy.transform.Field
 def repopluginversion="1.7-SNAPSHOT"
+@groovy.transform.Field
+def branch=""
 
 def call(Map params = [:]) {
     // variable needed for apidoc
@@ -69,7 +71,7 @@ def call(Map params = [:]) {
                         sh 'curl "https://gitbox.apache.org/repos/asf?p=netbeans-jenkins-lib.git;a=blob_plain;f=meta/netbeansrelease.json" -o netbeansrelease.json'
                         def releaseInformation = readJSON file: 'netbeansrelease.json'
                         sh 'rm -f netbeansrelease.json'
-                        def branch = env.BRANCH_NAME
+                        branch = env.BRANCH_NAME
                         def githash = env.GIT_COMMIT
 
                         println githash
