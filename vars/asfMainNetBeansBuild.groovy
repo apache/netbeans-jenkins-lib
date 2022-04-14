@@ -272,7 +272,7 @@ def doParallelClusters(cconfigs) {
         stage("prepare ${clustername}") {
             sh "rm -rf nbbuild/build"
 
-            sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666"
+            sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666 -Dmetabuild.branch=${branch}"
             script {
                 def targets = ['verify-libs-and-licenses','rat','build']
                 for (String target in targets) {
@@ -286,7 +286,7 @@ def doParallelClusters(cconfigs) {
                         }
 
                         // build the target on the cluster defined common to all
-                        sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add}"
+                        sh "ant -f ${target}-${clustername}-temp/build.xml ${target} -Dcluster.config=${clustername} ${add} -Dmetabuild.branch=${branch}"
 
                         // for verify-libs-and-licenses we only want the reports
                         if (target=='verify-libs-and-licenses') {
@@ -351,15 +351,15 @@ def doParallelClusters(cconfigs) {
 
                                 // additionnal target to have maven ready
                                 // javadoc build
-                                sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true"
-                                sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dmetabuild.branch=${branch}"
+                                sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip -Dmetabuild.branch=${branch}"
                                 sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
 
                                 archiveArtifacts 'WEBZIP.zip'
 
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
-                                sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates"
+                                sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates -Dmetabuild.branch=${branch}"
 
                                 withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                 {
@@ -369,7 +369,7 @@ def doParallelClusters(cconfigs) {
                                     sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                     
                                    // make vsix available to dist to pickup (only for main release) need a maven setup
-                                   sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion}"
+                                   sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
                                    sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
                                 }
                                 archiveArtifacts 'mavenrepository/**'
