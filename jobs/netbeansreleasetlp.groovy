@@ -44,7 +44,7 @@ organizationFolder('NetBeans/netbeans-TLP') {
             buildNamedBranches {
                 filters {
                     regex {
-                        regex('(master|release\\d+$)')
+                        regex('(master|release\\d+$|vsnetbeans_preview_\\d+$))')
                         caseSensitive(false)
                     }
                 }
