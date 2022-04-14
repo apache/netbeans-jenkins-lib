@@ -77,9 +77,9 @@ def call(Map params = [:]) {
 
                         if (!releaseInformation[branch]) {
                             // no branch definined in json exit build
-                            if (releaseInformation[branch.replace('vsnetbeans_previous_','release')]) {
+                            if (releaseInformation[branch.replace('vsnetbeans_preview_','release')]) {
                                 // branch is release1234
-                                branch = branch.replace('vsnetbeans_previous_','release')
+                                branch = branch.replace('vsnetbeans_preview_','release')
                             } else {
                                 // no branch definined in json exit build
                                 currentBuild.result = "FAILURE"
