@@ -213,7 +213,7 @@ def call(Map params = [:]) {
                 }
                 when {
                     allOf {
-                        expression { BRANCH_NAME ==~ /release[0-9]+/ }
+                        expression { BRANCH_NAME ==~ /release[0-9]+/  || BRANCH_NAME ==~ /vsnetbeans_preview[0-9]+/ }
                         //branch pattern : "release\\d+",comparator:"REGEXP" wait for modern 1.4.1
                         expression { month =='Invalid' }
                     }
