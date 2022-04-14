@@ -663,7 +663,8 @@
             "month": "11",
             "year": "2021"
         }
-    },"release1303": {
+    },
+    "release1303": {
         "position": "18",
         "ant": "ant_latest",
         "jdk": "jdk_1.8_latest",
