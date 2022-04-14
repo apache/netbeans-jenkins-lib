@@ -369,20 +369,21 @@ def doParallelClusters(cconfigs) {
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
                                 sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates -Dmetabuild.branch=${branch}"
-                                if (heavyrelease) { // skip install for vscode
                                 withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                 {
                                     sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
                                     def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
                                     //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                    sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
-                                    
+                                   if (heavyrelease) { // skip mavenrepo for vscode
+                                      sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:2 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                      archiveArtifacts 'mavenrepository/**'
+                                   }    
                                    // make vsix available to dist to pickup (only for main release) need a maven setup
                                    sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
                                    sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
                                 }
-                                archiveArtifacts 'mavenrepository/**'
-                                }
+                                
+                                
                                 
                             }
 
