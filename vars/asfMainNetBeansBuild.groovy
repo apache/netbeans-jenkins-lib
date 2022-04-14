@@ -186,8 +186,9 @@ def call(Map params = [:]) {
                 }
                 when {
                     allOf {
-                        expression { BRANCH_NAME ==~ /release[0-9]+/ }
-                        //branch pattern : "release\\d+",comparator:"REGEXP" wait for modern 1.4.1
+                        //expression { BRANCH_NAME ==~ /release[0-9]+/ }
+                        branch pattern : "release\\d+",comparator:"REGEXP" 
+                        //wait for modern 1.4.1
                         expression { month !='Invalid'}
                     }
 
@@ -213,8 +214,9 @@ def call(Map params = [:]) {
                 }
                 when {
                     allOf {
-                        expression { BRANCH_NAME ==~ /release[0-9]+/  || BRANCH_NAME ==~ /vsnetbeans_preview_[0-9]+/ }
-                        //branch pattern : "release\\d+",comparator:"REGEXP" wait for modern 1.4.1
+                        //expression { BRANCH_NAME ==~ /release[0-9]+/  || BRANCH_NAME ==~ /vsnetbeans_preview_[0-9]+/ }
+                        branch pattern : "release\\d+|vsnetbeans_preview_\\d+",comparator:"REGEXP" 
+                        //wait for modern 1.4.1
                         expression { month =='Invalid' }
                     }
                 }
