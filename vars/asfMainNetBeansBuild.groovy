@@ -49,6 +49,8 @@ def tooling=[:]
 def repopluginversion="1.7-SNAPSHOT"
 @groovy.transform.Field
 def branch=""
+@groovy.transform.Field
+def heavyrelease=true
 
 def call(Map params = [:]) {
     // variable needed for apidoc
@@ -114,6 +116,8 @@ def call(Map params = [:]) {
                         tooling.myMaven = releaseInformation[branch].maven
                         version = releaseInformation[branch].versionName;
                         vsixversion = releaseInformation[branch].vsixVersion;
+                        // make a new attribute in json for this.
+                        heavyrelease = releaseInformation[branch].publish_apidoc;
                         rmversion = version
                         //
                         if (releaseInformation[branch].milestones) {
@@ -321,7 +325,7 @@ def doParallelClusters(cconfigs) {
                                 sh "mkdir -p dist/installers"
                                 sh "mkdir -p distpreparation${versionnedpath}installer"
                                 sh "mkdir -p dist/vsix"
-
+                                if (heavyrelease) { // skip install for vscode
                                 def installer =  libraryResource 'org/apache/netbeans/installer.sh'
                                 writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
 
@@ -346,8 +350,9 @@ def doParallelClusters(cconfigs) {
                                 sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                 sh "cp distpreparation${versionnedpath}installer/dist/bundles/* dist/installers/ "
                                 sh "rm -rf distpreparation${versionnedpath}installer/dist"
+                                } 
                                 archiveArtifacts 'distpreparation/**'
-
+                                
                                 // the installer phase is ok we should have installer for linux / windows + scripts and a bit of source to build macos later
 
 
@@ -362,7 +367,7 @@ def doParallelClusters(cconfigs) {
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
                                 sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates -Dmetabuild.branch=${branch}"
-
+                                if (heavyrelease) { // skip install for vscode
                                 withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                 {
                                     sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
@@ -375,7 +380,7 @@ def doParallelClusters(cconfigs) {
                                    sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
                                 }
                                 archiveArtifacts 'mavenrepository/**'
-
+                                }
                                 
                             }
 
