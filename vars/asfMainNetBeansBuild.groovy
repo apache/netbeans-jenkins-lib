@@ -350,8 +350,10 @@ def doParallelClusters(cconfigs) {
                                 sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                 sh "cp distpreparation${versionnedpath}installer/dist/bundles/* dist/installers/ "
                                 sh "rm -rf distpreparation${versionnedpath}installer/dist"
-                                } 
                                 archiveArtifacts 'distpreparation/**'
+                                    
+                                } 
+                                
                                 
                                 // the installer phase is ok we should have installer for linux / windows + scripts and a bit of source to build macos later
 
