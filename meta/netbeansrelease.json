@@ -720,7 +720,11 @@
             "be3cce51a54dc2275242c37c309a055eafbec344": {
                 "version": "rc3",
                 "position": "3"
-            }
+            },
+            "7da3eee6a99250b362b1c886005b8baf506ff007": {
+                "version": "rc4",
+                "position": "4"
+            }            
         },
         "releasedate": {
             "day": "-",
