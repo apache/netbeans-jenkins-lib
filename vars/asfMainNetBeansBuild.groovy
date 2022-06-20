@@ -149,7 +149,6 @@ def call(Map params = [:]) {
                     stage ('build javadoc') {
                         steps {
                             withAnt(installation: tooling.myAnt) {
-                                sh "ant getallmavencoordinates"
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
