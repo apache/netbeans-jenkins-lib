@@ -153,7 +153,7 @@ def call(Map params = [:]) {
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 archiveArtifacts 'WEBZIP.zip'
-                                junit 'nbbuild/build/javadoc/checklinks-erros.xml'
+                                junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                             }
                         }
                     }
