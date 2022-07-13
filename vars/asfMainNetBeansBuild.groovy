@@ -208,7 +208,7 @@ def call(Map params = [:]) {
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
                             archiveArtifacts 'WEBZIP.zip'
-                            junit 'nbbuild/build/javadoc/checklinks-erros.xml'
+                            junit 'nbbuild/build/javadoc/checklinks-errors.xml'
 
                         }
                     }
@@ -366,7 +366,7 @@ def doParallelClusters(cconfigs) {
                                 sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
 
                                 archiveArtifacts 'WEBZIP.zip'
-                                junit 'nbbuild/build/javadoc/checklinks-erros.xml'
+                                junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
                                 withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
