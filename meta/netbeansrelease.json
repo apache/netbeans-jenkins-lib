@@ -745,6 +745,36 @@
             "year": "2022"
         }
     },
+    "release1403": {
+        "position": "20",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "14.0.301",
+        "vsixVersion": "14.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/14/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/14/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/14/catalog.xml.gz",
+        "publish_apidoc":"false",
+        "milestones": {
+            "f7c87baf1fe30070bd7a0f6397632b57d4709118": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "19",
+            "month": "07",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "09",
+            "month": "06",
+            "year": "2022"
+        }
+    },
     "master": {
         "position": "50000",
         "ant": "ant_latest",
