@@ -735,9 +735,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "09",
+            "month": "06",
+            "year": "2022"
         },
         "previousreleasedate": {
             "day": "04",
@@ -794,8 +794,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "04",
-            "month": "03",
+            "day": "09",
+            "month": "06",
             "year": "2022"
         }
     }
