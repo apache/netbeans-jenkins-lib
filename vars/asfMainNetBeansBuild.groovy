@@ -46,7 +46,7 @@ def mavenVersion=""
 @groovy.transform.Field
 def tooling=[:]
 @groovy.transform.Field
-def repopluginversion="1.7-SNAPSHOT"
+def repopluginversion="14.0-SNAPSHOT"
 @groovy.transform.Field
 def branch=""
 @groovy.transform.Field
