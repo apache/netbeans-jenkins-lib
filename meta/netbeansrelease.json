@@ -790,7 +790,7 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/15/catalog.xml.gz",
         "publish_apidoc":"true",
         "milestones": {
-            "ec46426d15d5fc3b853ffbe8cd4adf08d797b3af": {
+            "efa73c90b9ae82e4794a5a5cf890d43eb8d907c4": {
                 "version": "rc1",
                 "position": "1"
             }
