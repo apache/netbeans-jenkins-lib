@@ -285,7 +285,7 @@ def doParallelClusters(cconfigs) {
                 for (String target in targets) {
                     stage("${target} for ${clustername}") {
                         // prepare a clean subfolder target - clustername prefixed
-                        sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp && unzip nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp && cp .gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
+                        sh "rm -rf ${target}-${clustername}-temp && mkdir ${target}-${clustername}-temp && unzip -q nbbuild/build/${clustername}*.zip -d ${target}-${clustername}-temp && cp .gitignore ${env.WORKSPACE}/${target}-${clustername}-temp"
                         def add = "";
                         //
                         if (target=="build" && env.BRANCH_NAME!="release90") {

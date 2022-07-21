@@ -69,8 +69,8 @@ pipeline {
                             withAnt(jdk:"${env.JDK}") {
                                 unstash 'testbuildzip'
                                 unstash 'idebuildzip'
-                                unzip  zipFile: 'nbbuild/build/testdist.zip', dir:'testdir'
-                                unzip  zipFile: 'zip/NetBeansIDE.zip', dir:'netbeans'
+                                unzip  zipFile: 'nbbuild/build/testdist.zip', dir:'testdir', quiet: true
+                                unzip  zipFile: 'zip/NetBeansIDE.zip', dir:'netbeans', quiet: true
                                 sh "mkdir -p ${WORKSPACE}/result/unit/${env.JDK}/${env.CLUSTER} "
                                 sh 'java -version'
                                 //sh 'ant -version'

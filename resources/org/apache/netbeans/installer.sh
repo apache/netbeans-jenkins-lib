@@ -50,7 +50,7 @@ BINARY_NAME=`echo "${BIN_NAME%%.zip*}"`
 
 #create cluster zip files
 rm -rf temp
-unzip $1 -d temp
+unzip -q $1 -d temp
 cd temp
 mkdir javase
 mkdir javase/netbeans
@@ -88,33 +88,33 @@ mv websvccommon ../extide/netbeans
 cd ..
 echo `pwd`
 echo $BINARY_NAME
-zip -r $BINARY_NAME-base.zip netbeans
+zip -q -r $BINARY_NAME-base.zip netbeans
 mv $BINARY_NAME-base.zip ..
 
 echo `pwd`
 
 cd javase
-zip -r $BINARY_NAME-java.zip netbeans
+zip -q -r $BINARY_NAME-java.zip netbeans
 mv $BINARY_NAME-java.zip ../..
 cd ..
 
 cd javaee
-zip -r $BINARY_NAME-enterprise.zip netbeans
+zip -q -r $BINARY_NAME-enterprise.zip netbeans
 mv $BINARY_NAME-enterprise.zip ../..
 cd ..
 
 cd php
-zip -r $BINARY_NAME-php.zip netbeans
+zip -q -r $BINARY_NAME-php.zip netbeans
 mv $BINARY_NAME-php.zip ../..
 cd ..
 
 cd webcommon
-zip -r $BINARY_NAME-webcommon.zip netbeans
+zip -q -r $BINARY_NAME-webcommon.zip netbeans
 mv $BINARY_NAME-webcommon.zip ../..
 cd ..
 
 cd extide
-zip -r $BINARY_NAME-websvccommon.zip netbeans
+zip -q -r $BINARY_NAME-websvccommon.zip netbeans
 mv $BINARY_NAME-websvccommon.zip ../..
 cd ../..
 
