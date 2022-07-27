@@ -793,6 +793,10 @@
             "efa73c90b9ae82e4794a5a5cf890d43eb8d907c4": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "126e1701f096a52940dbd9d2f28a829088f9373b": {
+                "version": "rc2",
+                "position": "2"
             }
         },
         "releasedate": {
