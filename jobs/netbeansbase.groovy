@@ -73,13 +73,13 @@ The <b>licenses</b> are checked by the <a href="../netbeans-license/lastComplete
     label('ubuntu')
     steps {
         ant {
-            targets(['build','test-platform', 'build-nbms', 'generate-uc-catalog', 'build-source-zips'])
+            targets(['build','test-platform', 'build-nbms', 'generate-uc-catalog', 'build-source-zips', 'index-layer-path'])
             props('do.build.windows.launchers': 'true')
             antInstallation(antversion)
         }
     }
     publishers {
-        archiveArtifacts('nbbuild/**/*.zip,nbbuild/nbms/**')
+        archiveArtifacts('nbbuild/**/*.zip,nbbuild/nbms/**,nbbuild/build/generated/**')
         archiveJunit('**/test/*/results/TEST*.xml')
     } 
 }
