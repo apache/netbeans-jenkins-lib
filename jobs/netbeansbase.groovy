@@ -73,7 +73,7 @@ The <b>licenses</b> are checked by the <a href="../netbeans-license/lastComplete
     label('ubuntu')
     steps {
         ant {
-            targets(['build','test-platform', 'build-nbms', 'generate-uc-catalog', 'build-source-zips', 'index-layer-path'])
+            targets(['build','test-platform', 'build-nbms', 'generate-uc-catalog', 'build-source-zips', 'index-layer-paths'])
             props('do.build.windows.launchers': 'true')
             antInstallation(antversion)
         }
