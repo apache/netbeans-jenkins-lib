@@ -801,6 +801,10 @@
             "8156d3f887964e61cff5cce530bf9379cf59a91c": {
                 "version": "rc3",
                 "position": "3"
+            },
+            "387759c96ce1b891ec45ffaf524a53499455fe1a": {
+                "version": "rc4",
+                "position": "4"
             }
         },
         "releasedate": {
