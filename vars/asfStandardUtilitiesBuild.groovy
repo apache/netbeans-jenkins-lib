@@ -125,9 +125,10 @@ def mavenBuild(jdk, cmdline, mvnName, publishers,archive) {
         mavenLocalRepo: localRepo) {
         // Some common Maven command line + provided command line
         sh "mvn -V -B -U -e -DskipBrowserTests -Dmaven.test.failure.ignore=true $cmdline "
-	sh "cd target/staging; zip ../../WEBSITE.zip ."
+	//sh "cd target/staging; zip ../../WEBSITE.zip ."
     }
     if (archive) {
+	zip zipFile:'WEBSITE.zip' dir:'./target/staging' 
 	archiveArtifacts 'WEBSITE.zip'
     }
 }
