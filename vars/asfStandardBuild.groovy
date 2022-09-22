@@ -35,8 +35,8 @@ def call(Map params = [:]) {
 	 jdk = 'jdk_11_latest'
     }
     // use the cmdLine parameter otherwise default depending on current branch
-    def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy site:jar":"clean install")
-    def mvnName = params.containsKey('mvnName') ? params.mvnName : 'maven_3.5.4'
+    def cmdline = params.containsKey('cmdline') ? params.cmdline : (env.BRANCH_NAME == 'master'?"clean deploy site:site site:stage":"clean install")
+    def mvnName = params.containsKey('mvnName') ? params.mvnName : 'maven_3_latest'
     def xvfb = params.containsKey('xvfb') ? true : false
 
     def defaultPublishers = [artifactsPublisher(disabled: false), junitPublisher(ignoreAttachments: false, disabled: false),
@@ -131,7 +131,7 @@ def mavenBuild(jdk, cmdline, mvnName, publishers) {
         mavenLocalRepo: localRepo) {
         // Some common Maven command line + provided command line
         sh "mvn -V -B -U -e -DskipBrowserTests -Dmaven.test.failure.ignore=true $cmdline "
-	sh "mv target/*-site.jar WEBSITE.zip"
+	sh "cd target/staging; zip ../../WEBSITE.zip ."
     }
     archiveArtifacts 'WEBSITE.zip'
 }
