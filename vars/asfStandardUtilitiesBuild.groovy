@@ -128,7 +128,7 @@ def mavenBuild(jdk, cmdline, mvnName, publishers,archive) {
 	//sh "cd target/staging; zip ../../WEBSITE.zip ."
     }
     if (archive) {
-	zip zipFile:'WEBSITE.zip', dir:'./target/staging' 
+	zip zipFile:'WEBSITE.zip', dir:'./target/staging', overwrite: true
 	archiveArtifacts 'WEBSITE.zip'
     }
 }
