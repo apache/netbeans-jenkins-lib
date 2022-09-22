@@ -62,11 +62,11 @@ def call(Map params = [:]) {
                 options { timeout(time: 120, unit: 'MINUTES') }               
                 steps{
 	            script {	
-		        def jdklist = ['jdk_11_latest','jdk_17_latest','jdk_18_latest']
+		        def jdklist = ['jdk_11_latest','jdk_17_latest','jdk_18_latest','jdk_19_latest']
 		        for (ajdk in jdklist) {
 			    stage("build on $ajdk") {
 				// do not deploy for recent jdk
-			    	mavenBuild( ajdk, 'clean install site:jar', mvnName, publishers,false)
+			    	mavenBuild( ajdk, 'clean install site:site site:stage', mvnName, publishers,false)
 			    }
 		        }
 		    }
