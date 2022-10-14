@@ -225,7 +225,8 @@ def call(Map params = [:]) {
                                                 removePrefix: "${env.WORKSPACE}", 
                                                 sourceFiles: "${env.WORKSPACE}/WEBZIP.zip")],
                                                 usePromotionTimestamp: false,
-                                               useWorkspaceInPromotion: false, verbose: false)])
+                                                useWorkspaceInPromotion: false, 
+                                                verbose: true)])
                             
                             
 
