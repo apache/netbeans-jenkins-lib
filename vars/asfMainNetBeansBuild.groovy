@@ -276,7 +276,7 @@ def call(Map params = [:]) {
     }
 }
 
-def publishToNightlies(remotedirectory , source) {
+def publishToNightlies(remotedirectory , source, prefix="") {
     sshPublisher(publishers: [
             sshPublisherDesc(configName: 'Nightlies', transfers: [
                     sshTransfer(cleanRemote: true,
@@ -289,7 +289,7 @@ def publishToNightlies(remotedirectory , source) {
                         patternSeparator: '[, ]+', 
                         remoteDirectory: remotedirectory,
                         remoteDirectorySDF: false, 
-                        removePrefix: "", 
+                        removePrefix: prefix, 
                         sourceFiles: source)],
                 usePromotionTimestamp: false,
                 useWorkspaceInPromotion: false, 
@@ -388,7 +388,10 @@ def doParallelClusters(cconfigs) {
                                 sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dmetabuild.branch=${branch}"
                                 sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip -Dmetabuild.branch=${branch}"
                                 sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
-
+                                
+                                // apidoc
+                                publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
+                                
                                 archiveArtifacts 'WEBZIP.zip'
                                 junit testResults: "build-${clustername}-temp/nbbuild/build/javadoc/checklinks-errors.xml", allowEmptyResults:true
                                 def localRepo = ".repository"
@@ -419,10 +422,8 @@ def doParallelClusters(cconfigs) {
                             }
 
                             archiveArtifacts 'dist/**'
-                            // apidoc
-                            publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
-                            
-                            publishToNightlies("/netbeans/releasereparation/","dist/**/*.*")
+                                
+                            publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/**/**","dist/","dist${versionnedpath}")
                         }
                     }
                 }
