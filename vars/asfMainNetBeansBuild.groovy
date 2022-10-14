@@ -223,10 +223,10 @@ def call(Map params = [:]) {
                                                 remoteDirectory: "/netbeans/apidocs/${env.BRANCH_NAME}",
                                                 remoteDirectorySDF: false, 
                                                 removePrefix: "${env.WORKSPACE}", 
-                                                sourceFiles: "${env.WORKSPACE}/WEBZIP.zip")],
+                                                sourceFiles: "**/WEBZIP.zip")],
                                                 usePromotionTimestamp: false,
                                                 useWorkspaceInPromotion: false, 
-                                                verbose: true)])
+                                                verbose: false)])
                             
                             
 
