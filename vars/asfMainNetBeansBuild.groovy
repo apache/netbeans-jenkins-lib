@@ -205,11 +205,12 @@ def call(Map params = [:]) {
                         steps {
 
                             withAnt(installation: tooling.myAnt) {
-                                sh "ant"
-                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "echo 'testing copy' > ${env.WORKSPACE}/WEBZIP.zip"
+                                //sh "ant"
+                                //sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
                             archiveArtifacts 'WEBZIP.zip'
-                            junit 'nbbuild/build/javadoc/checklinks-errors.xml'
+                            //junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                             sshPublisher(publishers: [
                                 sshPublisherDesc(configName: 'Nightlies', transfers: [
                                     sshTransfer(cleanRemote: true,
@@ -222,7 +223,7 @@ def call(Map params = [:]) {
                                                 patternSeparator: '[, ]+', 
                                                 remoteDirectory: "/netbeans/apidocs/${env.BRANCH_NAME}",
                                                 remoteDirectorySDF: false, 
-                                                removePrefix: "${env.WORKSPACE}", 
+                                                removePrefix: "", 
                                                 sourceFiles: "**/WEBZIP.zip")],
                                                 usePromotionTimestamp: false,
                                                 useWorkspaceInPromotion: false, 
