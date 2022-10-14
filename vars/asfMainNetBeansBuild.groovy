@@ -210,6 +210,24 @@ def call(Map params = [:]) {
                             }
                             archiveArtifacts 'WEBZIP.zip'
                             junit 'nbbuild/build/javadoc/checklinks-errors.xml'
+                            sshPublisher(publishers: [
+                                sshPublisherDesc(configName: 'Nightlies', transfers: [
+                                    sshTransfer(cleanRemote: true,
+                                                excludes: '', 
+                                                execCommand: '', 
+                                                execTimeout: 120000, 
+                                                flatten: false, 
+                                                makeEmptyDirs: false, 
+                                                noDefaultExcludes: false, 
+                                                patternSeparator: '[, ]+', 
+                                                remoteDirectory: "/netbeans/apidocs/${env.WORKSPACE",
+                                                remoteDirectorySDF: false, 
+                                                removePrefix: '', 
+                                                sourceFiles: 'WEBSITE.zip')],
+                                                usePromotionTimestamp: false,
+                                               useWorkspaceInPromotion: false, verbose: false)])
+                            
+                            
 
                         }
                     }
