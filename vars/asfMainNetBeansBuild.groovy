@@ -423,7 +423,7 @@ def doParallelClusters(cconfigs) {
 
                             archiveArtifacts 'dist/**'
                                 
-                            publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/**/**","dist/","dist${versionnedpath}")
+                            publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/**/**","dist${versionnedpath}")
                         }
                     }
                 }
