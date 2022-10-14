@@ -153,8 +153,11 @@ def call(Map params = [:]) {
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                
                                 archiveArtifacts 'WEBZIP.zip'
                                 junit 'nbbuild/build/javadoc/checklinks-errors.xml'
+                                
+                                publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
                             }
                         }
                     }
@@ -205,32 +208,12 @@ def call(Map params = [:]) {
                         steps {
 
                             withAnt(installation: tooling.myAnt) {
-                                sh "echo 'testing copy' > ${env.WORKSPACE}/WEBZIP.zip"
-                                //sh "ant"
-                                //sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                sh "ant"
+                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
                             archiveArtifacts 'WEBZIP.zip'
-                            //junit 'nbbuild/build/javadoc/checklinks-errors.xml'
-                            sshPublisher(publishers: [
-                                sshPublisherDesc(configName: 'Nightlies', transfers: [
-                                    sshTransfer(cleanRemote: true,
-                                                excludes: '', 
-                                                execCommand: '', 
-                                                execTimeout: 120000, 
-                                                flatten: false, 
-                                                makeEmptyDirs: false, 
-                                                noDefaultExcludes: false, 
-                                                patternSeparator: '[, ]+', 
-                                                remoteDirectory: "/netbeans/apidocs/${env.BRANCH_NAME}",
-                                                remoteDirectorySDF: false, 
-                                                removePrefix: "", 
-                                                sourceFiles: "**/WEBZIP.zip")],
-                                                usePromotionTimestamp: false,
-                                                useWorkspaceInPromotion: false, 
-                                                verbose: false)])
-                            
-                            
-
+                            junit 'nbbuild/build/javadoc/checklinks-errors.xml'
+                            publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
                         }
                     }
                 }
@@ -291,6 +274,26 @@ def call(Map params = [:]) {
 
         }
     }
+}
+
+def publishToNightlies(remotedirectory , source) {
+    sshPublisher(publishers: [
+            sshPublisherDesc(configName: 'Nightlies', transfers: [
+                    sshTransfer(cleanRemote: true,
+                        excludes: '', 
+                        execCommand: '', 
+                        execTimeout: 120000, 
+                        flatten: false, 
+                        makeEmptyDirs: false, 
+                        noDefaultExcludes: false, 
+                        patternSeparator: '[, ]+', 
+                        remoteDirectory: remotedirectory,
+                        remoteDirectorySDF: false, 
+                        removePrefix: "", 
+                        sourceFiles: source)],
+                usePromotionTimestamp: false,
+                useWorkspaceInPromotion: false, 
+                verbose: false)])   
 }
 // in fact not parallel otherwise workspace not cleaned
 def doParallelClusters(cconfigs) {
@@ -416,8 +419,10 @@ def doParallelClusters(cconfigs) {
                             }
 
                             archiveArtifacts 'dist/**'
-
-
+                            // apidoc
+                            publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
+                            
+                            publishToNightlies("/netbeans/releasereparation/","dist/**/*.*")
                         }
                     }
                 }
