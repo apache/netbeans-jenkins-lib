@@ -36,7 +36,7 @@ organizationFolder('NetBeans/netbeans-TLP') {
             }
             traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {}
             traits << 'jenkins.scm.impl.trait.RegexSCMHeadFilterTrait' {
-                regex('(master|release\\d+$)')
+                regex('(master|release\\d+$|vsnetbeans_preview_\\d+$)')
             }
         }
        
