@@ -808,9 +808,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "31",
+            "month": "08",
+            "year": "2022"
         },
         "previousreleasedate": {
             "day": "09",
@@ -844,6 +844,37 @@
         },
         "previousreleasedate": {
             "day": "26",
+            "month": "08",
+            "year": "2022"
+        }
+    },
+    "release160": {
+        "position": "23",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "16",
+        "vsixVersion": "16.0.0",
+        "mavenversion": "RELEASE160",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/16/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/16/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/16/catalog.xml.gz",
+        "publish_apidoc":"true",
+        "milestones": {
+            "d99b1939ee54e29a68806b0a444a1283e52e61fc": {
+                "version": "rc1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "-",
+            "month": "-",
+            "year": "-"
+        },
+        "previousreleasedate": {
+            "day": "31",
             "month": "08",
             "year": "2022"
         }
