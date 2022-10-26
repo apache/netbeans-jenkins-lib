@@ -866,6 +866,10 @@
             "d99b1939ee54e29a68806b0a444a1283e52e61fc": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "aa0760ed4516b3aab769577e7a24667439522be3": {
+                "version": "rc2",
+                "position": "2"
             }
         },
         "releasedate": {
