@@ -60,7 +60,7 @@ def call(Map params = [:]) {
         options {
             buildDiscarder(logRotator(numToKeepStr: '2'))
             disableConcurrentBuilds()
-            timeout(time: 180, unit: 'MINUTES')
+            timeout(time: 240, unit: 'MINUTES')
         }
         agent { node { label 'ubuntu' } }
 
