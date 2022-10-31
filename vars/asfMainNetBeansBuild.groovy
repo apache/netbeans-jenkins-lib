@@ -162,10 +162,10 @@ def call(Map params = [:]) {
                         }
                     }
                     stage (' Populate Snapshots') {
-                        when {
-                            // thursday
-                            expression { return Calendar.instance.get(Calendar.HOUR_OF_DAY) == 1 && Calendar.instance.get(Calendar.DAY_OF_WEEK) == 3}
-                        }
+                        // when {
+                        // thursday
+                        //     expression { return Calendar.instance.get(Calendar.HOUR_OF_DAY) == 1 && Calendar.instance.get(Calendar.DAY_OF_WEEK) == 3}
+                        // }
                         steps {
                             withAnt(installation: tooling.myAnt) {
                                 script {
