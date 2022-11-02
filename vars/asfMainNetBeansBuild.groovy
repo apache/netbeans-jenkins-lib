@@ -379,7 +379,7 @@ def doParallelClusters(cconfigs) {
                                     sh "rm -rf distpreparation${versionnedpath}installer/dist"
                                     publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
                                                                   
-                                    archiveArtifacts 'distpreparation/**' // XXX REMOVE
+                                    archiveArtifacts 'distpreparation/**'  
                                   
                                 } 
                                 
@@ -408,13 +408,13 @@ def doParallelClusters(cconfigs) {
                                     //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                     if (heavyrelease) { // skip mavenrepo for vscode
                                         sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:3 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
-                                        zip zipFile:'mavenrepo.zip',dir:'mavenrepository',archive:'false'
-                                        //archiveArtifacts 'mavenrepository/**'
-                                        publishToNightlies("/netbeans/candidate/mavenrepository","mavenrepo.zip")
+                                        zip zipFile:'mavenrepo.zip',dir:'mavenrepository',archive:'true'
+                                        //archiveArtifacts 'mavenrepository/**' useless to have each file
+                                        //publishToNightlies("/netbeans/candidate/mavenrepository","mavenrepo.zip")
                                     }    
                                     // make vsix available to dist to pickup (only for main release) need a maven setup
                                     sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
-                                    //sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
+                                    sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
                                     publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
                                 }
                                 
@@ -428,9 +428,9 @@ def doParallelClusters(cconfigs) {
                                 sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
                             }
 
-                            archiveArtifacts 'dist/**'  // XXX REMOVE
-                                
-                            publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/**/**","dist${versionnedpath}")
+                            archiveArtifacts 'dist/**'  
+                            //
+                            publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
                         }
                     }
                 }
