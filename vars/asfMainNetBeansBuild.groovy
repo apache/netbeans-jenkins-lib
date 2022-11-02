@@ -154,7 +154,7 @@ def call(Map params = [:]) {
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 
-                                archiveArtifacts 'WEBZIP.zip'
+                                archiveArtifacts 'WEBZIP.zip' // XXX REMOVE
                                 junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                                 
                                 publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
@@ -211,7 +211,7 @@ def call(Map params = [:]) {
                                 sh "ant"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
-                            archiveArtifacts 'WEBZIP.zip'
+                            archiveArtifacts 'WEBZIP.zip' // XXX REMOVE
                             junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                             publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
                         }
@@ -234,7 +234,7 @@ def call(Map params = [:]) {
                 steps {
                     script {
 
-                        def clusterconfigs = [['platform','netbeans-platform'],['release','netbeans']]
+                        def clusterconfigs = [/*['platform','netbeans-platform'],*/['release','netbeans']]
 
                         doParallelClusters(clusterconfigs);
                     }
@@ -351,32 +351,36 @@ def doParallelClusters(cconfigs) {
                                 sh "mkdir -p distpreparation${versionnedpath}installer"
                                 sh "mkdir -p dist/vsix"
                                 if (heavyrelease) { // skip install for vscode
-                                def installer =  libraryResource 'org/apache/netbeans/installer.sh'
-                                writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
+                                    def installer =  libraryResource 'org/apache/netbeans/installer.sh'
+                                    writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
 
-                                def installermac =  libraryResource 'org/apache/netbeans/installermac.sh'
-                                writeFile file: "distpreparation${versionnedpath}installer/installermac.sh", text: installermac
+                                    def installermac =  libraryResource 'org/apache/netbeans/installermac.sh'
+                                    writeFile file: "distpreparation${versionnedpath}installer/installermac.sh", text: installermac
 
-                                sh "chmod +x distpreparation${versionnedpath}installer/installer.sh"
+                                    sh "chmod +x distpreparation${versionnedpath}installer/installer.sh"
 
-                                sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* distpreparation${versionnedpath}installer/nbbuild/newbuild "
-                                sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer distpreparation${versionnedpath}installer/nbbuild "
-                                sh "mkdir -p distpreparation${versionnedpath}installer/nbi && cp -r build-${clustername}-temp/nbi distpreparation${versionnedpath}installer "
-                                sh "cp build-${clustername}-temp/nbbuild/binaries-default-properties.xml distpreparation${versionnedpath}installer/nbbuild/binaries-default-properties.xml "
-                                sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/build/ && cp -r build-${clustername}-temp/nbbuild/build/antclasses distpreparation${versionnedpath}installer/nbbuild/build/antclasses "
+                                    sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* distpreparation${versionnedpath}installer/nbbuild/newbuild "
+                                    sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer distpreparation${versionnedpath}installer/nbbuild "
+                                    sh "mkdir -p distpreparation${versionnedpath}installer/nbi && cp -r build-${clustername}-temp/nbi distpreparation${versionnedpath}installer "
+                                    sh "cp build-${clustername}-temp/nbbuild/binaries-default-properties.xml distpreparation${versionnedpath}installer/nbbuild/binaries-default-properties.xml "
+                                    sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/build/ && cp -r build-${clustername}-temp/nbbuild/build/antclasses distpreparation${versionnedpath}installer/nbbuild/build/antclasses "
 
-                                sh "mkdir -p distpreparation${versionnedpath}installer/nb/ide.launcher && cp -r build-${clustername}-temp/nb/ide.launcher/macosx distpreparation${versionnedpath}installer/nb/ide.launcher "
+                                    sh "mkdir -p distpreparation${versionnedpath}installer/nb/ide.launcher && cp -r build-${clustername}-temp/nb/ide.launcher/macosx distpreparation${versionnedpath}installer/nb/ide.launcher "
 
 
-                                sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                def binaryfile = "${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                def timestamp = sh(returnStdout: true, script: 'date +%y%m%d').trim()
+                                    sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                                    def binaryfile = "${env.WORKSPACE}/dist${versionnedpath}${path}-${rmversion}-bin.zip"
+                                    def timestamp = sh(returnStdout: true, script: 'date +%y%m%d').trim()
 
-                                sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
-                                sh "cp distpreparation${versionnedpath}installer/dist/bundles/* dist/installers/ "
-                                sh "rm -rf distpreparation${versionnedpath}installer/dist"
-                                archiveArtifacts 'distpreparation/**'
-                                    
+                                    sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
+                                    sh "cp distpreparation${versionnedpath}installer/dist/bundles/* dist/installers/ "
+                                    publishToNightlies("/netbeans/candidate/installers","distpreparation${versionnedpath}installer/dist/bundles/*","distpreparation${versionnedpath}installer/dist/bundles/")
+                             
+                                    sh "rm -rf distpreparation${versionnedpath}installer/dist"
+                                    publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
+                                                                  
+                                    archiveArtifacts 'distpreparation/**' // XXX REMOVE
+                                  
                                 } 
                                 
                                 
@@ -392,23 +396,26 @@ def doParallelClusters(cconfigs) {
                                 // apidoc
                                 publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
                                 
-                                archiveArtifacts 'WEBZIP.zip'
+                                archiveArtifacts 'WEBZIP.zip' // XXX REMOVE
                                 junit testResults: "build-${clustername}-temp/nbbuild/build/javadoc/checklinks-errors.xml", allowEmptyResults:true
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
                                 sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates -Dmetabuild.branch=${branch}"
                                 withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                 {
-                                   sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                   def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
-                                   //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                   if (heavyrelease) { // skip mavenrepo for vscode
-                                      sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:3 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
-                                      archiveArtifacts 'mavenrepository/**'
-                                   }    
-                                   // make vsix available to dist to pickup (only for main release) need a maven setup
-                                   sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
-                                   sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
+                                    sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                    def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
+                                    //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                    if (heavyrelease) { // skip mavenrepo for vscode
+                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:3 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                        zip zipFile:'mavenrepo.zip',dir:'mavenrepository',archive:'false'
+                                        //archiveArtifacts 'mavenrepository/**'
+                                        publishToNightlies("/netbeans/candidate/mavenrepository","mavenrepo.zip")
+                                    }    
+                                    // make vsix available to dist to pickup (only for main release) need a maven setup
+                                    sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
+                                    //sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
+                                    publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
                                 }
                                 
                                 
@@ -421,7 +428,7 @@ def doParallelClusters(cconfigs) {
                                 sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
                             }
 
-                            archiveArtifacts 'dist/**'
+                            archiveArtifacts 'dist/**'  // XXX REMOVE
                                 
                             publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/**/**","dist${versionnedpath}")
                         }
