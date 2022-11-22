@@ -36,7 +36,9 @@ def netbeansBaseJob(Map m, Closure c = {}) {
             scm('H/5 * * * *')
         }
         wrappers {
-            xvfb('Xvfb') { }
+            if (m.xvfb) {
+              xvfb('Xvfb') { }
+            }    
             preBuildCleanup()
         }
         scm {
@@ -58,7 +60,7 @@ def netbeansBaseJob(Map m, Closure c = {}) {
     }
 }
 
-netbeansBaseJob(name:'linux') {
+netbeansBaseJob(name:'linux',xvfb:true) {
     description("""Builds Apache NetBeans from <a href="https://github.com/apache/netbeans">its Github repository</a>
 and runs platform tests that aren't marked with <code>@RandomlyFails</code> annotation:
 <p>
@@ -84,7 +86,7 @@ The <b>licenses</b> are checked by the <a href="../netbeans-license/lastComplete
     } 
 }
 
-netbeansBaseJob(name:'windows') {
+netbeansBaseJob(name:'windows',xvfb:false) {
     description("""<html>Builds Apache NetBeans from <a href="https://github.com/apache/netbeans">its Github repository</a>
 and runs platform tests (ant test-platform) that aren't marked with
 <code>@RandomlyFails</code> annotation.
@@ -94,7 +96,7 @@ There is also a <a href="../netbeans-linux">Linux version</a> of this build.</ht
         ant {
             targets(['build','test-platform'])
             props('test-unit-sys-prop.ignore.random.failures': 'true','continue.after.failing.tests':'true')
-            antInstallation(antversion+'_windows')
+            antInstallation(antversion)
         }
     }
     publishers {
@@ -102,7 +104,7 @@ There is also a <a href="../netbeans-linux">Linux version</a> of this build.</ht
     }  
 }
 
-netbeansBaseJob(name:'license') {
+netbeansBaseJob(name:'license',xvfb:true) {
     description("""Checks licenses of Apache NetBeans from <a href="https://github.com/apache/netbeans">its Github repository</a>:
 <p>
 <pre>
@@ -124,7 +126,7 @@ The real code check is done by a <a href="../netbeans-linux">linux job</a>.""")
     } 
 }
 
-netbeansBaseJob(name:'apisigcheck') {
+netbeansBaseJob(name:'apisigcheck',xvfb:true) {
     description("""Checks sig of Apache NetBeans from <a href="https://github.com/apache/netbeans">its Github repository</a>:
 <p>
 <pre>
