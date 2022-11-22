@@ -18,7 +18,7 @@
  * under the License.
  */
 // ant version
-def antversion='ant_1.10_latest'
+def antversion='ant_1_10_latest'
 
 // Common job with all default
 // jdk
