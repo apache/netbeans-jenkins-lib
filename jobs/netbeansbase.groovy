@@ -89,7 +89,7 @@ netbeansBaseJob(name:'windows') {
 and runs platform tests (ant test-platform) that aren't marked with
 <code>@RandomlyFails</code> annotation.
 There is also a <a href="../netbeans-linux">Linux version</a> of this build.</html>""")        
-    label('Window')
+    label('Windows')
     steps {
         ant {
             targets(['build','test-platform'])
