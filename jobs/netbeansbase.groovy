@@ -96,7 +96,7 @@ There is also a <a href="../netbeans-linux">Linux version</a> of this build.</ht
         ant {
             targets(['build','test-platform'])
             props('test-unit-sys-prop.ignore.random.failures': 'true','continue.after.failing.tests':'true')
-            antInstallation(antversion)
+            antInstallation(antversion+"_windows")
         }
     }
     publishers {
