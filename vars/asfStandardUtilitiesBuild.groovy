@@ -50,11 +50,11 @@ def call(Map params = [:]) {
             pollSCM('H/5 * * * * ')
 	}
         stages{
-            stage("Build with jdk 8 ") {
+            stage("Build with default jdk (jdk8 if no parameters) ") {
                 agent { node { label 'ubuntu' } }
                 options { timeout(time: 120, unit: 'MINUTES') }                
                 steps{
-                    mavenBuild( 'jdk_1.8_latest', cmdline, mvnName, publishers,true)        
+                    mavenBuild( jdk, cmdline, mvnName, publishers,true)        
                 }
             }
             stage("Build on recent jdk") {
