@@ -280,7 +280,7 @@ def publishToNightlies(remotedirectory , source, prefix="") {
                     sshTransfer(cleanRemote: true,
                         excludes: '', 
                         execCommand: '', 
-                        execTimeout: 120000, 
+                        execTimeout: 0, 
                         flatten: false, 
                         makeEmptyDirs: false, 
                         noDefaultExcludes: false, 
