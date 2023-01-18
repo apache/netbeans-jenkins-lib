@@ -154,7 +154,6 @@ def call(Map params = [:]) {
                                 sh "ant build-source-zips"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                                 
-                                archiveArtifacts 'WEBZIP.zip' // XXX REMOVE
                                 junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                                 
                                 publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
@@ -211,7 +210,6 @@ def call(Map params = [:]) {
                                 sh "ant"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
-                            archiveArtifacts 'WEBZIP.zip' // XXX REMOVE
                             junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                             publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
                         }
@@ -396,7 +394,6 @@ def doParallelClusters(cconfigs) {
                                 // apidoc
                                 publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
                                 
-                                archiveArtifacts 'WEBZIP.zip' // XXX REMOVE
                                 junit testResults: "build-${clustername}-temp/nbbuild/build/javadoc/checklinks-errors.xml", allowEmptyResults:true
                                 def localRepo = ".repository"
                                 def netbeansbase = "build-${clustername}-temp/nbbuild"
