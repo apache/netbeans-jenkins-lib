@@ -375,7 +375,7 @@ def doParallelClusters(cconfigs) {
                                     publishToNightlies("/netbeans/candidate/installers","distpreparation${versionnedpath}installer/dist/bundles/*","distpreparation${versionnedpath}installer/dist/bundles/")
                              
                                     sh "rm -rf distpreparation${versionnedpath}installer/dist"
-                                    publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
+                                    // XXX take too long 18012023 publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
                                                                   
                                     archiveArtifacts 'distpreparation/**'  
                                   
