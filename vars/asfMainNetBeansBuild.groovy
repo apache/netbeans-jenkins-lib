@@ -375,19 +375,9 @@ def doParallelClusters(cconfigs) {
                                             sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
                                             // build installer only deb for testing.
-                                            sh """
-nbpackage${versionnedpath}installer/nbpackage-${nbpackageversion}/bin/nbpackage
- --type linux-deb
- -Pname="Apache NetBeans"
- -Pversion=$version
- -Purl="https://netbeans.apache.org"
- -Pdeb.maintainer="NetBeans Mailing List <users@netbeans.apache.org>"
- -Pdeb.desktop-filename="apache-netbeans-ide-$rmversion"
- -Pdeb.wmclass="Apache NetBeans IDE $rmversion"
- --input dist$versionnedpath$path-$rmversion-bin.zip
-"""
+                                            sh "nbpackage${versionnedpath}installer/nbpackage-${nbpackageversion}/bin/nbpackage --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${version} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"dist/installers/apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input dist${versionnedpath}${path}-${rmversion}-bin.zip "
                                             // debug output
-                                            archiveArtifacts 'nbpackage${versionnedpath}installer/**'
+                                            archiveArtifacts "nbpackage${versionnedpath}installer/**"
                                         }
 
                                     }
