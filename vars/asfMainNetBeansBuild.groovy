@@ -371,8 +371,8 @@ def doParallelClusters(cconfigs) {
                                         withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                         {
                                             // unpack nbpackage snapshot can later
-                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get  -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:bin:zip -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:bin:zip -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get  -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
                                             // build installer only deb for testing.
                                             sh """
