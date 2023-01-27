@@ -34,6 +34,8 @@ def version=""
 @groovy.transform.Field
 def rmversion=""
 @groovy.transform.Field
+def debversion=""
+@groovy.transform.Field
 def vsixversion=""
 @groovy.transform.Field
 def month=""
@@ -137,6 +139,7 @@ def call(Map params = [:]) {
                                 }
                             }
                         }
+                        debversion = rmversion.replace('-','~')
                     }
                 }
             }
@@ -375,8 +378,9 @@ def doParallelClusters(cconfigs) {
                                             sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
                                             // build installer only deb for testing.
-                                            sh "cd dist/installers/ && ../../nbpackage${versionnedpath}installer/nbpackage-${nbpackageversion}/bin/nbpackage --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${version} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
+                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
                                             // debug output
+                                            sh "cp nbpackage${versionnedpath}installer/*.deb dist/installers/ "
                                             archiveArtifacts "nbpackage${versionnedpath}installer/**"
                                         }
 
