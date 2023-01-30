@@ -909,7 +909,7 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/16/catalog.xml.gz",
         "publish_apidoc":"false",
         "milestones": {
-            "f7f6f605b2e63e1010bba642e0afd7e633d3ce5d": {
+            "9af370f0ffacafe6e48908d2b24a3caf8eb676b1": {
                 "version": "rc1",
                 "position": "1"
             }
