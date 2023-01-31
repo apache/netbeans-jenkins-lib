@@ -909,13 +909,9 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/16/catalog.xml.gz",
         "publish_apidoc":"false",
         "milestones": {
-            "9af370f0ffacafe6e48908d2b24a3caf8eb676b1": {
-                "version": "rc1",
-                "position": "1"
-            },
             "133d0586ab94958d506f81087a98b81d0ccee533": {
-                "version": "rc2",
-                "position": "2"
+                "version": "1",
+                "position": "1"
             }
         },
         "releasedate": {
