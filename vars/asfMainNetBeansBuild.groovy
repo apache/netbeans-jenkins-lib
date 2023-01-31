@@ -381,6 +381,8 @@ def doParallelClusters(cconfigs) {
                                             sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
                                             // debug output
                                             sh "cp nbpackage${versionnedpath}installer/*.deb dist/installers/ "
+                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage --type linux-rpm -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Prpm.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Prpm.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
+                                            sh "cp nbpackage${versionnedpath}installer/*.rpm dist/installers/ "
                                             archiveArtifacts "nbpackage${versionnedpath}installer/**"
                                         }
 
