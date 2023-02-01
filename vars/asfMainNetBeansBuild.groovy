@@ -363,7 +363,7 @@ def doParallelClusters(cconfigs) {
                                         sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                         // we archive put to nightlies only exe for window, nbpackage is intended to do the installler
                                         sh "cp distpreparation${versionnedpath}installer/dist/bundles/*.exe dist/installers/ "
-                                        // XXX UNCOMMENT FOR RC3 publishToNightlies("/netbeans/candidate/installers","distpreparation${versionnedpath}installer/dist/bundles/*.exe","distpreparation${versionnedpath}installer/dist/bundles/")
+                                        publishToNightlies("/netbeans/candidate/installers","distpreparation${versionnedpath}installer/dist/bundles/*.exe","distpreparation${versionnedpath}installer/dist/bundles/")
 
                                         sh "rm -rf distpreparation${versionnedpath}installer/dist"
                                         // XXX take too long 18012023 publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
@@ -378,10 +378,10 @@ def doParallelClusters(cconfigs) {
                                             sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
                                             // build installer only deb for testing.
-                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
+                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage -v --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
                                             // debug output
                                             sh "cp nbpackage${versionnedpath}installer/*.deb dist/installers/ "
-                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage --type linux-rpm -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Prpm.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Prpm.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
+                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage -v --type linux-rpm -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Prpm.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Prpm.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
                                             sh "cp nbpackage${versionnedpath}installer/*.rpm dist/installers/ "
                                             archiveArtifacts "nbpackage${versionnedpath}installer/**"
                                         }
@@ -416,7 +416,7 @@ def doParallelClusters(cconfigs) {
                                         // make vsix available to dist to pickup (only for main release) need a maven setup
                                         sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
                                         sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
-                                        // XXX UNCOMMENT FOR RC3  publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
+                                        publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
                                     }
 
 
@@ -430,7 +430,7 @@ def doParallelClusters(cconfigs) {
                                 }
 
                                 archiveArtifacts 'dist/**'
-                                // XXX UNCOMMENT FOR RC3  publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
+                                publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
                             }
                         }
                     }
