@@ -363,8 +363,7 @@ def doParallelClusters(cconfigs) {
                                         sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                         // we archive put to nightlies only exe for window, nbpackage is intended to do the installler
                                         sh "cp distpreparation${versionnedpath}installer/dist/bundles/*.exe dist/installers/ "
-                                        publishToNightlies("/netbeans/candidate/installers","distpreparation${versionnedpath}installer/dist/bundles/*.exe","distpreparation${versionnedpath}installer/dist/bundles/")
-
+                                        
                                         sh "rm -rf distpreparation${versionnedpath}installer/dist"
                                         // XXX take too long 18012023 publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
 
@@ -383,7 +382,7 @@ def doParallelClusters(cconfigs) {
                                             sh "cp nbpackage${versionnedpath}installer/*.deb dist/installers/ "
                                             sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage -v --type linux-rpm -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Prpm.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Prpm.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
                                             sh "cp nbpackage${versionnedpath}installer/*.rpm dist/installers/ "
-                                            archiveArtifacts "nbpackage${versionnedpath}installer/**"
+                                            // archiveArtifacts "nbpackage${versionnedpath}installer/**"
                                         }
 
                                     }
@@ -431,6 +430,8 @@ def doParallelClusters(cconfigs) {
 
                                 archiveArtifacts 'dist/**'
                                 publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
+                                publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
+
                             }
                         }
                     }
