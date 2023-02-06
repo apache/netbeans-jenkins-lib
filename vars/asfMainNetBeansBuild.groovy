@@ -166,10 +166,6 @@ def call(Map params = [:]) {
                         }
                     }
                     stage (' Populate Snapshots') {
-                        // when {
-                        // thursday
-                        //     expression { return Calendar.instance.get(Calendar.HOUR_OF_DAY) == 1 && Calendar.instance.get(Calendar.DAY_OF_WEEK) == 3}
-                        // }
                         steps {
                             withAnt(installation: tooling.myAnt) {
                                 script {
@@ -188,9 +184,7 @@ def call(Map params = [:]) {
                                 }
                             }
                         }
-
                     }
-                    //}
                 }
 
             }
@@ -210,7 +204,6 @@ def call(Map params = [:]) {
                 stages {
                     stage ('Archive Javadoc') {
                         steps {
-
                             withAnt(installation: tooling.myAnt) {
                                 sh "ant"
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
@@ -262,29 +255,34 @@ def call(Map params = [:]) {
 }
 
 def publishToNightlies(remotedirectory , source, prefix="") {
-    sshPublisher(publishers: [
-            sshPublisherDesc(configName: 'Nightlies', transfers: [
-                    sshTransfer(cleanRemote: true,
-                        excludes: '',
-                        execCommand: '',
-                        execTimeout: 0,
-                        flatten: false,
-                        makeEmptyDirs: false,
-                        noDefaultExcludes: false,
-                        patternSeparator: '[, ]+',
-                        remoteDirectory: remotedirectory,
-                        remoteDirectorySDF: false,
-                        removePrefix: prefix,
-                        sourceFiles: source)],
-                usePromotionTimestamp: false,
-                useWorkspaceInPromotion: false,
-                verbose: false)])
+    // test if sshPublisher is known
+    if (this.getBinding().hasVariable('sshPublisher')) {
+        sshPublisher(publishers: [
+                sshPublisherDesc(configName: 'Nightlies', transfers: [
+                        sshTransfer(cleanRemote: true,
+                            excludes: '',
+                            execCommand: '',
+                            execTimeout: 0,
+                            flatten: false,
+                            makeEmptyDirs: false,
+                            noDefaultExcludes: false,
+                            patternSeparator: '[, ]+',
+                            remoteDirectory: remotedirectory,
+                            remoteDirectorySDF: false,
+                            removePrefix: prefix,
+                            sourceFiles: source)],
+                    usePromotionTimestamp: false,
+                    useWorkspaceInPromotion: false,
+                    verbose: false)])
+    }
 }
 // in fact not parallel otherwise workspace not cleaned
 def doParallelClusters(cconfigs) {
     for (cluster in cconfigs) {
         def clustername = cluster[0]
         def path = cluster[1]
+        // prepare versionned path
+        def versionnedpath = "/${path}/${versionpath}"
         stage("prepare ${clustername}") {
             sh "rm -rf nbbuild/build"
             withAnt(installation: tooling.myAnt) {
@@ -321,8 +319,8 @@ def doParallelClusters(cconfigs) {
 
                             // build target is more complex,
                             if (target=='build') {
-                                // prepare versionned path
-                                def versionnedpath = "/${path}/${versionpath}"
+                                
+                               
 
                                 sh "mkdir -p dist${versionnedpath}"
                                 // source
@@ -363,7 +361,7 @@ def doParallelClusters(cconfigs) {
                                         sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                         // we archive put to nightlies only exe for window, nbpackage is intended to do the installler
                                         sh "cp distpreparation${versionnedpath}installer/dist/bundles/*.exe dist/installers/ "
-                                        
+
                                         sh "rm -rf distpreparation${versionnedpath}installer/dist"
                                         // XXX take too long 18012023 publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
 
@@ -415,11 +413,7 @@ def doParallelClusters(cconfigs) {
                                         // make vsix available to dist to pickup (only for main release) need a maven setup
                                         sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
                                         sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
-                                        publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
                                     }
-
-
-
                                 }
 
                                 // do checksum
@@ -427,16 +421,18 @@ def doParallelClusters(cconfigs) {
                                 for (String extension in extensions) {
                                     sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
                                 }
-
-                                archiveArtifacts 'dist/**'
-                                publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
-                                publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
-
+                                archiveArtifacts 'dist/**'                             
                             }
                         }
                     }
                 }
             }
+        }
+        stage("publish to nightlies ${versionnedpath}") {
+            def inputmessage = input (message: "publish to nightlies ${versionnedpath}" )
+            publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
+            publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
+            publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
         }
     }
 }
