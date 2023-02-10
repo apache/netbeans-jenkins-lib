@@ -429,6 +429,7 @@ def doParallelClusters(cconfigs) {
             }
         }
         stage("publish to nightlies ${versionnedpath}") {
+            slackSend (channel:'#netbeans-builds', message:"Dear RM proceed to nightlies or abort ?  (${env.BUILD_URL})",color:'#00FF00')
             def inputmessage = input (message: "publish to nightlies ${versionnedpath}" )
             publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
             publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
