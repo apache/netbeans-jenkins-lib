@@ -66,7 +66,13 @@ def call(Map params = [:]) {
             disableConcurrentBuilds()
             timeout(time: 240, unit: 'MINUTES')
         }
+
         agent { node { label 'ubuntu' } }
+
+        parameters {
+            booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
+            booleanParam(name: 'NIGHTLIES', defaultValue: false, description: 'Publish to nightlies.apache.org?')
+        }
 
         stages {
             stage("Preparing Variable") {
@@ -336,7 +342,7 @@ def doParallelClusters(cconfigs) {
                                     sh "mkdir -p dist/installers"
                                     sh "mkdir -p distpreparation${versionnedpath}installer"
                                     sh "mkdir -p dist/vsix"
-                                    if (heavyrelease) { // skip install for vscode
+                                    if (params.INSTALLERS) { // skip installers unless requested
                                         def installer =  libraryResource 'org/apache/netbeans/installer.sh'
                                         writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
 
@@ -429,11 +435,14 @@ def doParallelClusters(cconfigs) {
             }
         }
         stage("publish to nightlies ${versionnedpath}") {
-            slackSend (channel:'#netbeans-builds', message:"Dear RM proceed to nightlies or abort ?  (${env.BUILD_URL})",color:'#00FF00')
-            def inputmessage = input (message: "publish to nightlies ${versionnedpath}" )
-            publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
-            publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
-            publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
+            when { expression { params.NIGHTLIES } }
+            steps {
+                script {
+                    publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
+                    publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
+                    publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
+                }
+            }
         }
     }
 }
