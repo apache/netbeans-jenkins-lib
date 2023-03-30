@@ -435,13 +435,10 @@ def doParallelClusters(cconfigs) {
             }
         }
         stage("publish to nightlies ${versionnedpath}") {
-            when { expression { params.NIGHTLIES } }
-            steps {
-                script {
-                    publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
-                    publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
-                    publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
-                }
+            if (params.NIGHTLIES) {
+                publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
+                publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
+                publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
             }
         }
     }
