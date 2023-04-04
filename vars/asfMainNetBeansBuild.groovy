@@ -69,10 +69,7 @@ def call(Map params = [:]) {
 
         agent { node { label 'ubuntu' } }
 
-        parameters {
-            booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
-            booleanParam(name: 'NIGHTLIES', defaultValue: false, description: 'Publish to nightlies.apache.org?')
-        }
+        
 
         stages {
             stage("Preparing Variable") {
@@ -222,6 +219,10 @@ def call(Map params = [:]) {
 
             }
             stage ('Release preparation') {
+                parameters {
+                     booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
+                     booleanParam(name: 'NIGHTLIES', defaultValue: false, description: 'Publish to nightlies.apache.org?')
+                }
                 tools {
                     jdk tooling.jdktool
                 }
