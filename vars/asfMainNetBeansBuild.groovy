@@ -123,6 +123,11 @@ def call(Map params = [:]) {
                         //2018-07-29T12:00:00Z
                         atomdate = releaseInformation[branch].releasedate['year']+'-'+releaseInformation[branch].releasedate['month']+'-'+releaseInformation[branch].releasedate['day']+'T12:00:00Z'
                         tooling.jdktool = releaseInformation[branch].jdk
+                        if (releaseInformation[branch].jdktoolapidoc) {
+                            tooling.jdktoolapidoc = releaseInformation[branch].jdktoolapidoc
+                        }else {
+                            tooling.jdktoolapidoc = releaseInformation[branch].jdk
+                        }
                         tooling.myMaven = releaseInformation[branch].maven
                         version = releaseInformation[branch].versionName;
                         vsixversion = releaseInformation[branch].vsixVersion;
@@ -163,6 +168,9 @@ def call(Map params = [:]) {
                                 sh "ant getallmavencoordinates"
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
+                            }
+                            withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
+
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
 
                                 junit 'nbbuild/build/javadoc/checklinks-errors.xml'
@@ -212,6 +220,8 @@ def call(Map params = [:]) {
                         steps {
                             withAnt(installation: tooling.myAnt) {
                                 sh "ant"
+                            }
+                            withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
                             junit 'nbbuild/build/javadoc/checklinks-errors.xml'
