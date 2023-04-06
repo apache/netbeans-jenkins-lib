@@ -35,6 +35,7 @@ organizationFolder('NetBeans/netbeans-TLP') {
                 }
             }
         }
+        /* seems no accessible 
         buildStrategies {
             buildNamedBranches {
                 filters {
@@ -44,7 +45,7 @@ organizationFolder('NetBeans/netbeans-TLP') {
                     }
                 }
             }
-        }
+        } */
         projectFactories {
             workflowMultiBranchProjectFactory {
                 // Relative location within the checkout of our Pipeline script.
