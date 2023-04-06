@@ -20,26 +20,21 @@
 organizationFolder('NetBeans/netbeans-TLP') {
     description('Apache NetBeans release jobs and apidoc generation for historical version')
     displayName('NetBeans-TLP')
-    
     organizations {
-        configure {
-            def asf  = it / navigators / 'org.apache.jenkins.gitpubsub.ASFGitSCMNavigator'
-            asf << {
-                server ('https://gitbox.apache.org/repos/asf')
-            }
-            def traits = asf / traits
-            traits << 'org.apache.jenkins.gitpubsub.ASFMetadataSCMNavigatorTrait' {
-                avatarUrl('https://netbeans.apache.org/images/nblogo32x32.png')
-            }
-            traits << 'jenkins.scm.impl.trait.WildcardSCMSourceFilterTrait' {
-                includes('netbeans')
-            }
-            traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {}
-            traits << 'jenkins.scm.impl.trait.RegexSCMHeadFilterTrait' {
-                regex('(master|release\\d+$|vsnetbeans_preview_\\d+$|vsnetbeans_\\d+$)')
+        fromSource {
+            name ('NetBeans')
+            sources {
+                git {
+                    remote ('https://github.com/apache/netbeans')    
+                    traits {
+                        gitBranchDiscovery()
+                        headRegexFilter {
+                            regex('(master|release\\d+$|vsnetbeans_preview_\\d+$|vsnetbeans_\\d+$)')
+                        }
+                    }
+                }
             }
         }
-       
         buildStrategies {
             buildNamedBranches {
                 filters {
@@ -62,7 +57,6 @@ organizationFolder('NetBeans/netbeans-TLP') {
                 daysToKeep(5)
             }
         }
-    
         triggers {
             periodicFolderTrigger {
                 interval("1d")
