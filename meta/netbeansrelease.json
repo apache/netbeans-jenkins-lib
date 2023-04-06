@@ -981,7 +981,8 @@
             "b3cf9b988542578e8d2c55c4d090e5fb5797fa1e": {
                 "version": "rc1",
                 "position": "1"
-            },
+            }
+        },
         "releasedate": {
             "day": "18",
             "month": "04",
