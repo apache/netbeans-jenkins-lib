@@ -92,9 +92,13 @@ def call(Map params = [:]) {
                         if (!releaseInformation[branch]) {
                             // no branch definined in json exit build
                             if (releaseInformation[branch.replace('vsnetbeans_preview_','release')]) {
-                                // branch is release1234
+                                // branch is release1234 for vsnetbeans_preview_1237
                                 branch = branch.replace('vsnetbeans_preview_','release')
-                            } else {
+                            } else if (releaseInformation[branch.replace('vsnetbeans_','release')]) {
+                                // branch is release1234 for vsnetbeans_1237
+                                branch = branch.replace('vsnetbeans_','release')
+                            }
+                            else {
                                 // no branch definined in json exit build
                                 currentBuild.result = "FAILURE"
                                 throw new Exception("No entry in json for $branch")
