@@ -17,51 +17,40 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-organizationFolder('NetBeans/netbeans-TLP') {
+multibranchPipelineJob('NetBeans/netbeans-TLP') {
     description('Apache NetBeans release jobs and apidoc generation for historical version')
     displayName('NetBeans-TLP')
-    organizations {
-        fromSource {
-            name ('NetBeans')
-            sources {
+    branchSources  {
+        branchSource {
+            source {
                 git {
-                    remote ('https://github.com/apache/netbeans')    
+                    remote ('https://github.com/apache/netbeans')
                     traits {
                         gitBranchDiscovery()
                         headRegexFilter {
+
                             regex('(master|release\\d+$|vsnetbeans_preview_\\d+$|vsnetbeans_\\d+$)')
                         }
                     }
                 }
             }
         }
-        /* seems no accessible 
-        buildStrategies {
-            buildNamedBranches {
-                filters {
-                    regex {
-                        regex('(master|release\\d+$|vsnetbeans_preview_\\d+$|vsnetbeans_\\d+$)')
-                        caseSensitive(false)
-                    }
-                }
-            }
-        } */
-        projectFactories {
-            workflowMultiBranchProjectFactory {
-                // Relative location within the checkout of our Pipeline script.
-                scriptPath("nbbuild/jenkins/Jenkinsfile.groovy")
-            } 
+    }
+    factory {
+        workflowBranchProjectFactory {
+            // Relative location within the checkout of our Pipeline script.
+            scriptPath("nbbuild/jenkins/Jenkinsfile.groovy")
         }
-        orphanedItemStrategy {
-            discardOldItems {
-                numToKeep(4)
-                daysToKeep(5)
-            }
+    }
+    orphanedItemStrategy {
+        discardOldItems {
+            numToKeep(4)
+            daysToKeep(5)
         }
-        triggers {
-            periodicFolderTrigger {
-                interval("1d")
-            }
+    }
+    triggers {
+        periodicFolderTrigger {
+            interval("1d")
         }
     }
 }
