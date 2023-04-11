@@ -28,6 +28,7 @@ organizationFolder('NetBeans/netbeans-native-TLP') {
         traits {
           sourceWildcardFilter  {
             includes('netbeans-native*')
+            excludes('')
           } 
         }
       }
