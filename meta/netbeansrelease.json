@@ -978,8 +978,8 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/17/catalog.xml.gz",
         "publish_apidoc":"false",
         "milestones": {
-            "b3cf9b988542578e8d2c55c4d090e5fb5797fa1e": {
-                "version": "rc1",
+            "d5ba096b95520c04dcc2548ffd6751b8214dba88": {
+                "version": "1",
                 "position": "1"
             }
         },
