@@ -30,6 +30,10 @@ organizationFolder('NetBeans/netbeans-native-TLP') {
             includes('netbeans-native*')
             excludes('')
           } 
+          gitBranchDiscovery()
+          headRegexFilter {
+           regex('master')
+          } 
         }
       }
     }
