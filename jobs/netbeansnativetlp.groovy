@@ -26,8 +26,8 @@ organizationFolder('NetBeans/netbeans-native-TLP') {
         apiUri('https://api.github.com')
         credentialsId('ASF CI for Github PRs etc')
         traits {
-          sourceRegexFilter {
-            regex('netbeans-native*')
+          sourceWildcardFilter  {
+            includes('netbeans-native*')
           } 
         }
       }
