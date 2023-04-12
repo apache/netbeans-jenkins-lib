@@ -19,7 +19,7 @@
  */
 organizationFolder('NetBeans/netbeans-maven-TLP') {
     description('Apache NetBeans maven related jobs (nbm plugin ,archetype, infra, nbpackage)')
-    displayName('NetBeans-Maven-TLP')
+    displayName('netbeans-maven-TLP')
     organizations {
       github {
         repoOwner('apache')
@@ -36,6 +36,16 @@ organizationFolder('NetBeans/netbeans-maven-TLP') {
           headRegexFilter {
            regex('master')
           } 
+          cleanAfterCheckout {
+            extension {
+              deleteUntrackedNestedRepositories(true)
+            }
+          }
+          cleanBeforeCheckout {
+            extension {
+              deleteUntrackedNestedRepositories(true)
+            }
+          }  
         }
       }
     }
@@ -57,8 +67,8 @@ organizationFolder('NetBeans/netbeans-maven-TLP') {
         }
     }
 }
-listView('NetBeans/native') {
+listView('NetBeans/maven') {
     jobs {
-        name('NetBeans/netbeans-native-TLP')
+        name('NetBeans/netbeans-maven-TLP')
     }
 }
