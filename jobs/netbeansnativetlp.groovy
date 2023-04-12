@@ -19,7 +19,7 @@
  */
 organizationFolder('NetBeans/netbeans-native-TLP') {
     description('Apache NetBeans native related jobs (installer,launcher)')
-    displayName('NetBeans-native-TLP')
+    displayName('netbeans-native-TLP')
     organizations {
       github {
         repoOwner('apache')
