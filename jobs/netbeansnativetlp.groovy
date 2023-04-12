@@ -35,7 +35,17 @@ organizationFolder('NetBeans/netbeans-native-TLP') {
           } 
           headRegexFilter {
            regex('master')
-          } 
+          }
+          cleanAfterCheckout {
+            extension {
+              deleteUntrackedNestedRepositories(true)
+            }
+          }
+          cleanBeforeCheckout {
+            extension {
+              deleteUntrackedNestedRepositories(true)
+            }
+          }  
         }
       }
     }
