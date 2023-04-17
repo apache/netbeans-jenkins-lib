@@ -24,7 +24,7 @@ organizationFolder('NetBeans/netbeans-maven-TLP') {
       github {
         repoOwner('apache')
         apiUri('https://api.github.com')
-        credentials('ASF CI for Github PRs etc')
+        credentialsId('ASF_Cloudbees_Jenkins_ci-builds')
         traits {
           sourceWildcardFilter  {
             includes('netbeans-parent netbeans-webskin netbeans-mavenutils-* netbeans-nbpackage')
