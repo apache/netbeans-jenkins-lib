@@ -206,7 +206,7 @@ def call(Map params = [:]) {
                 }
 
             }
-            stage ('Released javadoc rebuild') {
+            stage ('Release branch javadoc rebuild to nightlies') {
                 tools {
                     jdk tooling.jdktool
                 }
@@ -215,7 +215,6 @@ def call(Map params = [:]) {
                         //expression { BRANCH_NAME ==~ /release[0-9]+/ }
                         branch pattern : "release\\d+",comparator:"REGEXP"
                         //wait for modern 1.4.1
-                        expression { month !='Invalid'}
                     }
 
                 }
@@ -225,6 +224,7 @@ def call(Map params = [:]) {
                             withAnt(installation: tooling.myAnt) {
                                 sh "ant"
                             }
+                            // use jdk version aligned to max supported
                             withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
                                 sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
                             }
@@ -410,15 +410,11 @@ def doParallelClusters(cconfigs) {
 
 
                                     // additionnal target to have maven ready
-                                    // javadoc build
+                                    // javadoc build for maven artefacts, do the more we can using jdk of build.
                                     sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dmetabuild.branch=${branch}"
-                                    sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip -Dmetabuild.branch=${branch}"
+                                    sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Dmetabuild.branch=${branch}"
                                     sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
-
-                                    // apidoc
-                                    publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
-
-                                    junit testResults: "build-${clustername}-temp/nbbuild/build/javadoc/checklinks-errors.xml", allowEmptyResults:true
+                                    
                                     def netbeansbase = "build-${clustername}-temp/nbbuild"
                                     sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates -Dmetabuild.branch=${branch}"
                                     withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
