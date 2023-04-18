@@ -24,7 +24,7 @@ organizationFolder('NetBeans/netbeans-native-TLP') {
       github {
         repoOwner('apache')
         apiUri('https://api.github.com')
-        credentialsId('ASF CI for Github PRs etc')
+        credentialsId('ASF_Cloudbees_Jenkins_ci-builds')
         traits {
           sourceWildcardFilter  {
             includes('netbeans-native*')
