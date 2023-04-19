@@ -294,6 +294,8 @@ def publishToNightlies(remotedirectory , source, prefix="") {
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
                     verbose: false)])
+    } else {
+        println "NO SSH PUBLISHER TO PUSH TO NIGHTLIES"
     }
 }
 // in fact not parallel otherwise workspace not cleaned
@@ -357,6 +359,7 @@ def doParallelClusters(cconfigs) {
                                     sh "mkdir -p distpreparation${versionnedpath}installer"
                                     sh "mkdir -p dist/vsix"
                                     if (params.INSTALLERS) { // skip installers unless requested
+                                        println "BUILDING INSTALLERS"
                                         def installer =  libraryResource 'org/apache/netbeans/installer.sh'
                                         writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
 
@@ -403,6 +406,8 @@ def doParallelClusters(cconfigs) {
                                             // archiveArtifacts "nbpackage${versionnedpath}installer/**"
                                         }
 
+                                    } else {
+                                        println "SKIPPING INSTALLER BUILDS"
                                     }
 
 
@@ -450,9 +455,12 @@ def doParallelClusters(cconfigs) {
         }
         stage("publish to nightlies ${versionnedpath}") {
             if (params.NIGHTLIES) {
+                println "PUBLISHING TO NIGHTLIES"
                 publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
                 publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
                 publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
+            } else {
+                println "SKIPPING PUBLISH TO NIGHTLIES"
             }
         }
     }
