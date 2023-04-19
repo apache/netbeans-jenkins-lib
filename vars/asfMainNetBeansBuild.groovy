@@ -276,7 +276,7 @@ def call(Map params = [:]) {
 
 def publishToNightlies(remotedirectory , source, prefix="") {
     // test if sshPublisher is known
-    if (this.getBinding().hasVariable('sshPublisher')) {
+    //if (this.getBinding().hasVariable('sshPublisher')) {
         sshPublisher(publishers: [
                 sshPublisherDesc(configName: 'Nightlies', transfers: [
                         sshTransfer(cleanRemote: true,
@@ -294,9 +294,9 @@ def publishToNightlies(remotedirectory , source, prefix="") {
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
                     verbose: false)])
-    } else {
-        println "NO SSH PUBLISHER TO PUSH TO NIGHTLIES"
-    }
+    //} else {
+    //     println "NO SSH PUBLISHER TO PUSH TO NIGHTLIES"
+    //}
 }
 // in fact not parallel otherwise workspace not cleaned
 def doParallelClusters(cconfigs) {
