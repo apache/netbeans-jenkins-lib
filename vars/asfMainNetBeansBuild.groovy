@@ -85,7 +85,7 @@ def call(Map params = [:]) {
                         sh 'rm -f netbeansrelease.json'
                         branch = env.BRANCH_NAME
                         def githash = env.GIT_COMMIT
-
+                        println '20231904'
                         println githash
                         println branch
 
