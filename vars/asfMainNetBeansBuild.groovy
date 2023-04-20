@@ -204,7 +204,25 @@ def call(Map params = [:]) {
                         }
                     }
                 }
-
+            }            
+            stage ('Release preparation') {
+                tools {
+                    jdk tooling.jdktool
+                }
+                when {
+                    allOf {
+                        //expression { BRANCH_NAME ==~ /release[0-9]+/  || BRANCH_NAME ==~ /vsnetbeans_preview_[0-9]+/ }
+                        branch pattern : "release\\d+|vsnetbeans_preview_\\d+",comparator:"REGEXP"
+                        //wait for modern 1.4.1
+                        expression { month =='Invalid' }
+                    }
+                }
+                steps {
+                    script {
+                        def clusterconfigs = [/*['platform','netbeans-platform'],*/['release','netbeans']]
+                        doParallelClusters(clusterconfigs);
+                    }
+                }
             }
             stage ('Release branch javadoc rebuild to nightlies') {
                 tools {
@@ -234,27 +252,6 @@ def call(Map params = [:]) {
                     }
                 }
 
-            }
-            stage ('Release preparation') {
-                tools {
-                    jdk tooling.jdktool
-                }
-                when {
-                    allOf {
-                        //expression { BRANCH_NAME ==~ /release[0-9]+/  || BRANCH_NAME ==~ /vsnetbeans_preview_[0-9]+/ }
-                        branch pattern : "release\\d+|vsnetbeans_preview_\\d+",comparator:"REGEXP"
-                        //wait for modern 1.4.1
-                        expression { month =='Invalid' }
-                    }
-                }
-                steps {
-                    script {
-
-                        def clusterconfigs = [/*['platform','netbeans-platform'],*/['release','netbeans']]
-
-                        doParallelClusters(clusterconfigs);
-                    }
-                }
             }
         }
 
