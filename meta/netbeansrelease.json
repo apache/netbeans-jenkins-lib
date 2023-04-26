@@ -1013,6 +1013,10 @@
             "931459385aafc6c12a637a2687736c55399cdda8": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "50323577f0f05669590725c1523e68b5f0f7a27c": {
+                "version": "rc2",
+                "position": "2"
             }
         },
         "releasedate": {
