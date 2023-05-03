@@ -80,7 +80,7 @@ def call(Map params = [:]) {
                 steps {
                     script {
                         // test if we can do that
-                        sh 'curl "https://netbeans.apache.org/nbbuild/netbeansrelease.json" -o netbeansrelease.json'
+                        sh 'curl "https://netbeans.apache.org/nbbuild/netbeansrelease.json" -L -o netbeansrelease.json'
                         def releaseInformation = readJSON file: 'netbeansrelease.json'
                         sh 'rm -f netbeansrelease.json'
                         branch = env.BRANCH_NAME
