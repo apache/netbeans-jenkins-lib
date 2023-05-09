@@ -1017,6 +1017,10 @@
             "50323577f0f05669590725c1523e68b5f0f7a27c": {
                 "version": "rc2",
                 "position": "2"
+            },
+            "c7b709c5c7eae44877c08c876b7dc2ba59e153fe": {
+                "version": "rc3",
+                "position": "3"
             }
         },
         "releasedate": {
