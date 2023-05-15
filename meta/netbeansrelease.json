@@ -1021,6 +1021,10 @@
             "c7b709c5c7eae44877c08c876b7dc2ba59e153fe": {
                 "version": "rc3",
                 "position": "3"
+            },
+            "7d33005615b3c744564f3d38ab9ef14bf8c3ec44": {
+                "version": "rc4",
+                "position": "4"
             }
         },
         "releasedate": {
