@@ -51,14 +51,14 @@ def call(Map params = [:]) {
 	}
         stages{
             stage("Build with default jdk (jdk8 if no parameters) ") {
-                agent { node { label 'ubuntu' } }
+                agent { node { label 'ubuntu && !nocredentials' } }
                 options { timeout(time: 120, unit: 'MINUTES') }                
                 steps{
                     mavenBuild( jdk, cmdline, mvnName, publishers,true)        
                 }
             }
             stage("Build on recent jdk") {
-                agent { node { label 'ubuntu' } }
+                agent { node { label 'ubuntu && !nocredentials' } }
                 options { timeout(time: 120, unit: 'MINUTES') }               
                 steps{
 	            script {	
