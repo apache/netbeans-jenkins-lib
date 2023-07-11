@@ -67,7 +67,7 @@ def call(Map params = [:]) {
             timeout(time: 240, unit: 'MINUTES')
         }
 
-        agent { node { label 'ubuntu' } }
+        agent { node { label 'ubuntu && !nocredentials' } }
 
         parameters {
             booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
@@ -76,7 +76,7 @@ def call(Map params = [:]) {
 
         stages {
             stage("Preparing Variable") {
-                //agent { node { label 'ubuntu' } }
+                //agent { node { label 'ubuntu && !nocredentials' } }
                 steps {
                     script {
                         // test if we can do that
