@@ -54,7 +54,7 @@ def call(Map params = [:]) {
 	}
         stages{
             stage("Build with xvfb") {
-                agent { node { label 'ubuntu' } }
+                agent { node { label 'ubuntu && !nocredentials' } }
                 options { timeout(time: 120, unit: 'MINUTES') }
                 when {expression {
                         return xvfb
@@ -67,7 +67,7 @@ def call(Map params = [:]) {
                 }
             }
             stage("Build") {
-                agent { node { label 'ubuntu' } }
+                agent { node { label 'ubuntu && !nocredentials' } }
                 options { timeout(time: 120, unit: 'MINUTES') }
                 when {expression {
                         return !xvfb
