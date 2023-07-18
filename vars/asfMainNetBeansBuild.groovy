@@ -71,6 +71,7 @@ def call(Map params = [:]) {
 
         parameters {
             booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
+            booleanParam(name: 'VSIX', defaultValue: false, description: 'Build VSCode plugin?')
             booleanParam(name: 'NIGHTLIES', defaultValue: false, description: 'Publish to nightlies.apache.org?')
         }
 
@@ -428,9 +429,14 @@ def doParallelClusters(cconfigs) {
                                             sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:4 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                             zip zipFile:'mavenrepo.zip',dir:'mavenrepository',archive:'true'
                                         }
-                                        // make vsix available to dist to pickup (only for main release) need a maven setup
-                                        sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
-                                        sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
+                                        if (params.VSIX) {
+                                            // make vsix available to dist to pickup (only for main release) need a maven setup
+                                            println "BUILDING VSCODE PLUGIN"
+                                            sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
+                                            sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
+                                        } else {
+                                            println "SKIPPING VSCODE PLUGIN"
+                                        }
                                     }
                                 }
 
