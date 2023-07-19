@@ -221,7 +221,7 @@ def call(Map params = [:]) {
                         steps {
                             script {
                                 def clusterconfigs = [/*['platform','netbeans-platform'],*/['release','netbeans']]
-                                doParallelClusters(clusterconfigs);
+                                doClusters(clusterconfigs);
                             }
                         }
                     }
@@ -298,8 +298,8 @@ def publishToNightlies(remotedirectory , source, prefix="") {
     //     println "NO SSH PUBLISHER TO PUSH TO NIGHTLIES"
     //}
 }
-// in fact not parallel otherwise workspace not cleaned
-def doParallelClusters(cconfigs) {
+// do clusters for a config
+def doClusters(cconfigs) {
     for (cluster in cconfigs) {
         def clustername = cluster[0]
         def path = cluster[1]
