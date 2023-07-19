@@ -159,103 +159,105 @@ def call(Map params = [:]) {
                     }
                 }
             }
-            stage ('Master build') {
-                tools {
-                    jdk tooling.jdktool
-                }
-                when {
-                    branch 'master'
-                }
-                stages {
-                    stage ('build javadoc') {
-                        steps {
-                            withAnt(installation: tooling.myAnt) {
-                                sh "ant getallmavencoordinates"
-                                sh "ant build-nbms"
-                                sh "ant build-source-zips"
-                            }
-                            withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
-
-                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
-
-                                junit 'nbbuild/build/javadoc/checklinks-errors.xml'
-
-                                publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
-                            }
+            stage ('parallel section') {                
+                parallel {
+                    stage ('Master build') {
+                        // build apidoc using apidocjdk + populate snapshot
+                        tools {
+                            jdk tooling.jdktool
                         }
-                    }
-                    stage (' Populate Snapshots') {
-                        steps {
-                            withAnt(installation: tooling.myAnt) {
-                                script {
-                                    def localRepo = "${env.WORKSPACE}/.repository"
-                                    def netbeansbase = "nbbuild"
-                                    def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
+                        when {
+                            branch 'master'
+                        }
+                        stages {
+                            stage ('build javadoc') {
+                                steps {
+                                    withAnt(installation: tooling.myAnt) {
+                                        sh "ant getallmavencoordinates"
+                                        sh "ant build-nbms"
+                                        sh "ant build-source-zips"
+                                    }
+                                    withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
+                                        sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                        // check apidoc links
+                                        junit 'nbbuild/build/javadoc/checklinks-errors.xml'
+                                        publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
+                                    }
+                                }
+                            }
+                            stage (' Populate Snapshots') {
+                                steps {
+                                    withAnt(installation: tooling.myAnt) {
+                                        script {
+                                            def localRepo = "${env.WORKSPACE}/.repository"
+                                            def netbeansbase = "nbbuild"
+                                            def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
+                                            sh "rm -rf ${env.WORKSPACE}/.repository"
+                                            withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
+                                            {
+                                                sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.6.0:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
-                                    sh "rm -rf ${env.WORKSPACE}/.repository"
-                                    withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
-                                    {
-                                        sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-
-                                        //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:4 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
+                                                //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
+                                                sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:4 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-            }            
-            stage ('Release preparation') {
-                tools {
-                    jdk tooling.jdktool
-                }
-                when {
-                    allOf {
-                        //expression { BRANCH_NAME ==~ /release[0-9]+/  || BRANCH_NAME ==~ /vsnetbeans_preview_[0-9]+/ }
-                        branch pattern : "release\\d+|vsnetbeans_preview_\\d+",comparator:"REGEXP"
-                        //wait for modern 1.4.1
-                        expression { month =='Invalid' }
-                    }
-                }
-                steps {
-                    script {
-                        def clusterconfigs = [/*['platform','netbeans-platform'],*/['release','netbeans']]
-                        doParallelClusters(clusterconfigs);
-                    }
-                }
-            }
-            stage ('Release branch javadoc rebuild to nightlies') {
-                tools {
-                    jdk tooling.jdktool
-                }
-                when {
-                    allOf {
-                        //expression { BRANCH_NAME ==~ /release[0-9]+/ }
-                        branch pattern : "release\\d+",comparator:"REGEXP"
-                        //wait for modern 1.4.1
-                    }
-
-                }
-                stages {
-                    stage ('Archive Javadoc') {
+                    stage ('Release preparation') {
+                        tools {
+                            jdk tooling.jdktool
+                        }
+                        when {
+                            allOf {
+                                //expression { BRANCH_NAME ==~ /release[0-9]+/  || BRANCH_NAME ==~ /vsnetbeans_preview_[0-9]+/ }
+                                branch pattern : "release\\d+|vsnetbeans_preview_\\d+",comparator:"REGEXP"
+                                //wait for modern 1.4.1
+                                expression { month =='Invalid' }
+                            }
+                        }
                         steps {
-                            withAnt(installation: tooling.myAnt) {
-                                sh "ant"
+                            script {
+                                def clusterconfigs = [/*['platform','netbeans-platform'],*/['release','netbeans']]
+                                doParallelClusters(clusterconfigs);
                             }
-                            // use jdk version aligned to max supported
-                            withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
-                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
-                            }
-                            junit 'nbbuild/build/javadoc/checklinks-errors.xml'
-                            publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
                         }
                     }
-                }
+                    stage ('Release branch javadoc rebuild to nightlies') {
+                        // build apidoc using apidocjdk
+                        tools {
+                            jdk tooling.jdktool
+                        }
+                        when {
+                            allOf {
+                                //expression { BRANCH_NAME ==~ /release[0-9]+/ }
+                                branch pattern : "release\\d+",comparator:"REGEXP"
+                                //wait for modern 1.4.1
+                            }
+                        }
+                        stages {
+                            stage ('Archive Javadoc') {
+                                steps {
+                                    withAnt(installation: tooling.myAnt) {
+                                        sh "ant"
+                                    }
+                                    // use jdk version aligned to max supported
+                                    withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
+                                        sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                    }
+                                    // check apidoc links
+                                    junit 'nbbuild/build/javadoc/checklinks-errors.xml'
+                                    publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
+                                }
+                            }
+                        }
 
+                    }
+                }
             }
         }
-
 
         post {
             cleanup {
@@ -267,31 +269,31 @@ def call(Map params = [:]) {
             failure {
                 slackSend (channel:'#netbeans-builds', message:"FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'  (${env.BUILD_URL})",color:'#FF0000')
             }
-
         }
     }
 }
 
+
 def publishToNightlies(remotedirectory , source, prefix="") {
     // test if sshPublisher is known
     //if (this.getBinding().hasVariable('sshPublisher')) {
-        sshPublisher(publishers: [
-                sshPublisherDesc(configName: 'Nightlies', transfers: [
-                        sshTransfer(cleanRemote: true,
-                            excludes: '',
-                            execCommand: '',
-                            execTimeout: 0,
-                            flatten: false,
-                            makeEmptyDirs: false,
-                            noDefaultExcludes: false,
-                            patternSeparator: '[, ]+',
-                            remoteDirectory: remotedirectory,
-                            remoteDirectorySDF: false,
-                            removePrefix: prefix,
-                            sourceFiles: source)],
-                    usePromotionTimestamp: false,
-                    useWorkspaceInPromotion: false,
-                    verbose: false)])
+    sshPublisher(publishers: [
+            sshPublisherDesc(configName: 'Nightlies', transfers: [
+                    sshTransfer(cleanRemote: true,
+                        excludes: '',
+                        execCommand: '',
+                        execTimeout: 0,
+                        flatten: false,
+                        makeEmptyDirs: false,
+                        noDefaultExcludes: false,
+                        patternSeparator: '[, ]+',
+                        remoteDirectory: remotedirectory,
+                        remoteDirectorySDF: false,
+                        removePrefix: prefix,
+                        sourceFiles: source)],
+                usePromotionTimestamp: false,
+                useWorkspaceInPromotion: false,
+                verbose: false)])
     //} else {
     //     println "NO SSH PUBLISHER TO PUSH TO NIGHTLIES"
     //}
@@ -339,8 +341,8 @@ def doParallelClusters(cconfigs) {
 
                             // build target is more complex,
                             if (target=='build') {
-                                
-                               
+
+
 
                                 sh "mkdir -p dist${versionnedpath}"
                                 // source
@@ -392,8 +394,8 @@ def doParallelClusters(cconfigs) {
                                         withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                         {
                                             // unpack nbpackage snapshot can later
-                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get  -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.6.0:get  -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.6.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
                                             // build installer only deb for testing.
                                             sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage -v --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
@@ -417,12 +419,12 @@ def doParallelClusters(cconfigs) {
                                     sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dmetabuild.branch=${branch}"
                                     sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Dmetabuild.branch=${branch}"
                                     sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
-                                    
+
                                     def netbeansbase = "build-${clustername}-temp/nbbuild"
                                     sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates -Dmetabuild.branch=${branch}"
                                     withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                     {
-                                        sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                        sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.6.0:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
                                         def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
                                         //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                         if (heavyrelease) { // skip mavenrepo for vscode
@@ -445,7 +447,7 @@ def doParallelClusters(cconfigs) {
                                 for (String extension in extensions) {
                                     sh "cd dist"+' && for z in $(find . -name "'+"${extension}"+'") ; do cd $(dirname $z) ; sha512sum ./$(basename $z) > $(basename $z).sha512; cd - >/dev/null; done '
                                 }
-                                archiveArtifacts 'dist/**'                             
+                                archiveArtifacts 'dist/**'
                             }
                         }
                     }
