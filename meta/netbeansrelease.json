@@ -1065,6 +1065,10 @@
             "9e004a08c61fd707f83fe7e6e6e746dd5a82d33f": {
                 "version": "rc3",
                 "position": "3"
+            },
+            "f1f01f07c5874faea7a7864b07f0305949981830": {
+                "version": "rc4",
+                "position": "4"
             }
         },
         "releasedate": {
