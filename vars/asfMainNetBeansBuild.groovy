@@ -50,7 +50,7 @@ def tooling=[:]
 @groovy.transform.Field
 def repopluginversion="14.0-SNAPSHOT"
 @groovy.transform.Field
-def nbpackageversion="1.0-beta3-SNAPSHOT"
+def nbpackageversion="1.0-beta3"
 @groovy.transform.Field
 def branch=""
 @groovy.transform.Field
