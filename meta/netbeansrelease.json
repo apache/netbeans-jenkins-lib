@@ -1086,6 +1086,37 @@
             "year": "2023"
         }
     },
+    "release1903": {
+        "position": "29",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc" : "jdk_20_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "19.0.301",
+        "vsixVersion": "19.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/19/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/19/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/19/catalog.xml.gz",
+        "publish_apidoc":"false",
+        "milestones": {
+            "a4ca9c57cd358d4f8c267ab1884bfa24242f1a32": {
+                "version": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "15",
+            "month": "09",
+            "year": "2023"
+        },
+        "previousreleasedate": {
+            "day": "01",
+            "month": "09",
+            "year": "2023"
+        }
+    },
     "master": {
         "position": "50000",
         "ant": "ant_latest",
