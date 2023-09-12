@@ -1101,13 +1101,13 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/19/catalog.xml.gz",
         "publish_apidoc":"false",
         "milestones": {
-            "a4ca9c57cd358d4f8c267ab1884bfa24242f1a32": {
+            "f48f91e6c197d8a40bd82fc2f2d12a4e71242afe": {
                 "version": "1",
                 "position": "1"
             }
         },
         "releasedate": {
-            "day": "15",
+            "day": "18",
             "month": "09",
             "year": "2023"
         },
