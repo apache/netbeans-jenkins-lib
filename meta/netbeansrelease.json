@@ -1144,6 +1144,10 @@
             "cbc39f85a13aa7ea9142087867f135d890588a61": {
                 "version": "rc3",
                 "position": "3"
+            },
+            "91f9ed846ac143b52d50b5ea323a42c2f7e78392": {
+                "version": "rc4",
+                "position": "4"
             }
         },
         "releasedate": {
