@@ -48,7 +48,7 @@ def mavenVersion=""
 @groovy.transform.Field
 def tooling=[:]
 @groovy.transform.Field
-def repopluginversion="14.0-SNAPSHOT"
+def repopluginversion="14.1-SNAPSHOT"
 @groovy.transform.Field
 def nbpackageversion="1.0-beta3"
 @groovy.transform.Field
