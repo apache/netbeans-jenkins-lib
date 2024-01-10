@@ -1176,7 +1176,7 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/20/catalog.xml.gz",
         "publish_apidoc":"false",
         "milestones": {
-            "53e632e7e3068683519d985fc33f40647c3dcd8e": {
+            "2fb03d6ccf775da515fd128f05d252a5e434d3eb": {
                 "version": "1",
                 "position": "1"
             }
