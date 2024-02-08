@@ -1215,6 +1215,10 @@
             "61d71a2ede5896cdcc712f51af51e0611c01ddcd": {
                 "version": "rc2",
                 "position": "2"
+            },
+            "115308a5e12df3924736ffb7d7cccf649b2bc690": {
+                "version": "rc3",
+                "position": "3"
             }
         },
         "releasedate": {
