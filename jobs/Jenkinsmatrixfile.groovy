@@ -53,7 +53,7 @@ pipeline {
                 axes {
                     axis {
                         name 'JDK'
-                        values 'jdk_1.8_latest', 'jdk_11_latest', 'jdk_17_latest'
+                        values 'jdk_1.8_latest', 'jdk_11_latest', 'jdk_17_latest', 'jdk_21_latest','jdk_23_latest'
                     }
                     axis {
                         name 'CLUSTER'
@@ -100,7 +100,7 @@ pipeline {
                 script { 
                     // generate an index 
                     // matrix axis  (jdk and cluster) should be copied here matrix do not allow variable
-                    def jdk = ['jdk_1.8_latest', 'jdk_11_latest', 'jdk_17_latest']
+                    def jdk = ['jdk_1.8_latest', 'jdk_11_latest', 'jdk_17_latest','jdk_21_latest','jdk_23_latest']
                     def cluster = ['platform','ide']
                     
                     def content = '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>testing website</title></head><body><h1>Unit and QA functional testing for Apache NetBeans</h1>'
