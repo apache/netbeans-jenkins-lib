@@ -61,15 +61,20 @@ def netbeansBaseJob(Map m, Closure c = {}) {
 }
 
 netbeansBaseJob(name:'linux',xvfb:true) {
-    description("""Builds Apache NetBeans from <a href="https://github.com/apache/netbeans">its Github repository</a>
-and runs platform tests that aren't marked with <code>@RandomlyFails</code> annotation:
+    description("""job tasks:
+ <ul>
+  <li>Builds Apache NetBeans from <a href="https://github.com/apache/netbeans">its Github repository</a></li>
+  <li>runs platform tests that aren't marked with <code>@RandomlyFails</code> annotation</li>
+  <li>the artifacts are used as dev-build and linked from the README (and therefore github)</li>
+</ul> 
+
 <p>
+  tests:
 <pre>
-\$ ant test-platform
+$ ant test-platform
 </pre>
 <p>
 There is also a <a href="../netbeans-windows">windows version</a> of this job.
-There is also a <a href="../netbeans-linux-jdk11">JDK11 version</a> of this job.
 The <b>licenses</b> are checked by the <a href="../netbeans-license/lastCompletedBuild/testReport/ ">license job</a>.""")
     
     label('ubuntu')
