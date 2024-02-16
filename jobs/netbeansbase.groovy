@@ -71,7 +71,7 @@ netbeansBaseJob(name:'linux',xvfb:true) {
 <p>
   tests:
 <pre>
-$ ant test-platform
+\$ ant test-platform
 </pre>
 <p>
 There is also a <a href="../netbeans-windows">windows version</a> of this job.
