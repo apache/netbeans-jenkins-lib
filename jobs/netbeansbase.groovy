@@ -31,7 +31,7 @@ def netbeansBaseJob(Map m, Closure c = {}) {
             numToKeep(2)
             daysToKeep(7)
         }
-        jdk('jdk_11_latest')    
+        jdk('jdk_17_latest')    
         triggers {
             scm('H/5 * * * *')
         }
@@ -80,7 +80,7 @@ The <b>licenses</b> are checked by the <a href="../netbeans-license/lastComplete
     label('ubuntu')
     steps {
         ant {
-            targets(['build','test-platform', 'build-nbms', 'generate-uc-catalog', 'build-source-zips', 'index-layer-paths'])
+            targets(['build','build-nbms', 'generate-uc-catalog', 'build-source-zips', 'index-layer-paths'])
             props('do.build.windows.launchers': 'true')
             antInstallation(antversion)
         }
