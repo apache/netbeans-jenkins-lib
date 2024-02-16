@@ -87,7 +87,7 @@ The <b>licenses</b> are checked by the <a href="../netbeans-license/lastComplete
     }
     publishers {
         archiveArtifacts('nbbuild/**/*.zip,nbbuild/nbms/**,nbbuild/build/generated/**')
-        archiveJunit('**/test/*/results/TEST*.xml')
+        //archiveJunit('**/test/*/results/TEST*.xml')
     } 
 }
 
