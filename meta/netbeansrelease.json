@@ -1281,7 +1281,8 @@
         "milestones": {
             "553bcecede66e4c45748761aeeadbf41ec29f508 ": {
                 "version": "rc1",
-                "position": "1"           
+                "position": "1"
+            }
         },
         "releasedate": {
             "day": "-",
