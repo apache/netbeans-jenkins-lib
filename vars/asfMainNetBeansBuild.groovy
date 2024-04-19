@@ -66,8 +66,8 @@ def call(Map params = [:]) {
             disableConcurrentBuilds()
             timeout(time: 340, unit: 'MINUTES')
         }
-
-        agent { node { label 'ubuntu && !nocredentials' } }
+// 
+        agent { node { label 'ubuntu && !nocredentials && !ephemeral' } }
 
         parameters {
             booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
@@ -89,7 +89,8 @@ def call(Map params = [:]) {
                         println '20231904'
                         println githash
                         println branch
-
+                        // we need npm later test early
+                        sh 'npm --version'
                         if (!releaseInformation[branch]) {
                             // no branch definined in json exit build
                             if (releaseInformation[branch.replace('vsnetbeans_preview_','release')]) {
