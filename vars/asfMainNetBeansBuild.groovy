@@ -67,7 +67,7 @@ def call(Map params = [:]) {
             timeout(time: 340, unit: 'MINUTES')
         }
 // 
-        agent { node { label 'ubuntu && !nocredentials && !ephemeral' } }
+        agent { node { label 'ubuntu && !ephemeral' } }
 
         parameters {
             booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
