@@ -1279,7 +1279,7 @@
         "plugin_url": "https://netbeans.apache.org/nb/plugins/22/catalog.xml.gz",
         "publish_apidoc": "true",
         "milestones": {
-            "553bcecede66e4c45748761aeeadbf41ec29f508 ": {
+            "553bcecede66e4c45748761aeeadbf41ec29f508": {
                 "version": "rc1",
                 "position": "1"
             }
