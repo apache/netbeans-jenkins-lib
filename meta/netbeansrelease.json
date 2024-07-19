@@ -1297,9 +1297,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "29",
+            "month": "05",
+            "year": "2024"
         },
         "previousreleasedate": {
             "day": "20",
@@ -1342,7 +1342,7 @@
         "position": "50000",
         "ant": "ant_latest",
         "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_21_latest",
+        "jdktoolapidoc" : "jdk_22_latest",
         "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
         "maven": "maven_3_latest",
         "mavenversion": "dev-SNAPSHOT",
@@ -1358,8 +1358,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "20",
-            "month": "02",
+            "day": "29",
+            "month": "05",
             "year": "2024"
         }
     }
