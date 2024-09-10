@@ -265,6 +265,9 @@ def call(Map params = [:]) {
             success {
                 slackSend (channel:'#netbeans-builds', message:"SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ",color:'#00FF00')
             }
+            unstable {
+                slackSend (channel:'#netbeans-builds', message:"UNSTABLE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'  (${env.BUILD_URL})",color:'#FF8000')
+            }
             failure {
                 slackSend (channel:'#netbeans-builds', message:"FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'  (${env.BUILD_URL})",color:'#FF0000')
             }
