@@ -1413,7 +1413,7 @@
         "position": "50000",
         "ant": "ant_latest",
         "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_22_latest",
+        "jdktoolapidoc" : "jdk_23_latest",
         "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
         "maven": "maven_3_latest",
         "mavenversion": "dev-SNAPSHOT",
