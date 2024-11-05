@@ -1428,7 +1428,11 @@
             "4d10c981a697859633d8b4a204d91ffd39dfba0f": {
                 "version": "rc1",
                 "position": "1"
-            },    
+            },
+            "4aeb2be7a207c9573db01d3a25659ec205d5e45a": {
+                "version": "rc2",
+                "position": "2"
+            } 
         },
         "releasedate": {
             "day": "-",
