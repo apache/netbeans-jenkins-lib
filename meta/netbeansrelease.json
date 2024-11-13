@@ -1432,7 +1432,11 @@
             "4aeb2be7a207c9573db01d3a25659ec205d5e45a": {
                 "version": "rc2",
                 "position": "2"
-            } 
+            },
+            "0be8be2cd31c7f5799b51655b849f9ea22d04ba1": {
+                "version": "rc3",
+                "position": "3"
+            },            
         },
         "releasedate": {
             "day": "-",
