@@ -1447,9 +1447,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "10",
+            "month": "12",
+            "year": "2024"
         },
         "previousreleasedate": {
             "day": "19",
@@ -1477,8 +1477,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "19",
-            "month": "09",
+            "day": "10",
+            "month": "12",
             "year": "2024"
         }
     }
