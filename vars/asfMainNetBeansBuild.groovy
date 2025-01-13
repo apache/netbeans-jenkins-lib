@@ -419,7 +419,10 @@ def doParallelClusters(cconfigs) {
                                     // additionnal target to have maven ready
                                     // javadoc build for maven artefacts, do the more we can using jdk of build.
                                     sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dmetabuild.branch=${branch}"
+                                    // try to build javadoc using jdkapidoc
+                                    withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
                                     sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Dmetabuild.branch=${branch}"
+                                    }
                                     sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
                                     
                                     def netbeansbase = "build-${clustername}-temp/nbbuild"
