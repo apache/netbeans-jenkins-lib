@@ -1475,6 +1475,10 @@
             "daa8132538e9343d013cbac3c20cff859aefa5f4": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "4b9a4f764036ea334e0f8b9063daf86a0ead9a51": {
+                "vote": "2",
+                "position": "2"
             }
         },
         "releasedate": {
