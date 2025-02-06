@@ -1511,7 +1511,11 @@
             "340da06d02a6f4eb1525774d74be603f152d04af": {
                 "version": "rc1",
                 "position": "1"
-            }            
+            },
+             "0f82d968998b78ef4d323537d1149eb68e747d9a": {
+                "version": "rc2",
+                "position": "2"
+            }
         },
         "releasedate": {
             "day": "-",
