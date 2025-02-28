@@ -1518,9 +1518,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "20",
+            "month": "02",
+            "year": "2025"
         },
         "previousreleasedate": {
             "day": "10",
@@ -1533,7 +1533,7 @@
         "ant": "ant_latest",
         "jdk": "jdk_17_latest",
         "jdktoolapidoc" : "jdk_23_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/23/docs/api/",
         "maven": "maven_3_latest",
         "mavenversion": "dev-SNAPSHOT",
         "versionName": "dev",
