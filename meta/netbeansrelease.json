@@ -1546,12 +1546,16 @@
             "dc7c5dce1ab78eaf84c580343c388e246a9e473f": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "f92cfd14a564c5d1add459db4c6c6539273cdf1d" : {
+                "vote": "1",
+                "position": "1"
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "01",
+            "month": "04",
+            "year": "2025"
         },
         "previousreleasedate": {
             "day": "20",
