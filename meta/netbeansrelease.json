@@ -1575,7 +1575,7 @@
         "vsixVersion": "26.0.0",
         "tlp": "true",
         "apidocurl": "https://bits.netbeans.org/26/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/26/updates.xml?{$netbeans.hash.code}"
+        "update_url": "https://netbeans.apache.org/nb/updates/26/updates.xml?{$netbeans.hash.code}",
         "plugin_url": "https://netbeans.apache.org/nb/plugins/26/catalog.xml.gz",
         "publish_apidoc":"true",
         "milestones": {
