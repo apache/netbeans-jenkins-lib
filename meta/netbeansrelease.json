@@ -1582,7 +1582,11 @@
             "27b43e77690d92eaf5d90e23d77b4626145c4d3f": {
                 "version": "rc1",
                 "position": "1"
-            }       
+            },
+            "473241e74600e9232c55ac2bdc3bd29d2be18fc6": {
+                "version": "rc2",
+                "position": "2"
+            }     
         },
         "releasedate": {
             "day": "-",
