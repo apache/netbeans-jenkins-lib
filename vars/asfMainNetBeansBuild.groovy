@@ -247,8 +247,10 @@ def call(Map params = [:]) {
                                 sh "ant"
                             }
                             // use jdk version aligned to max supported
-                            withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
-                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                            withEnv( ["ANT_OPTS=-Djdk.xml.totalEntitySizeLimit=200000"]){
+                                withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
+                                    sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                }
                             }
                             junit 'nbbuild/build/javadoc/checklinks-errors.xml'
                             publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
