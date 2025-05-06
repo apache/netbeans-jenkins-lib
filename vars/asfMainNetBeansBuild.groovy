@@ -66,7 +66,7 @@ def call(Map params = [:]) {
             disableConcurrentBuilds()
             timeout(time: 340, unit: 'MINUTES')
         }
-// 
+        // 
         agent { node { label 'ubuntu && !ephemeral' } }
 
         parameters {
@@ -175,13 +175,15 @@ def call(Map params = [:]) {
                                 sh "ant build-nbms"
                                 sh "ant build-source-zips"
                             }
-                            withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
+                            withEnv( ["ANT_OPTS=-Djdk.xml.totalEntitySizeLimit=200000"]){
+                                withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
 
-                                sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
+                                    sh "ant build-javadoc -Djavadoc.web.zip=${env.WORKSPACE}/WEBZIP.zip"
 
-                                junit 'nbbuild/build/javadoc/checklinks-errors.xml'
+                                    junit 'nbbuild/build/javadoc/checklinks-errors.xml'
 
-                                publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
+                                    publishToNightlies("/netbeans/apidocs/${env.BRANCH_NAME}","**/WEBZIP.zip")
+                                }
                             }
                         }
                     }
@@ -279,23 +281,23 @@ def call(Map params = [:]) {
 def publishToNightlies(remotedirectory , source, prefix="") {
     // test if sshPublisher is known
     //if (this.getBinding().hasVariable('sshPublisher')) {
-        sshPublisher(publishers: [
-                sshPublisherDesc(configName: 'Nightlies', transfers: [
-                        sshTransfer(cleanRemote: true,
-                            excludes: '',
-                            execCommand: '',
-                            execTimeout: 0,
-                            flatten: false,
-                            makeEmptyDirs: false,
-                            noDefaultExcludes: false,
-                            patternSeparator: '[, ]+',
-                            remoteDirectory: remotedirectory,
-                            remoteDirectorySDF: false,
-                            removePrefix: prefix,
-                            sourceFiles: source)],
-                    usePromotionTimestamp: false,
-                    useWorkspaceInPromotion: false,
-                    verbose: false)])
+    sshPublisher(publishers: [
+            sshPublisherDesc(configName: 'Nightlies', transfers: [
+                    sshTransfer(cleanRemote: true,
+                        excludes: '',
+                        execCommand: '',
+                        execTimeout: 0,
+                        flatten: false,
+                        makeEmptyDirs: false,
+                        noDefaultExcludes: false,
+                        patternSeparator: '[, ]+',
+                        remoteDirectory: remotedirectory,
+                        remoteDirectorySDF: false,
+                        removePrefix: prefix,
+                        sourceFiles: source)],
+                usePromotionTimestamp: false,
+                useWorkspaceInPromotion: false,
+                verbose: false)])
     //} else {
     //     println "NO SSH PUBLISHER TO PUSH TO NIGHTLIES"
     //}
@@ -420,8 +422,10 @@ def doParallelClusters(cconfigs) {
                                     // javadoc build for maven artefacts, do the more we can using jdk of build.
                                     sh "ant -f build-${clustername}-temp/build.xml build-nbms build-source-zips generate-uc-catalog -Dcluster.config=release -Ddo.build.windows.launchers=true -Dmetabuild.branch=${branch}"
                                     // try to build javadoc using jdkapidoc
-                                    withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
-                                    sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Dmetabuild.branch=${branch}"
+                                    withEnv( ["ANT_OPTS=-Djdk.xml.totalEntitySizeLimit=200000"]){
+                                        withAnt(installation: tooling.myAnt, jdk: tooling.jdktoolapidoc) {
+                                            sh "ant -f build-${clustername}-temp/build.xml build-javadoc -Djavadoc.web.root='${apidocurl}' -Dmodules-javadoc-date='${date}' -Datom-date='${atomdate}' -Dmetabuild.branch=${branch}"
+                                        }
                                     }
                                     sh "cp -r build-${clustername}-temp/nbbuild/nbms/** dist${versionnedpath}nbms/"
                                     
