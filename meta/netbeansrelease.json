@@ -1586,7 +1586,11 @@
             "473241e74600e9232c55ac2bdc3bd29d2be18fc6": {
                 "version": "rc2",
                 "position": "2"
-            }     
+            },
+            "81d21190648c8a1bae92bc9cdb0bb9783ae4912f": {
+                "version": "rc3,
+                "position": "3"
+            }
         },
         "releasedate": {
             "day": "-",
@@ -1619,9 +1623,9 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "10",
-            "month": "12",
-            "year": "2024"
+            "day": "20",
+            "month": "02",
+            "year": "2025"
         }
     }
 }
