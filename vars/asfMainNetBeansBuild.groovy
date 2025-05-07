@@ -362,40 +362,16 @@ def doParallelClusters(cconfigs) {
                                     // installer we prepare a folder so that release manager can build mac os on his own
                                     sh "mkdir -p dist${versionnedpath}nbms"
                                     sh "mkdir -p dist/installers"
-                                    sh "mkdir -p distpreparation${versionnedpath}installer"
                                     sh "mkdir -p dist/vsix"
                                     if (params.INSTALLERS) { // skip installers unless requested
                                         println "BUILDING INSTALLERS"
-                                        def installer =  libraryResource 'org/apache/netbeans/installer.sh'
-                                        writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
-
-                                        def installermac =  libraryResource 'org/apache/netbeans/installermac.sh'
-                                        writeFile file: "distpreparation${versionnedpath}installer/installermac.sh", text: installermac
-
-                                        sh "chmod +x distpreparation${versionnedpath}installer/installer.sh"
-
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* distpreparation${versionnedpath}installer/nbbuild/newbuild "
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer distpreparation${versionnedpath}installer/nbbuild "
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbi && cp -r build-${clustername}-temp/nbi distpreparation${versionnedpath}installer "
-                                        sh "cp build-${clustername}-temp/nbbuild/binaries-default-properties.xml distpreparation${versionnedpath}installer/nbbuild/binaries-default-properties.xml "
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/build/ && cp -r build-${clustername}-temp/nbbuild/build/antclasses distpreparation${versionnedpath}installer/nbbuild/build/antclasses "
-
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nb/ide.launcher && cp -r build-${clustername}-temp/nb/ide.launcher/macosx distpreparation${versionnedpath}installer/nb/ide.launcher "
-
-
-                                        sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         def binaryfile = "../../../dist${versionnedpath}${path}-${rmversion}-bin.zip"
                                         def timestamp = sh(returnStdout: true, script: 'date +%y%m%d').trim()
 
-                                        sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
                                         // we archive put to nightlies only exe for window, nbpackage is intended to do the installler
-                                        sh "cp distpreparation${versionnedpath}installer/dist/bundles/*.exe dist/installers/ "
-
-                                        sh "rm -rf distpreparation${versionnedpath}installer/dist"
                                         // XXX take too long 18012023 publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
 
-                                        archiveArtifacts 'distpreparation/**'
-
+                                        
                                         sh "mkdir -p nbpackage${versionnedpath}installer"
                                         withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                         {
