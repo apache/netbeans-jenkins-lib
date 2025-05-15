@@ -18,6 +18,10 @@
             "27b43e77690d92eaf5d90e23d77b4626145c4d3f": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "ddac88c216c6468942f3e65cb10b54d1b29857a5" : {
+                "vote": "1",
+                "position": "2"
             }
         },
         "releasedate": {
