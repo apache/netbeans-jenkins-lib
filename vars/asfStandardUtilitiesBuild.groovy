@@ -62,7 +62,7 @@ def call(Map params = [:]) {
                 options { timeout(time: 120, unit: 'MINUTES') }               
                 steps{
 	            script {	
-		        def jdklist = ['jdk_11_latest','jdk_17_latest','jdk_21_latest'] // lts and after last lts if available
+		        def jdklist = ['jdk_17_latest','jdk_21_latest'] // lts and after last lts if available
 		        for (ajdk in jdklist) {
 			    stage("build on $ajdk") {
 				// do not deploy for recent jdk
