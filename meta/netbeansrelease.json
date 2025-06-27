@@ -1593,9 +1593,9 @@
             }
         },
         "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
+            "day": "19",
+            "month": "05",
+            "year": "2025"
         },
         "previousreleasedate": {
             "day": "20",
@@ -1623,8 +1623,8 @@
             "year": "-"
         },
         "previousreleasedate": {
-            "day": "20",
-            "month": "02",
+            "day": "19",
+            "month": "05",
             "year": "2025"
         }
     }
