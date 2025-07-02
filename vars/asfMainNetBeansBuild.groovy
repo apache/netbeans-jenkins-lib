@@ -48,7 +48,7 @@ def mavenVersion=""
 @groovy.transform.Field
 def tooling=[:]
 @groovy.transform.Field
-def repopluginversion="14.2"
+def repopluginversion="14.3"
 @groovy.transform.Field
 def nbpackageversion="1.0-beta5"
 @groovy.transform.Field
@@ -201,7 +201,7 @@ def call(Map params = [:]) {
                                         sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
                                         //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate -X ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:4 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
+                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate -X ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:5 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
                                     }
                                 }
                             }
@@ -439,7 +439,7 @@ def doParallelClusters(cconfigs) {
                                         def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
                                         //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                         if (heavyrelease) { // skip mavenrepo for vscode
-                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:4 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:5 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                             zip zipFile:'mavenrepo.zip',dir:'mavenrepository',archive:'true'
                                         }
                                         if (params.VSIX) {
