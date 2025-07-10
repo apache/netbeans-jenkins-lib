@@ -50,8 +50,6 @@ def tooling=[:]
 @groovy.transform.Field
 def repopluginversion="14.3"
 @groovy.transform.Field
-def nbpackageversion="1.0-beta5"
-@groovy.transform.Field
 def branch=""
 @groovy.transform.Field
 def heavyrelease=true
@@ -70,7 +68,6 @@ def call(Map params = [:]) {
         agent { node { label 'ubuntu && !ephemeral' } }
 
         parameters {
-            booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
             booleanParam(name: 'VSIX', defaultValue: false, description: 'Build VSCode plugin?')
             booleanParam(name: 'NIGHTLIES', defaultValue: false, description: 'Publish to nightlies.apache.org?')
         }
@@ -361,60 +358,8 @@ def doParallelClusters(cconfigs) {
 
                                     // installer we prepare a folder so that release manager can build mac os on his own
                                     sh "mkdir -p dist${versionnedpath}nbms"
-                                    sh "mkdir -p dist/installers"
-                                    sh "mkdir -p distpreparation${versionnedpath}installer"
                                     sh "mkdir -p dist/vsix"
-                                    if (params.INSTALLERS) { // skip installers unless requested
-                                        println "BUILDING INSTALLERS"
-                                        def installer =  libraryResource 'org/apache/netbeans/installer.sh'
-                                        writeFile file: "distpreparation${versionnedpath}installer/installer.sh", text: installer
-
-                                        def installermac =  libraryResource 'org/apache/netbeans/installermac.sh'
-                                        writeFile file: "distpreparation${versionnedpath}installer/installermac.sh", text: installermac
-
-                                        sh "chmod +x distpreparation${versionnedpath}installer/installer.sh"
-
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/newbuild && cp build-${clustername}-temp/nbbuild/newbuild/* distpreparation${versionnedpath}installer/nbbuild/newbuild "
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/installer && cp -r build-${clustername}-temp/nbbuild/installer distpreparation${versionnedpath}installer/nbbuild "
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbi && cp -r build-${clustername}-temp/nbi distpreparation${versionnedpath}installer "
-                                        sh "cp build-${clustername}-temp/nbbuild/binaries-default-properties.xml distpreparation${versionnedpath}installer/nbbuild/binaries-default-properties.xml "
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nbbuild/build/ && cp -r build-${clustername}-temp/nbbuild/build/antclasses distpreparation${versionnedpath}installer/nbbuild/build/antclasses "
-
-                                        sh "mkdir -p distpreparation${versionnedpath}installer/nb/ide.launcher && cp -r build-${clustername}-temp/nb/ide.launcher/macosx distpreparation${versionnedpath}installer/nb/ide.launcher "
-
-
-                                        sh "cp build-${clustername}-temp/nbbuild/*${clustername}*.zip dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                        def binaryfile = "../../../dist${versionnedpath}${path}-${rmversion}-bin.zip"
-                                        def timestamp = sh(returnStdout: true, script: 'date +%y%m%d').trim()
-
-                                        sh "cd distpreparation${versionnedpath}installer && ./installer.sh ${binaryfile} ${version} ${timestamp}"
-                                        // we archive put to nightlies only exe for window, nbpackage is intended to do the installler
-                                        sh "cp distpreparation${versionnedpath}installer/dist/bundles/*.exe dist/installers/ "
-
-                                        sh "rm -rf distpreparation${versionnedpath}installer/dist"
-                                        // XXX take too long 18012023 publishToNightlies("/netbeans/candidate/installerspreparation","distpreparation/**/**","distpreparation")
-
-                                        archiveArtifacts 'distpreparation/**'
-
-                                        sh "mkdir -p nbpackage${versionnedpath}installer"
-                                        withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
-                                        {
-                                            // unpack nbpackage snapshot can later
-                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get  -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                            sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:unpack -DoutputDirectory=nbpackage${versionnedpath}installer -Dartifact=org.apache.netbeans:nbpackage:${nbpackageversion}:zip:bin -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-
-                                            // build installer only deb for testing.
-                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage -v --type linux-deb -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Pdeb.maintainer=\"NetBeans Mailing List <users@netbeans.apache.org>\"  -Pdeb.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Pdeb.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
-                                            // debug output
-                                            sh "cp nbpackage${versionnedpath}installer/*.deb dist/installers/ "
-                                            sh "cd nbpackage${versionnedpath}installer/ && nbpackage-${nbpackageversion}/bin/nbpackage -v --type linux-rpm -Pname=\"Apache NetBeans\" -Pversion=${debversion} -Purl=\"https://netbeans.apache.org\"  -Prpm.desktop-filename=\"apache-netbeans-ide-${rmversion}\"  -Prpm.wmclass=\"Apache NetBeans IDE ${rmversion}\"  --input ../../../dist${versionnedpath}${path}-${rmversion}-bin.zip "
-                                            sh "cp nbpackage${versionnedpath}installer/*.rpm dist/installers/ "
-                                            // archiveArtifacts "nbpackage${versionnedpath}installer/**"
-                                        }
-
-                                    } else {
-                                        println "SKIPPING INSTALLER BUILDS"
-                                    }
+                                    
 
 
                                     // the installer phase is ok we should have installer for linux / windows + scripts and a bit of source to build macos later
@@ -469,7 +414,6 @@ def doParallelClusters(cconfigs) {
             if (params.NIGHTLIES) {
                 println "PUBLISHING TO NIGHTLIES"
                 publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
-                publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
                 publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
             } else {
                 println "SKIPPING PUBLISH TO NIGHTLIES"
