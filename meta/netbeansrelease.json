@@ -1603,7 +1603,7 @@
             "year": "2025"
         }
     },
-    "release260": {
+    "release270": {
         "position": "43",
         "ant": "ant_latest",
         "jdk": "jdk_17_latest",
