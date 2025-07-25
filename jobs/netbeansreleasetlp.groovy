@@ -29,7 +29,7 @@ multibranchPipelineJob('NetBeans/netbeans-TLP') {
                         gitBranchDiscovery()
                         headRegexFilter {
 
-                            regex('(master|release\\d+$|vsnetbeans_preview_\\d+$|vsnetbeans_\\d+$)')
+                            regex('(master|release\\d+$)')
                         }
                     }
                 }

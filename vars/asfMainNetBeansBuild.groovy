@@ -36,8 +36,6 @@ def rmversion=""
 @groovy.transform.Field
 def debversion=""
 @groovy.transform.Field
-def vsixversion=""
-@groovy.transform.Field
 def month=""
 @groovy.transform.Field
 def votecandidate=false
@@ -71,7 +69,6 @@ def call(Map params = [:]) {
 
         parameters {
             booleanParam(name: 'INSTALLERS', defaultValue: false, description: 'Build installers?')
-            booleanParam(name: 'VSIX', defaultValue: false, description: 'Build VSCode plugin?')
             booleanParam(name: 'NIGHTLIES', defaultValue: false, description: 'Publish to nightlies.apache.org?')
         }
 
@@ -136,7 +133,6 @@ def call(Map params = [:]) {
                         }
                         tooling.myMaven = releaseInformation[branch].maven
                         version = releaseInformation[branch].versionName;
-                        vsixversion = releaseInformation[branch].vsixVersion;
                         // make a new attribute in json for this.
                         heavyrelease = releaseInformation[branch].publish_apidoc == 'true';
                         rmversion = version
@@ -363,7 +359,6 @@ def doParallelClusters(cconfigs) {
                                     sh "mkdir -p dist${versionnedpath}nbms"
                                     sh "mkdir -p dist/installers"
                                     sh "mkdir -p distpreparation${versionnedpath}installer"
-                                    sh "mkdir -p dist/vsix"
                                     if (params.INSTALLERS) { // skip installers unless requested
                                         println "BUILDING INSTALLERS"
                                         def installer =  libraryResource 'org/apache/netbeans/installer.sh'
@@ -442,14 +437,6 @@ def doParallelClusters(cconfigs) {
                                             sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:5 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
                                             zip zipFile:'mavenrepo.zip',dir:'mavenrepository',archive:'true'
                                         }
-                                        if (params.VSIX) {
-                                            // make vsix available to dist to pickup (only for main release) need a maven setup
-                                            println "BUILDING VSCODE PLUGIN"
-                                            sh "ant -f build-${clustername}-temp/java/java.lsp.server build-vscode-ext -Dvsix.version=${vsixversion} -Dmetabuild.branch=${branch}"
-                                            sh "cp -r build-${clustername}-temp/java/java.lsp.server/build/*.vsix dist/vsix/"
-                                        } else {
-                                            println "SKIPPING VSCODE PLUGIN"
-                                        }
                                     }
                                 }
 
@@ -470,7 +457,6 @@ def doParallelClusters(cconfigs) {
                 println "PUBLISHING TO NIGHTLIES"
                 publishToNightlies("/netbeans/candidate/${versionnedpath}","dist${versionnedpath}/*","dist${versionnedpath}")
                 publishToNightlies("/netbeans/candidate/installers","dist/installers/*","dist/installers/")
-                publishToNightlies("/netbeans/candidate/vsix","build-${clustername}-temp/java/java.lsp.server/build/*.vsix","build-${clustername}-temp/java/java.lsp.server/build")
             } else {
                 println "SKIPPING PUBLISH TO NIGHTLIES"
             }
