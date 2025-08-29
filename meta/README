@@ -20,7 +20,7 @@
 Json file containing release information for Apache NetBeans.
 `meta` folder content:
   * `netbeansrelease.json` - Release information for Apache NetBeans IDE releases. Then main Release.
-  * `netbeanshtml4j.json` - Release information for  [Html 4 Java](https://github.com/apache/netbeans-html4j) project
-  * `netbeansvscode.json` - Release information for Apache NetBeans Langauge Server for VSCode. Decoupled from netbeansrelease.json in v. 26.0.
+  * `netbeanshtml4j.json` - Release information for  Html 4 Java https://github.com/apache/netbeans-html4j project
+  * `netbeansvscode.json` - Release information for Apache NetBeans Langauge Server for VSCode https://github.com/apache/netbeans-vscode. Decoupled from netbeansrelease.json in v. 26.0.
 
 Json cannot contains ASF Header
