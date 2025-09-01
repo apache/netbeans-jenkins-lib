@@ -54,6 +54,10 @@
             "601d8ccf362fa832e4f16c04a9f3bae2aee9c757": {
                 "version": "rc1",
                 "position": "1"
+            },
+            "1155373098d32c6301a45151a72fedec07f62ec8": {
+                "vote": "1",
+                "position": "2"
             }
         },
         "releasedate": {
