@@ -1643,12 +1643,44 @@
             "year": "2025"
         }
     },
+    "release280": {
+        "position": "44",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc" : "jdk_25_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
+        "maven": "maven_3_latest",
+        "mavenversion": "RELEASE280",
+        "versionName": "28",
+        "vsixVersion": "28.0.0",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/28/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/28/updates.xml?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/28/catalog.xml.gz",
+        "publish_apidoc":"true",
+        "milestones": {
+            "a2a2958133b0d6ce07519419d56bf8fdbbfec201": {
+                "version": "rc1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "-",
+            "month": "-",
+            "year": "-"
+        },
+        "previousreleasedate": {
+            "day": "21",
+            "month": "08",
+            "year": "2025"
+        }
+    },
     "master": {
         "position": "50000",
         "ant": "ant_latest",
         "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_24_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/24/docs/api/",
+        "jdktoolapidoc" : "jdk_25_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
         "maven": "maven_3_latest",
         "mavenversion": "dev-SNAPSHOT",
         "versionName": "dev",
