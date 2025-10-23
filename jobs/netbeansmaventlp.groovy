@@ -27,7 +27,7 @@ organizationFolder('NetBeans/netbeans-maven-TLP') {
         credentialsId('ASF_Cloudbees_Jenkins_ci-builds')
         traits {
           sourceWildcardFilter  {
-            includes('netbeans-parent netbeans-webskin netbeans-mavenutils-* netbeans-nbpackage')
+            includes('netbeans-parent netbeans-mavenutils-* netbeans-nbpackage')
             excludes('')
           } 
           gitHubBranchDiscovery {
