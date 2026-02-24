@@ -38,10 +38,10 @@ jobs:
           show-progress: false
 
       - name: check json Apache NetBeans
-        run: jq meta/netbeansrelease.json
+        run: jq . meta/netbeansrelease.json
 
       - name: check json Apache NetBeans VS code
-        run: jq meta/netbeansvscode.json
+        run: jq . meta/netbeansvscode.json
 
       - name: check json Apache NetBeans
-        run: jq meta/netbeanshtml4j.json
+        run: jq . meta/netbeanshtml4j.json
