@@ -1,1265 +1,438 @@
 {
-    "release90": {
-        "position": "1",
+    "master": {
+        "position": "50000",
         "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "9.0",
-        "mavenversion": "RELEASE90",
-        "tlp": "false",
-        "apidocurl": "https://bits.netbeans.org/9.0/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/9.0/updates.xml.gz",
-        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/9.0/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "releasedate": {
-            "day": "29",
-            "month": "07",
-            "year": "2018"
-        },
-        "previousreleasedate": {
-            "day": "03",
-            "month": "10",
-            "year": "2016"
-        }
-    },
-    "release100": {
-        "position": "2",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "10",
-        "mavenversion": "RELEASE100",
-        "tlp": "false",
-        "apidocurl": "https://bits.netbeans.org/10.0/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/10.0/updates.xml.gz",
-        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/10.0/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "releasedate": {
-            "day": "27",
-            "month": "12",
-            "year": "2018"
-        },
-        "previousreleasedate": {
-            "day": "29",
-            "month": "07",
-            "year": "2018"
-        }
-    },
-    "release110": {
-        "position": "3",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "11.0",
-        "mavenversion": "RELEASE110",
-        "tlp": "false",
-        "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/11.0/updates.xml.gz",
-        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/11.0/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "releasedate": {
-            "day": "04",
-            "month": "04",
-            "year": "2019"
-        },
-        "previousreleasedate": {
-            "day": "27",
-            "month": "12",
-            "year": "2018"
-        }
-    },
-    "release111": {
-        "position": "4",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "11.1",
-        "mavenversion": "RELEASE111",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/11.1/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/11.1/updates.xml.gz",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/11.1/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "13437000bfb94d22a3a6fa2ba8f600e53ffd3cdd": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "f56623c16cc2cbc4a381508562545b13de91437e": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "a768ad8867918351b23eda88f3253fe8f5795f91": {
-                "version": "beta3",
-                "position": "3"
-            },
-            "a4a76a5b548a937e1ba9991c4eb10ff0716fd69c": {
-                "vote": "1",
-                "position": "4"
-            },
-            "d9ec4e569177f19413439e1775707928cc93e1a5": {
-                "version": "beta4",
-                "vote": "2",
-                "position": "5"
-            }
-        },
-        "releasedate": {
-            "day": "22",
-            "month": "07",
-            "year": "2019"
-        },
-        "previousreleasedate": {
-            "day": "04",
-            "month": "04",
-            "year": "2019"
-        }
-    },
-    "release112": {
-        "position": "5",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "11.2",
-        "mavenversion": "RELEASE112",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/11.2/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/11.2/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/11.2/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "fc82d6fe44bb3557f757bc520b7bc95fade01ebd": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "86e1b2eb194e8e9628a66e6ee1a128134c70671a": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "d60b28422c35fc6f2fa0952dc214c3bf010c33d3": {
-                "version": "beta3",
-                "position": "3"
-            },
-            "d04fb24027334c4b6fd8397b5d0cdd33187a8f54": {
-                "vote": "1",
-                "position": "4"
-            },
-            "d54c01082b55a3821ad0f1246c0d3e4932f6d83b": {
-                "version": "u1",
-                "position": "5"
-            }
-        },
-        "releasedate": {
-            "day": "25",
-            "month": "10",
-            "year": "2019"
-        },
-        "previousreleasedate": {
-            "day": "22",
-            "month": "07",
-            "year": "2019"
-        }
-    },
-    "release113": {
-        "position": "6",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "11.3",
-        "mavenversion": "RELEASE113",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/11.3/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/11.3/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/11.3/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "e9111499a7b3d71fce5496a633116574f617067b": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "090a21448c308c29c7ede623e33518a4714b0487": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "017ddb7b75c339a13d913c0cceff23f1f52da6de": {
-                "version": "beta3",
-                "position": "3"
-            },
-            "9d007f64d7e5facd6f65639e8487d25385aa7ca5": {
-                "vote": "1",
-                "position": "4"
-            },
-            "6b879cb782eaa4f13a731aff82eada11289a66f7": {
-                "vote": "2",
-                "position": "5"
-            }
-        },
-        "releasedate": {
-            "day": "24",
-            "month": "02",
-            "year": "2020"
-        },
-        "previousreleasedate": {
-            "day": "25",
-            "month": "10",
-            "year": "2019"
-        }
-    },
-    "release120": {
-        "position": "7",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.0",
-        "mavenversion": "RELEASE120-u2",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.0/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.0/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.0/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "96c12bc480bb621f05e40978fced87f99768873f": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "e47e1f7e8ab746020425adcbf05d810fb99540bb": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "1098dd9e85868080c434c2f5136f43076d8d8c95": {
-                "version": "beta3",
-                "position": "3"
-            },
-            "6a0e13fff50b1246262da7bea9c609e0382f8549": {
-                "version": "beta4",
-                "position": "4"
-            },
-            "16abbbfa644b6b17d1baaed7f59454da9f8857ca": {
-                "version": "beta5",
-                "position": "5"
-            },
-            "631bd69cd6112b1cc4c892c24e3e605b1ba04241": {
-                "version": "beta6",
-                "vote": "1",
-                "position": "6"
-            },
-            "efd543aaefdb0a9f8f0073896cb12c82fe4ef9c8": {
-                "version": "u1",
-                "position": "7"
-            },
-            "ba34c2dabd3091a6ee93cfde08a653816a7e19ea": {
-                "version": "u2",
-                "position": "8"
-            }
-        },
-        "releasedate": {
-            "day": "04",
-            "month": "06",
-            "year": "2020"
-        },
-        "previousreleasedate": {
-            "day": "24",
-            "month": "02",
-            "year": "2020"
-        }
-    },
-    "release121": {
-        "position": "8",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.1",
-        "mavenversion": "RELEASE121",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.1/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.1/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.1/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "08d65f163be3bb1232098cc66b558438e90ddc01": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "95e4be413811ba9206721bb39c97523022a0180c": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "26e6ce805bae6d79990354fb9bdc4971228f28ad": {
-                "version": "beta3",
-                "position": "3"
-            },
-            "cade25887c5450e4595fa59e616daee4d2520ee0": {
-                "version": "beta4",
-                "vote": "1",
-                "position": "4"
-            }
-        },
-        "releasedate": {
-            "day": "15",
-            "month": "09",
-            "year": "2020"
-        },
-        "previousreleasedate": {
-            "day": "04",
-            "month": "06",
-            "year": "2020"
-        }
-    },
-    "release122": {
-        "position": "9",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.2",
-        "mavenversion": "RELEASE122",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.2/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.2/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.2/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "249b77ca133341ef08ae019e1b71a6cba373a422": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "45bf3b3beec5ee7bb1c41778a2be8ebb8b3a2f95": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "50cc57430a8ca3f87ecaed9c978b0c12a8ce7cfb": {
-                "version": "beta3",
-                "position": "3"
-            },
-            "f556f4b88826521d18181854f5ccd3be922a0283": {
-                "version": "rc1",
-                "position": "4"
-            },
-            "d2b8034b2f26fd1c3d9838d9a341b1115b2cd4e3": {
-                "version": "rc2",
-                "vote": "1",
-                "position": "5"
-            },
-            "d73d3dd898acc440c460924dabf8ad5feb90369f": {
-                "version": "rc3",
-                "vote": "2",
-                "position": "6"
-            }
-        },
-        "releasedate": {
-            "day": "25",
-            "month": "11",
-            "year": "2020"
-        },
-        "previousreleasedate": {
-            "day": "15",
-            "month": "09",
-            "year": "2020"
-        }
-    },
-    "release123": {
-        "position": "10",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.3",
-        "mavenversion": "RELEASE123",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.3/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.3/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.3/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "5a5be189e2989e308e41d88835ca9db3f40f1683": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "f2751c2c69a1b418610b066a22f3a27847ddd5e4": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "c3d4f6fa6c956cf1b5a35e8da4f44a96ab76f6a9": {
-                "vote": "1",
-                "position": "3"
-            }
-        },
-        "releasedate": {
-            "day": "03",
-            "month": "03",
-            "year": "2021"
-        },
-        "previousreleasedate": {
-            "day": "25",
-            "month": "11",
-            "year": "2020"
-        }
-    },
-    "release124": {
-        "position": "11",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.4",
-        "vsixVersion": "12.4.0",
-        "mavenversion": "RELEASE124",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.4/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.4/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "5a9c949e8e4e2820109de064f4c2b501dcb49242": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "ed64962cfe2f0441fe18d2ca7f862ba30d392151": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "b8c421efe675643c1d867e261cf696a2fe33ab31": {
-                "version": "rc1",
-                "position": "3"
-            },
-            "8feac4cb7e2e4fed45f4bc20ef916a27e794e535": {
-                "version": "rc2",
-                "position": "4"
-            },
-            "064136c61386b371259a4275173eacb745464224": {
-                "version": "rc3",
-                "position": "5"
-            },
-            "21726744165c946ba6619bff89e98d5863f26e22": {
-                "vote": "1",
-                "position": "6"
-            }
-        },
-        "releasedate": {
-            "day": "19",
-            "month": "05",
-            "year": "2021"
-        },
-        "previousreleasedate": {
-            "day": "03",
-            "month": "03",
-            "year": "2021"
-        }
-    },
-    "release1243": {
-        "position": "12",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.4.301",
-        "vsixVersion": "12.4.301",
-        "tlp": "true",
-        "apidocurl": "",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.4/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "cd6bfbc00a8ae58191e3c442492aa9e4fd5137bb": {
-                "vote": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "14",
-            "month": "07",
-            "year": "2021"
-        },
-        "previousreleasedate": {
-            "day": "19",
-            "month": "05",
-            "year": "2021"
-        }
-    },
-    "release125": {
-        "position": "13",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.5",
-        "vsixVersion": "12.5.0",
-        "mavenversion": "RELEASE125",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.5/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.5/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.5/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "c0f4399cbf5c4ea5083f4b5d4dde0193065aff79": {
-                "version": "beta1",
-                "position": "1"
-            },
-            "0067d3cd693282f4bf7d6e407665a4c2ebcab8dd": {
-                "version": "beta2",
-                "position": "2"
-            },
-            "fd523ddc12d6156412d7b81f0c8663d8913d1021": {
-                "vote": "1",
-                "position": "3"
-            }
-        },
-        "releasedate": {
-            "day": "13",
-            "month": "09",
-            "year": "2021"
-        },
-        "previousreleasedate": {
-            "day": "19",
-            "month": "05",
-            "year": "2021"
-        }
-    },
-    "release1253": {
-        "position": "14",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.5.301",
-        "vsixVersion": "12.5.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.5/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.5/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.5/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "b19730846d986575f26b3b70236d2142dde18157": {
-                "vote": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "16",
-            "month": "10",
-            "year": "2021"
-        },
-        "previousreleasedate": {
-            "day": "13",
-            "month": "09",
-            "year": "2021"
-        }
-    },
-    "release126": {
-        "position": "15",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.6",
-        "vsixVersion": "12.6.0",
-        "mavenversion": "RELEASE126",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.6/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.6/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.6/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "8388dd194ac7ea7dfdaf1235742ecf987a5c268d": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "22aebab0c6dc643e861a7af3d71aea7b7644e4bd": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "9cacf1fd305b775b176576c8b633b10b73524861": {
-                "vote": "1",
-                "position": "3"
-            }
-        },
-        "releasedate": {
-            "day": "29",
-            "month": "11",
-            "year": "2021"
-        },
-        "previousreleasedate": {
-            "day": "13",
-            "month": "09",
-            "year": "2021"
-        }
-    },
-    "release1263": {
-        "position": "16",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "12.6.301",
-        "vsixVersion": "12.6.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/12.6/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/12.6/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.6/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "e38a4a3e560418b45d0900cae2cfdc4cdd333f8f": {
-                "vote": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "16",
-            "month": "01",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "29",
-            "month": "11",
-            "year": "2021"
-        }
-    },
-    "release130": {
-        "position": "17",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "13",
-        "vsixVersion": "13.0.0",
-        "mavenversion": "RELEASE130",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/13/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/13/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/13/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "d77f0692fbc94e546fba48454beca58765e6e93a": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "321d779a21b1cc303f043f87d3ed7b5e4186ee7c": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "b3553a6fb9b350ec936670a5f211408c442eac24": {
-                "version": "rc3",
-                "position": "3"
-            },
-            "00d6d969bf4d9b14e7406c9ee9cc13a61dc39655": {
-                "vote": "1",
-                "position": "4"
-            }
-        },
-        "releasedate": {
-            "day": "04",
-            "month": "03",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "29",
-            "month": "11",
-            "year": "2021"
-        }
-    },
-    "release1303": {
-        "position": "18",
-        "ant": "ant_latest",
-        "jdk": "jdk_1.8_latest",
-        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
-        "maven": "maven_3.3.9",
-        "versionName": "13.0.301",
-        "vsixVersion": "13.0.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/13/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/13/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/13/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "432b8bec18e7c56037e07651f31b9399eb64b744": {
-                "vote": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "20",
-            "month": "4",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "29",
-            "month": "11",
-            "year": "2021"
-        }
-    },
-    "release140": {
-        "position": "19",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "jdk": "jdk_21_latest",
+        "jdktoolapidoc": "jdk_25_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
         "maven": "maven_3_latest",
-        "versionName": "14",
-        "vsixVersion": "14.0.0",
-        "mavenversion": "RELEASE140",
+        "mavenversion": "dev-SNAPSHOT",
+        "versionName": "dev",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/14/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/14/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/14/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "ca91d1962cfa8b0cf8b8a0ad1053f2ba763c2360": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "9e9f14d532c46ceab204a0ca1eddecfed08ed1fb": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "be3cce51a54dc2275242c37c309a055eafbec344": {
-                "version": "rc3",
-                "position": "3"
-            },
-            "7da3eee6a99250b362b1c886005b8baf506ff007": {
-                "version": "rc4",
-                "position": "4"
-            },
-            "0bf8e0f0021b0398c36fc3fe8fc3b0a719607f38": {
-                "version": "rc5",
-                "position": "5"
-            },
-            "c4f2d87113e1a2d2d4e21e8952e1f99612d5b3fd": {
-                "vote": "1",
-                "position": "6"
-            }
-        },
+        "apidocurl": "https://bits.netbeans.org/dev/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/dev/updates.xml?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/dev/catalog.xml.gz",
+        "publish_apidoc": "true",
         "releasedate": {
-            "day": "09",
-            "month": "06",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "04",
-            "month": "03",
-            "year": "2022"
-        }
-    },
-    "release1403": {
-        "position": "20",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "14.0.301",
-        "vsixVersion": "14.0.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/14/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/14/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/14/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "f7c87baf1fe30070bd7a0f6397632b57d4709118": {
-                "vote": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "19",
-            "month": "07",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "09",
-            "month": "06",
-            "year": "2022"
-        }
-    },
-    "release150": {
-        "position": "21",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "15",
-        "vsixVersion": "15.0.0",
-        "mavenversion": "RELEASE150",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/15/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/15/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/15/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "efa73c90b9ae82e4794a5a5cf890d43eb8d907c4": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "126e1701f096a52940dbd9d2f28a829088f9373b": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "8156d3f887964e61cff5cce530bf9379cf59a91c": {
-                "version": "rc3",
-                "position": "3"
-            },
-            "387759c96ce1b891ec45ffaf524a53499455fe1a": {
-                "vote": "1",
-                "position": "4"
-            }
-        },
-        "releasedate": {
-            "day": "31",
-            "month": "08",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "09",
-            "month": "06",
-            "year": "2022"
-        }
-    },
-    "release1503": {
-        "position": "22",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "15.0.301",
-        "vsixVersion": "15.0.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/15/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/15/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/15/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "a15f69c14c82041feb079d4e8a3dabc451f7d474": {
-                "vote": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "14",
-            "month": "10",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "26",
-            "month": "08",
-            "year": "2022"
-        }
-    },
-    "release160": {
-        "position": "23",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "16",
-        "vsixVersion": "16.0.0",
-        "mavenversion": "RELEASE160",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/16/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/16/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/16/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "d99b1939ee54e29a68806b0a444a1283e52e61fc": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "aa0760ed4516b3aab769577e7a24667439522be3": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "bb7bf3fde87b4429a66b17ecf94247cc1fcb2f48": {
-                "version": "rc3",
-                "position": "3"
-            },
-            "321935444b183aea1c4ff255d8d2ab8d50c60606": {
-                "vote": "1",
-                "position": "4"
-            },
-            "73dbc4e7f761295839396d66021475e5802e2db3": {
-                "version": "u1",
-                "position": "5"
-            }
-        },
-        "releasedate": {
-            "day": "30",
-            "month": "11",
-            "year": "2022"
-        },
-        "previousreleasedate": {
-            "day": "31",
-            "month": "08",
-            "year": "2022"
-        }
-    },
-    "release1603": {
-        "position": "24",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "16.0.301",
-        "vsixVersion": "16.0.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/16/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/16/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/16/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "133d0586ab94958d506f81087a98b81d0ccee533": {
-                "version": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "03",
-            "month": "02",
-            "year": "2023"
-        },
-        "previousreleasedate": {
-            "day": "30",
-            "month": "11",
-            "year": "2022"
-        }
-    },
-    "release170": {
-        "position": "25",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "17",
-        "vsixVersion": "17.0.0",
-        "mavenversion": "RELEASE170",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/17/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/17/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/17/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "ad297ed60f04e0f2caf3fbe4cda83ea0f58b2a86": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "6d082ad5aa7dd179c000ba86f7b072778fd756a3": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "ac2b269fa33a277ff09bc424fb9a5a8c63ed2194": {
-                "vote": "1",
-                "position": "3"
-            }
-        },
-        "releasedate": {
-            "day": "21",
-            "month": "02",
-            "year": "2023"
-        },
-        "previousreleasedate": {
-            "day": "30",
-            "month": "11",
-            "year": "2022"
-        }
-    },
-    "release1703": {
-        "position": "26",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "17.0.301",
-        "vsixVersion": "17.0.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/17/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/17/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/17/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "d5ba096b95520c04dcc2548ffd6751b8214dba88": {
-                "version": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "15",
-            "month": "04",
-            "year": "2023"
-        },
-        "previousreleasedate": {
             "day": "-",
             "month": "-",
             "year": "-"
+        },
+        "previousreleasedate": {
+            "day": "23",
+            "month": "02",
+            "year": "2026"
         }
     },
-    "release180": {
-        "position": "27",
+    "release290": {
+        "position": "45",
         "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdktoolapidoc" : "jdk_20_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_25_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
         "maven": "maven_3_latest",
-        "versionName": "18",
-        "vsixVersion": "18.0.0",
-        "mavenversion": "RELEASE180",
+        "mavenversion": "RELEASE290",
+        "versionName": "29",
+        "vsixVersion": "29.0.0",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/18/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/18/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/18/catalog.xml.gz",
-        "publish_apidoc":"true",
+        "apidocurl": "https://bits.netbeans.org/29/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/29/updates.xml?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/29/catalog.xml.gz",
+        "publish_apidoc": "true",
         "milestones": {
-            "931459385aafc6c12a637a2687736c55399cdda8": {
+            "46c5ee3e1dab0e6e8ba228e26a3ca7426c5aeaf0": {
                 "version": "rc1",
                 "position": "1"
             },
-            "50323577f0f05669590725c1523e68b5f0f7a27c": {
+            "7d005b95e8ac4db1e1351c06fb75bbbaf9983d5a": {
                 "version": "rc2",
                 "position": "2"
             },
-            "c7b709c5c7eae44877c08c876b7dc2ba59e153fe": {
-                "version": "rc3",
-                "position": "3"
-            },
-            "7d33005615b3c744564f3d38ab9ef14bf8c3ec44": {
+            "e45e218307fce4891f6ea1d58efb5ff7031518e2": {
                 "vote": "1",
-                "position": "4"
+                "position": "3"
             }
         },
         "releasedate": {
-            "day": "30",
-            "month": "05",
-            "year": "2023"
+            "day": "23",
+            "month": "02",
+            "year": "2026"
+        },
+        "previousreleasedate": {
+            "day": "10",
+            "month": "11",
+            "year": "2025"
+        }
+    },
+    "release280": {
+        "position": "44",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_25_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
+        "maven": "maven_3_latest",
+        "mavenversion": "RELEASE280",
+        "versionName": "28",
+        "vsixVersion": "28.0.0",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/28/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/28/updates.xml?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/28/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "a2a2958133b0d6ce07519419d56bf8fdbbfec201": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "bb4f5c31012229fb1577f019127e203b6925ab33": {
+                "vote": "1",
+                "position": "2"
+            }
+        },
+        "releasedate": {
+            "day": "10",
+            "month": "11",
+            "year": "2025"
         },
         "previousreleasedate": {
             "day": "21",
-            "month": "02",
-            "year": "2023"
+            "month": "08",
+            "year": "2025"
         }
     },
-    "release190": {
-        "position": "28",
+    "release270": {
+        "position": "43",
         "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdktoolapidoc" : "jdk_20_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_24_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/24/docs/api/",
         "maven": "maven_3_latest",
-        "versionName": "19",
-        "vsixVersion": "19.0.0",
-        "mavenversion": "RELEASE190",
+        "mavenversion": "RELEASE270",
+        "versionName": "27",
+        "vsixVersion": "27.0.0",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/19/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/19/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/19/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "8df65b70ed0d17f0e641b961b0ede8ef89ba640d": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "4fe23f8f1057b3bf89ad2df330f64dc8128a0542": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "9e004a08c61fd707f83fe7e6e6e746dd5a82d33f": {
-                "version": "rc3",
-                "position": "3"
-            },
-            "f1f01f07c5874faea7a7864b07f0305949981830": {
-                "version": "rc4",
-                "position": "4"
-            },
-            "ba85468772292fd64f188f4022f9d49f77f00b89": {
-                "vote": "1",
-                "position": "5"
-            }
-        },
-        "releasedate": {
-            "day": "01",
-            "month": "09",
-            "year": "2023"
-        },
-        "previousreleasedate": {
-            "day": "30",
-            "month": "05",
-            "year": "2023"
-        }
-    },
-    "release1903": {
-        "position": "29",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdktoolapidoc" : "jdk_20_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "19.0.301",
-        "vsixVersion": "19.0.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/19/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/19/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/19/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "f48f91e6c197d8a40bd82fc2f2d12a4e71242afe": {
-                "version": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "18",
-            "month": "09",
-            "year": "2023"
-        },
-        "previousreleasedate": {
-            "day": "01",
-            "month": "09",
-            "year": "2023"
-        }
-    },
-    "release200": {
-        "position": "30",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdktoolapidoc" : "jdk_21_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "20",
-        "vsixVersion": "20.0.0",
-        "mavenversion": "RELEASE200",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/20/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/20/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/20/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "3fae03992a7987d2bb05dab272916e5d17a19302": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "d30b8ef06f3f284c7ed2453dcb329775e573b700": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "cbc39f85a13aa7ea9142087867f135d890588a61": {
-                "version": "rc3",
-                "position": "3"
-            },
-            "91f9ed846ac143b52d50b5ea323a42c2f7e78392": {
-                "vote": "1",
-                "position": "4"
-            }
-        },
-        "releasedate": {
-            "day": "01",
-            "month": "12",
-            "year": "2023"
-        },
-        "previousreleasedate": {
-            "day": "01",
-            "month": "09",
-            "year": "2023"
-        }
-    },
-    "release2003": {
-        "position": "31",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdktoolapidoc" : "jdk_21_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "20.0.301",
-        "vsixVersion": "20.0.301",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/20/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/20/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/20/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "2fb03d6ccf775da515fd128f05d252a5e434d3eb": {
-                "version": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "16",
-            "month": "01",
-            "year": "2024"
-        },
-        "previousreleasedate": {
-            "day": "01",
-            "month": "12",
-            "year": "2023"
-        }
-    },
-    "release210": {
-        "position": "32",
-        "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdktoolapidoc": "jdk_21_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "21",
-        "vsixVersion": "21.0.0",
-        "mavenversion": "RELEASE210",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/21/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/21/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/21/catalog.xml.gz",
+        "apidocurl": "https://bits.netbeans.org/27/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/27/updates.xml?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/27/catalog.xml.gz",
         "publish_apidoc": "true",
         "milestones": {
-            "82c6c8faed9699e26b58b0d8b5121efb6c7c1a52": {
+            "1c2ffa19e01db3da56db915b6af3f5d0ba9fb0e8": {
                 "version": "rc1",
                 "position": "1"
             },
-            "61d71a2ede5896cdcc712f51af51e0611c01ddcd": {
+            "1e53285e34a6acb65d58ae5a50b902b4d94948d9": {
                 "version": "rc2",
                 "position": "2"
             },
-            "b15c9b7692b2764be5a997d056e2283b72ae9131": {
+            "312307d41168e81225f112a1365f8706d843e5ea": {
                 "vote": "1",
                 "position": "3"
+            }
+        },
+        "releasedate": {
+            "day": "21",
+            "month": "08",
+            "year": "2025"
+        },
+        "previousreleasedate": {
+            "day": "19",
+            "month": "05",
+            "year": "2025"
+        }
+    },
+    "release260": {
+        "position": "42",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_24_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/24/docs/api/",
+        "maven": "maven_3_latest",
+        "mavenversion": "RELEASE260",
+        "versionName": "26",
+        "vsixVersion": "26.0.0",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/26/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/26/updates.xml?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/26/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "27b43e77690d92eaf5d90e23d77b4626145c4d3f": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "473241e74600e9232c55ac2bdc3bd29d2be18fc6": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "81d21190648c8a1bae92bc9cdb0bb9783ae4912f": {
+                "vote": "1",
+                "position": "3"
+            }
+        },
+        "releasedate": {
+            "day": "19",
+            "month": "05",
+            "year": "2025"
+        },
+        "previousreleasedate": {
+            "day": "20",
+            "month": "02",
+            "year": "2025"
+        }
+    },
+    "release2599": {
+        "position": "41",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_23_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "25.9.9",
+        "vsixVersion": "25.9.9",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/25/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/25/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/25/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "dc7c5dce1ab78eaf84c580343c388e246a9e473f": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "f92cfd14a564c5d1add459db4c6c6539273cdf1d": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "01",
+            "month": "04",
+            "year": "2025"
+        },
+        "previousreleasedate": {
+            "day": "20",
+            "month": "02",
+            "year": "2025"
+        }
+    },
+    "release250": {
+        "position": "40",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_23_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "mavenversion": "RELEASE250",
+        "versionName": "25",
+        "vsixVersion": "25.0.0",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/25/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/25/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/25/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "340da06d02a6f4eb1525774d74be603f152d04af": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "0f82d968998b78ef4d323537d1149eb68e747d9a": {
+                "vote": "2",
+                "position": "2"
             }
         },
         "releasedate": {
             "day": "20",
             "month": "02",
+            "year": "2025"
+        },
+        "previousreleasedate": {
+            "day": "10",
+            "month": "12",
+            "year": "2024"
+        }
+    },
+    "release2499": {
+        "position": "39",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_23_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "24.9.9",
+        "vsixVersion": "24.9.9",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/24/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/24/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/24/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "daa8132538e9343d013cbac3c20cff859aefa5f4": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "4b9a4f764036ea334e0f8b9063daf86a0ead9a51": {
+                "vote": "2",
+                "position": "2"
+            }
+        },
+        "releasedate": {
+            "day": "24",
+            "month": "01",
+            "year": "2025"
+        },
+        "previousreleasedate": {
+            "day": "10",
+            "month": "12",
+            "year": "2024"
+        }
+    },
+    "release240": {
+        "position": "38",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_23_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "mavenversion": "RELEASE240",
+        "versionName": "24",
+        "vsixVersion": "24.0.0",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/24/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/24/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/24/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "4d10c981a697859633d8b4a204d91ffd39dfba0f": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "4aeb2be7a207c9573db01d3a25659ec205d5e45a": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "0be8be2cd31c7f5799b51655b849f9ea22d04ba1": {
+                "version": "rc3",
+                "position": "3"
+            },
+            "212f4c39a711b51d590ec6ec66850f37b74076d7": {
+                "version": "rc4",
+                "position": "4"
+            },
+            "6308a54f5ac18a75f460d86cc9bb8d4cc7213564": {
+                "vote": "2",
+                "position": "5"
+            }
+        },
+        "releasedate": {
+            "day": "10",
+            "month": "12",
             "year": "2024"
         },
         "previousreleasedate": {
-            "day": "01",
-            "month": "12",
-            "year": "2023"
+            "day": "19",
+            "month": "09",
+            "year": "2024"
         }
     },
-    "release2199": {
-        "position": "33",
+    "release2399": {
+        "position": "37",
         "ant": "ant_latest",
-        "jdk": "jdk_11_latest",
-        "jdktoolapidoc" : "jdk_21_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_22_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
         "maven": "maven_3_latest",
-        "versionName": "21.9.9",
-        "vsixVersion": "21.9.9",
+        "versionName": "23.9.9",
+        "vsixVersion": "23.9.9",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/21/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/21/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/21/catalog.xml.gz",
-        "publish_apidoc":"false",
+        "apidocurl": "https://bits.netbeans.org/23/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/23/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/23/catalog.xml.gz",
+        "publish_apidoc": "false",
         "milestones": {
-            "28402c5035fe16148b0ad90e78f9c35bf7169d47": {
-                "version": "1",
+            "bb3e5852ae46de1f511c43b1073d53c89e992854": {
+                "version": "rc1",
                 "position": "1"
             }
         },
         "releasedate": {
-            "day": "15",
-            "month": "04",
+            "day": "07",
+            "month": "10",
             "year": "2024"
         },
         "previousreleasedate": {
+            "day": "19",
+            "month": "09",
+            "year": "2024"
+        }
+    },
+    "release230": {
+        "position": "36",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_22_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "mavenversion": "RELEASE230",
+        "versionName": "23",
+        "vsixVersion": "23.0.0",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/23/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/23/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/23/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "b2b45ae2b852ced31e668be773a71c25e0f3f442": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "cc863fdbd850aa1defd6f2aad292263154babb75": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "2985f1fa57ce0c1877bad0f86d5e5504d65f9286": {
+                "vote": "1",
+                "position": "3"
+            }
+        },
+        "releasedate": {
+            "day": "19",
+            "month": "09",
+            "year": "2024"
+        },
+        "previousreleasedate": {
+            "day": "29",
+            "month": "05",
+            "year": "2024"
+        }
+    },
+    "release2299": {
+        "position": "35",
+        "ant": "ant_latest",
+        "jdk": "jdk_17_latest",
+        "jdktoolapidoc": "jdk_21_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "22.9.9",
+        "vsixVersion": "22.9.9",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/22/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/22/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/22/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "155b3d4f65779ff165819a333d5142604a8bbc11": {
+                "version": "rc1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
             "day": "16",
-            "month": "01",
+            "month": "07",
+            "year": "2024"
+        },
+        "previousreleasedate": {
+            "day": "20",
+            "month": "05",
             "year": "2024"
         }
     },
@@ -1307,441 +480,1268 @@
             "year": "2024"
         }
     },
-    "release2299": {
-        "position": "35",
+    "release2199": {
+        "position": "33",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_21_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc": "jdk_21_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
         "maven": "maven_3_latest",
-        "versionName": "22.9.9",
-        "vsixVersion": "22.9.9",
+        "versionName": "21.9.9",
+        "vsixVersion": "21.9.9",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/22/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/22/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/22/catalog.xml.gz",
-        "publish_apidoc":"false",
+        "apidocurl": "https://bits.netbeans.org/21/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/21/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/21/catalog.xml.gz",
+        "publish_apidoc": "false",
         "milestones": {
-            "155b3d4f65779ff165819a333d5142604a8bbc11": {
+            "28402c5035fe16148b0ad90e78f9c35bf7169d47": {
+                "version": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "15",
+            "month": "04",
+            "year": "2024"
+        },
+        "previousreleasedate": {
+            "day": "16",
+            "month": "01",
+            "year": "2024"
+        }
+    },
+    "release210": {
+        "position": "32",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc": "jdk_21_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "21",
+        "vsixVersion": "21.0.0",
+        "mavenversion": "RELEASE210",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/21/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/21/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/21/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "82c6c8faed9699e26b58b0d8b5121efb6c7c1a52": {
                 "version": "rc1",
+                "position": "1"
+            },
+            "61d71a2ede5896cdcc712f51af51e0611c01ddcd": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "b15c9b7692b2764be5a997d056e2283b72ae9131": {
+                "vote": "1",
+                "position": "3"
+            }
+        },
+        "releasedate": {
+            "day": "20",
+            "month": "02",
+            "year": "2024"
+        },
+        "previousreleasedate": {
+            "day": "01",
+            "month": "12",
+            "year": "2023"
+        }
+    },
+    "release2003": {
+        "position": "31",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc": "jdk_21_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "20.0.301",
+        "vsixVersion": "20.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/20/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/20/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/20/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "2fb03d6ccf775da515fd128f05d252a5e434d3eb": {
+                "version": "1",
                 "position": "1"
             }
         },
         "releasedate": {
             "day": "16",
-            "month": "07",
+            "month": "01",
             "year": "2024"
         },
         "previousreleasedate": {
-            "day": "20",
-            "month": "05",
-            "year": "2024"
+            "day": "01",
+            "month": "12",
+            "year": "2023"
         }
     },
-    "release230": {
-        "position": "36",
+    "release200": {
+        "position": "30",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_22_latest",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc": "jdk_21_latest",
         "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
         "maven": "maven_3_latest",
-        "mavenversion": "RELEASE230",
-        "versionName": "23",
-        "vsixVersion": "23.0.0",
+        "versionName": "20",
+        "vsixVersion": "20.0.0",
+        "mavenversion": "RELEASE200",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/23/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/23/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/23/catalog.xml.gz",
-        "publish_apidoc":"true",
+        "apidocurl": "https://bits.netbeans.org/20/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/20/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/20/catalog.xml.gz",
+        "publish_apidoc": "true",
         "milestones": {
-            "b2b45ae2b852ced31e668be773a71c25e0f3f442": {
+            "3fae03992a7987d2bb05dab272916e5d17a19302": {
                 "version": "rc1",
                 "position": "1"
             },
-            "cc863fdbd850aa1defd6f2aad292263154babb75": {
+            "d30b8ef06f3f284c7ed2453dcb329775e573b700": {
                 "version": "rc2",
                 "position": "2"
             },
-            "2985f1fa57ce0c1877bad0f86d5e5504d65f9286": {
+            "cbc39f85a13aa7ea9142087867f135d890588a61": {
+                "version": "rc3",
+                "position": "3"
+            },
+            "91f9ed846ac143b52d50b5ea323a42c2f7e78392": {
+                "vote": "1",
+                "position": "4"
+            }
+        },
+        "releasedate": {
+            "day": "01",
+            "month": "12",
+            "year": "2023"
+        },
+        "previousreleasedate": {
+            "day": "01",
+            "month": "09",
+            "year": "2023"
+        }
+    },
+    "release1903": {
+        "position": "29",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc": "jdk_20_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "19.0.301",
+        "vsixVersion": "19.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/19/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/19/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/19/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "f48f91e6c197d8a40bd82fc2f2d12a4e71242afe": {
+                "version": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "18",
+            "month": "09",
+            "year": "2023"
+        },
+        "previousreleasedate": {
+            "day": "01",
+            "month": "09",
+            "year": "2023"
+        }
+    },
+    "release190": {
+        "position": "28",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc": "jdk_20_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "19",
+        "vsixVersion": "19.0.0",
+        "mavenversion": "RELEASE190",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/19/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/19/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/19/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "8df65b70ed0d17f0e641b961b0ede8ef89ba640d": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "4fe23f8f1057b3bf89ad2df330f64dc8128a0542": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "9e004a08c61fd707f83fe7e6e6e746dd5a82d33f": {
+                "version": "rc3",
+                "position": "3"
+            },
+            "f1f01f07c5874faea7a7864b07f0305949981830": {
+                "version": "rc4",
+                "position": "4"
+            },
+            "ba85468772292fd64f188f4022f9d49f77f00b89": {
+                "vote": "1",
+                "position": "5"
+            }
+        },
+        "releasedate": {
+            "day": "01",
+            "month": "09",
+            "year": "2023"
+        },
+        "previousreleasedate": {
+            "day": "30",
+            "month": "05",
+            "year": "2023"
+        }
+    },
+    "release180": {
+        "position": "27",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdktoolapidoc": "jdk_20_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "18",
+        "vsixVersion": "18.0.0",
+        "mavenversion": "RELEASE180",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/18/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/18/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/18/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "931459385aafc6c12a637a2687736c55399cdda8": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "50323577f0f05669590725c1523e68b5f0f7a27c": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "c7b709c5c7eae44877c08c876b7dc2ba59e153fe": {
+                "version": "rc3",
+                "position": "3"
+            },
+            "7d33005615b3c744564f3d38ab9ef14bf8c3ec44": {
+                "vote": "1",
+                "position": "4"
+            }
+        },
+        "releasedate": {
+            "day": "30",
+            "month": "05",
+            "year": "2023"
+        },
+        "previousreleasedate": {
+            "day": "21",
+            "month": "02",
+            "year": "2023"
+        }
+    },
+    "release1703": {
+        "position": "26",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "17.0.301",
+        "vsixVersion": "17.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/17/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/17/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/17/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "d5ba096b95520c04dcc2548ffd6751b8214dba88": {
+                "version": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "15",
+            "month": "04",
+            "year": "2023"
+        },
+        "previousreleasedate": {
+            "day": "-",
+            "month": "-",
+            "year": "-"
+        }
+    },
+    "release170": {
+        "position": "25",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "17",
+        "vsixVersion": "17.0.0",
+        "mavenversion": "RELEASE170",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/17/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/17/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/17/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "ad297ed60f04e0f2caf3fbe4cda83ea0f58b2a86": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "6d082ad5aa7dd179c000ba86f7b072778fd756a3": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "ac2b269fa33a277ff09bc424fb9a5a8c63ed2194": {
                 "vote": "1",
                 "position": "3"
             }
         },
         "releasedate": {
-            "day": "19",
-            "month": "09",
-            "year": "2024"
+            "day": "21",
+            "month": "02",
+            "year": "2023"
         },
         "previousreleasedate": {
-            "day": "29",
-            "month": "05",
-            "year": "2024"
+            "day": "30",
+            "month": "11",
+            "year": "2022"
         }
     },
-    "release2399": {
-        "position": "37",
+    "release1603": {
+        "position": "24",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_22_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
         "maven": "maven_3_latest",
-        "versionName": "23.9.9",
-        "vsixVersion": "23.9.9",
+        "versionName": "16.0.301",
+        "vsixVersion": "16.0.301",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/23/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/23/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/23/catalog.xml.gz",
-        "publish_apidoc":"false",
+        "apidocurl": "https://bits.netbeans.org/16/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/16/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/16/catalog.xml.gz",
+        "publish_apidoc": "false",
         "milestones": {
-            "bb3e5852ae46de1f511c43b1073d53c89e992854": {
-                "version": "rc1",
+            "133d0586ab94958d506f81087a98b81d0ccee533": {
+                "version": "1",
                 "position": "1"
             }
         },
         "releasedate": {
-            "day": "07",
-            "month": "10",
-            "year": "2024"
+            "day": "03",
+            "month": "02",
+            "year": "2023"
         },
         "previousreleasedate": {
-            "day": "19",
-            "month": "09",
-            "year": "2024"
+            "day": "30",
+            "month": "11",
+            "year": "2022"
         }
     },
-    "release240": {
-        "position": "38",
+    "release160": {
+        "position": "23",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_23_latest",
+        "jdk": "jdk_11_latest",
         "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
         "maven": "maven_3_latest",
-        "mavenversion": "RELEASE240",
-        "versionName": "24",
-        "vsixVersion": "24.0.0",
+        "versionName": "16",
+        "vsixVersion": "16.0.0",
+        "mavenversion": "RELEASE160",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/24/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/24/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/24/catalog.xml.gz",
-        "publish_apidoc":"true",
+        "apidocurl": "https://bits.netbeans.org/16/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/16/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/16/catalog.xml.gz",
+        "publish_apidoc": "true",
         "milestones": {
-            "4d10c981a697859633d8b4a204d91ffd39dfba0f": {
+            "d99b1939ee54e29a68806b0a444a1283e52e61fc": {
                 "version": "rc1",
                 "position": "1"
             },
-            "4aeb2be7a207c9573db01d3a25659ec205d5e45a": {
+            "aa0760ed4516b3aab769577e7a24667439522be3": {
                 "version": "rc2",
                 "position": "2"
             },
-            "0be8be2cd31c7f5799b51655b849f9ea22d04ba1": {
+            "bb7bf3fde87b4429a66b17ecf94247cc1fcb2f48": {
                 "version": "rc3",
                 "position": "3"
             },
-            "212f4c39a711b51d590ec6ec66850f37b74076d7": {
+            "321935444b183aea1c4ff255d8d2ab8d50c60606": {
+                "vote": "1",
+                "position": "4"
+            },
+            "73dbc4e7f761295839396d66021475e5802e2db3": {
+                "version": "u1",
+                "position": "5"
+            }
+        },
+        "releasedate": {
+            "day": "30",
+            "month": "11",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "31",
+            "month": "08",
+            "year": "2022"
+        }
+    },
+    "release1503": {
+        "position": "22",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "15.0.301",
+        "vsixVersion": "15.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/15/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/15/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/15/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "a15f69c14c82041feb079d4e8a3dabc451f7d474": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "14",
+            "month": "10",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "26",
+            "month": "08",
+            "year": "2022"
+        }
+    },
+    "release150": {
+        "position": "21",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "15",
+        "vsixVersion": "15.0.0",
+        "mavenversion": "RELEASE150",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/15/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/15/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/15/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "efa73c90b9ae82e4794a5a5cf890d43eb8d907c4": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "126e1701f096a52940dbd9d2f28a829088f9373b": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "8156d3f887964e61cff5cce530bf9379cf59a91c": {
+                "version": "rc3",
+                "position": "3"
+            },
+            "387759c96ce1b891ec45ffaf524a53499455fe1a": {
+                "vote": "1",
+                "position": "4"
+            }
+        },
+        "releasedate": {
+            "day": "31",
+            "month": "08",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "09",
+            "month": "06",
+            "year": "2022"
+        }
+    },
+    "release1403": {
+        "position": "20",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "14.0.301",
+        "vsixVersion": "14.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/14/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/14/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/14/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "f7c87baf1fe30070bd7a0f6397632b57d4709118": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "19",
+            "month": "07",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "09",
+            "month": "06",
+            "year": "2022"
+        }
+    },
+    "release140": {
+        "position": "19",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3_latest",
+        "versionName": "14",
+        "vsixVersion": "14.0.0",
+        "mavenversion": "RELEASE140",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/14/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/14/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/14/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "ca91d1962cfa8b0cf8b8a0ad1053f2ba763c2360": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "9e9f14d532c46ceab204a0ca1eddecfed08ed1fb": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "be3cce51a54dc2275242c37c309a055eafbec344": {
+                "version": "rc3",
+                "position": "3"
+            },
+            "7da3eee6a99250b362b1c886005b8baf506ff007": {
                 "version": "rc4",
                 "position": "4"
             },
-            "6308a54f5ac18a75f460d86cc9bb8d4cc7213564": {
+            "0bf8e0f0021b0398c36fc3fe8fc3b0a719607f38": {
+                "version": "rc5",
+                "position": "5"
+            },
+            "c4f2d87113e1a2d2d4e21e8952e1f99612d5b3fd": {
+                "vote": "1",
+                "position": "6"
+            }
+        },
+        "releasedate": {
+            "day": "09",
+            "month": "06",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "04",
+            "month": "03",
+            "year": "2022"
+        }
+    },
+    "release1303": {
+        "position": "18",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "13.0.301",
+        "vsixVersion": "13.0.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/13/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/13/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/13/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "432b8bec18e7c56037e07651f31b9399eb64b744": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "20",
+            "month": "4",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "29",
+            "month": "11",
+            "year": "2021"
+        }
+    },
+    "release130": {
+        "position": "17",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "13",
+        "vsixVersion": "13.0.0",
+        "mavenversion": "RELEASE130",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/13/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/13/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/13/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "d77f0692fbc94e546fba48454beca58765e6e93a": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "321d779a21b1cc303f043f87d3ed7b5e4186ee7c": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "b3553a6fb9b350ec936670a5f211408c442eac24": {
+                "version": "rc3",
+                "position": "3"
+            },
+            "00d6d969bf4d9b14e7406c9ee9cc13a61dc39655": {
+                "vote": "1",
+                "position": "4"
+            }
+        },
+        "releasedate": {
+            "day": "04",
+            "month": "03",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "29",
+            "month": "11",
+            "year": "2021"
+        }
+    },
+    "release1263": {
+        "position": "16",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.6.301",
+        "vsixVersion": "12.6.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.6/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.6/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.6/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "e38a4a3e560418b45d0900cae2cfdc4cdd333f8f": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "16",
+            "month": "01",
+            "year": "2022"
+        },
+        "previousreleasedate": {
+            "day": "29",
+            "month": "11",
+            "year": "2021"
+        }
+    },
+    "release126": {
+        "position": "15",
+        "ant": "ant_latest",
+        "jdk": "jdk_11_latest",
+        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.6",
+        "vsixVersion": "12.6.0",
+        "mavenversion": "RELEASE126",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.6/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.6/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.6/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "8388dd194ac7ea7dfdaf1235742ecf987a5c268d": {
+                "version": "rc1",
+                "position": "1"
+            },
+            "22aebab0c6dc643e861a7af3d71aea7b7644e4bd": {
+                "version": "rc2",
+                "position": "2"
+            },
+            "9cacf1fd305b775b176576c8b633b10b73524861": {
+                "vote": "1",
+                "position": "3"
+            }
+        },
+        "releasedate": {
+            "day": "29",
+            "month": "11",
+            "year": "2021"
+        },
+        "previousreleasedate": {
+            "day": "13",
+            "month": "09",
+            "year": "2021"
+        }
+    },
+    "release1253": {
+        "position": "14",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.5.301",
+        "vsixVersion": "12.5.301",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.5/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.5/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.5/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "b19730846d986575f26b3b70236d2142dde18157": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "16",
+            "month": "10",
+            "year": "2021"
+        },
+        "previousreleasedate": {
+            "day": "13",
+            "month": "09",
+            "year": "2021"
+        }
+    },
+    "release125": {
+        "position": "13",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.5",
+        "vsixVersion": "12.5.0",
+        "mavenversion": "RELEASE125",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.5/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.5/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.5/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "c0f4399cbf5c4ea5083f4b5d4dde0193065aff79": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "0067d3cd693282f4bf7d6e407665a4c2ebcab8dd": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "fd523ddc12d6156412d7b81f0c8663d8913d1021": {
+                "vote": "1",
+                "position": "3"
+            }
+        },
+        "releasedate": {
+            "day": "13",
+            "month": "09",
+            "year": "2021"
+        },
+        "previousreleasedate": {
+            "day": "19",
+            "month": "05",
+            "year": "2021"
+        }
+    },
+    "release1243": {
+        "position": "12",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.4.301",
+        "vsixVersion": "12.4.301",
+        "tlp": "true",
+        "apidocurl": "",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.4/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
+        "publish_apidoc": "false",
+        "milestones": {
+            "cd6bfbc00a8ae58191e3c442492aa9e4fd5137bb": {
+                "vote": "1",
+                "position": "1"
+            }
+        },
+        "releasedate": {
+            "day": "14",
+            "month": "07",
+            "year": "2021"
+        },
+        "previousreleasedate": {
+            "day": "19",
+            "month": "05",
+            "year": "2021"
+        }
+    },
+    "release124": {
+        "position": "11",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.4",
+        "vsixVersion": "12.4.0",
+        "mavenversion": "RELEASE124",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.4/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.4/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.4/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "5a9c949e8e4e2820109de064f4c2b501dcb49242": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "ed64962cfe2f0441fe18d2ca7f862ba30d392151": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "b8c421efe675643c1d867e261cf696a2fe33ab31": {
+                "version": "rc1",
+                "position": "3"
+            },
+            "8feac4cb7e2e4fed45f4bc20ef916a27e794e535": {
+                "version": "rc2",
+                "position": "4"
+            },
+            "064136c61386b371259a4275173eacb745464224": {
+                "version": "rc3",
+                "position": "5"
+            },
+            "21726744165c946ba6619bff89e98d5863f26e22": {
+                "vote": "1",
+                "position": "6"
+            }
+        },
+        "releasedate": {
+            "day": "19",
+            "month": "05",
+            "year": "2021"
+        },
+        "previousreleasedate": {
+            "day": "03",
+            "month": "03",
+            "year": "2021"
+        }
+    },
+    "release123": {
+        "position": "10",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.3",
+        "mavenversion": "RELEASE123",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.3/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.3/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.3/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "5a5be189e2989e308e41d88835ca9db3f40f1683": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "f2751c2c69a1b418610b066a22f3a27847ddd5e4": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "c3d4f6fa6c956cf1b5a35e8da4f44a96ab76f6a9": {
+                "vote": "1",
+                "position": "3"
+            }
+        },
+        "releasedate": {
+            "day": "03",
+            "month": "03",
+            "year": "2021"
+        },
+        "previousreleasedate": {
+            "day": "25",
+            "month": "11",
+            "year": "2020"
+        }
+    },
+    "release122": {
+        "position": "9",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.2",
+        "mavenversion": "RELEASE122",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.2/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.2/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.2/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "249b77ca133341ef08ae019e1b71a6cba373a422": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "45bf3b3beec5ee7bb1c41778a2be8ebb8b3a2f95": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "50cc57430a8ca3f87ecaed9c978b0c12a8ce7cfb": {
+                "version": "beta3",
+                "position": "3"
+            },
+            "f556f4b88826521d18181854f5ccd3be922a0283": {
+                "version": "rc1",
+                "position": "4"
+            },
+            "d2b8034b2f26fd1c3d9838d9a341b1115b2cd4e3": {
+                "version": "rc2",
+                "vote": "1",
+                "position": "5"
+            },
+            "d73d3dd898acc440c460924dabf8ad5feb90369f": {
+                "version": "rc3",
+                "vote": "2",
+                "position": "6"
+            }
+        },
+        "releasedate": {
+            "day": "25",
+            "month": "11",
+            "year": "2020"
+        },
+        "previousreleasedate": {
+            "day": "15",
+            "month": "09",
+            "year": "2020"
+        }
+    },
+    "release121": {
+        "position": "8",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.1",
+        "mavenversion": "RELEASE121",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.1/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.1/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.1/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "08d65f163be3bb1232098cc66b558438e90ddc01": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "95e4be413811ba9206721bb39c97523022a0180c": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "26e6ce805bae6d79990354fb9bdc4971228f28ad": {
+                "version": "beta3",
+                "position": "3"
+            },
+            "cade25887c5450e4595fa59e616daee4d2520ee0": {
+                "version": "beta4",
+                "vote": "1",
+                "position": "4"
+            }
+        },
+        "releasedate": {
+            "day": "15",
+            "month": "09",
+            "year": "2020"
+        },
+        "previousreleasedate": {
+            "day": "04",
+            "month": "06",
+            "year": "2020"
+        }
+    },
+    "release120": {
+        "position": "7",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "12.0",
+        "mavenversion": "RELEASE120-u2",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/12.0/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/12.0/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/12.0/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "96c12bc480bb621f05e40978fced87f99768873f": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "e47e1f7e8ab746020425adcbf05d810fb99540bb": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "1098dd9e85868080c434c2f5136f43076d8d8c95": {
+                "version": "beta3",
+                "position": "3"
+            },
+            "6a0e13fff50b1246262da7bea9c609e0382f8549": {
+                "version": "beta4",
+                "position": "4"
+            },
+            "16abbbfa644b6b17d1baaed7f59454da9f8857ca": {
+                "version": "beta5",
+                "position": "5"
+            },
+            "631bd69cd6112b1cc4c892c24e3e605b1ba04241": {
+                "version": "beta6",
+                "vote": "1",
+                "position": "6"
+            },
+            "efd543aaefdb0a9f8f0073896cb12c82fe4ef9c8": {
+                "version": "u1",
+                "position": "7"
+            },
+            "ba34c2dabd3091a6ee93cfde08a653816a7e19ea": {
+                "version": "u2",
+                "position": "8"
+            }
+        },
+        "releasedate": {
+            "day": "04",
+            "month": "06",
+            "year": "2020"
+        },
+        "previousreleasedate": {
+            "day": "24",
+            "month": "02",
+            "year": "2020"
+        }
+    },
+    "release113": {
+        "position": "6",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "11.3",
+        "mavenversion": "RELEASE113",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/11.3/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/11.3/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/11.3/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "e9111499a7b3d71fce5496a633116574f617067b": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "090a21448c308c29c7ede623e33518a4714b0487": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "017ddb7b75c339a13d913c0cceff23f1f52da6de": {
+                "version": "beta3",
+                "position": "3"
+            },
+            "9d007f64d7e5facd6f65639e8487d25385aa7ca5": {
+                "vote": "1",
+                "position": "4"
+            },
+            "6b879cb782eaa4f13a731aff82eada11289a66f7": {
                 "vote": "2",
                 "position": "5"
             }
         },
         "releasedate": {
-            "day": "10",
-            "month": "12",
-            "year": "2024"
-        },
-        "previousreleasedate": {
-            "day": "19",
-            "month": "09",
-            "year": "2024"
-        }
-    },
-    "release2499": {
-        "position": "39",
-        "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_23_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "24.9.9",
-        "vsixVersion": "24.9.9",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/24/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/24/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/24/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "daa8132538e9343d013cbac3c20cff859aefa5f4": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "4b9a4f764036ea334e0f8b9063daf86a0ead9a51": {
-                "vote": "2",
-                "position": "2"
-            }
-        },
-        "releasedate": {
             "day": "24",
-            "month": "01",
-            "year": "2025"
+            "month": "02",
+            "year": "2020"
         },
         "previousreleasedate": {
-            "day": "10",
-            "month": "12",
-            "year": "2024"
+            "day": "25",
+            "month": "10",
+            "year": "2019"
         }
     },
-    "release250": {
-        "position": "40",
+    "release112": {
+        "position": "5",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_23_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/11/docs/api/",
-        "maven": "maven_3_latest",
-        "mavenversion": "RELEASE250",
-        "versionName": "25",
-        "vsixVersion": "25.0.0",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "11.2",
+        "mavenversion": "RELEASE112",
         "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/25/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/25/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/25/catalog.xml.gz",
-        "publish_apidoc":"true",
+        "apidocurl": "https://bits.netbeans.org/11.2/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/11.2/updates.xml.gz?{$netbeans.hash.code}",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/11.2/catalog.xml.gz",
+        "publish_apidoc": "true",
         "milestones": {
-            "340da06d02a6f4eb1525774d74be603f152d04af": {
-                "version": "rc1",
+            "fc82d6fe44bb3557f757bc520b7bc95fade01ebd": {
+                "version": "beta1",
                 "position": "1"
             },
-             "0f82d968998b78ef4d323537d1149eb68e747d9a": {
+            "86e1b2eb194e8e9628a66e6ee1a128134c70671a": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "d60b28422c35fc6f2fa0952dc214c3bf010c33d3": {
+                "version": "beta3",
+                "position": "3"
+            },
+            "d04fb24027334c4b6fd8397b5d0cdd33187a8f54": {
+                "vote": "1",
+                "position": "4"
+            },
+            "d54c01082b55a3821ad0f1246c0d3e4932f6d83b": {
+                "version": "u1",
+                "position": "5"
+            }
+        },
+        "releasedate": {
+            "day": "25",
+            "month": "10",
+            "year": "2019"
+        },
+        "previousreleasedate": {
+            "day": "22",
+            "month": "07",
+            "year": "2019"
+        }
+    },
+    "release111": {
+        "position": "4",
+        "ant": "ant_latest",
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "11.1",
+        "mavenversion": "RELEASE111",
+        "tlp": "true",
+        "apidocurl": "https://bits.netbeans.org/11.1/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/11.1/updates.xml.gz",
+        "plugin_url": "https://netbeans.apache.org/nb/plugins/11.1/catalog.xml.gz",
+        "publish_apidoc": "true",
+        "milestones": {
+            "13437000bfb94d22a3a6fa2ba8f600e53ffd3cdd": {
+                "version": "beta1",
+                "position": "1"
+            },
+            "f56623c16cc2cbc4a381508562545b13de91437e": {
+                "version": "beta2",
+                "position": "2"
+            },
+            "a768ad8867918351b23eda88f3253fe8f5795f91": {
+                "version": "beta3",
+                "position": "3"
+            },
+            "a4a76a5b548a937e1ba9991c4eb10ff0716fd69c": {
+                "vote": "1",
+                "position": "4"
+            },
+            "d9ec4e569177f19413439e1775707928cc93e1a5": {
+                "version": "beta4",
                 "vote": "2",
-                "position": "2"
+                "position": "5"
             }
         },
         "releasedate": {
-            "day": "20",
-            "month": "02",
-            "year": "2025"
+            "day": "22",
+            "month": "07",
+            "year": "2019"
         },
         "previousreleasedate": {
-            "day": "10",
-            "month": "12",
-            "year": "2024"
-        }
-    },
-    "release2599": {
-        "position": "41",
-        "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_23_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/17/docs/api/",
-        "maven": "maven_3_latest",
-        "versionName": "25.9.9",
-        "vsixVersion": "25.9.9",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/25/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/25/updates.xml.gz?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/25/catalog.xml.gz",
-        "publish_apidoc":"false",
-        "milestones": {
-            "dc7c5dce1ab78eaf84c580343c388e246a9e473f": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "f92cfd14a564c5d1add459db4c6c6539273cdf1d" : {
-                "vote": "1",
-                "position": "1"
-            }
-        },
-        "releasedate": {
-            "day": "01",
+            "day": "04",
             "month": "04",
-            "year": "2025"
-        },
-        "previousreleasedate": {
-            "day": "20",
-            "month": "02",
-            "year": "2025"
+            "year": "2019"
         }
     },
-    "release260": {
-        "position": "42",
+    "release110": {
+        "position": "3",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_24_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/24/docs/api/",
-        "maven": "maven_3_latest",
-        "mavenversion": "RELEASE260",
-        "versionName": "26",
-        "vsixVersion": "26.0.0",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/26/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/26/updates.xml?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/26/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "27b43e77690d92eaf5d90e23d77b4626145c4d3f": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "473241e74600e9232c55ac2bdc3bd29d2be18fc6": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "81d21190648c8a1bae92bc9cdb0bb9783ae4912f": {
-                "vote": "1",
-                "position": "3"
-            }
-        },
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "11.0",
+        "mavenversion": "RELEASE110",
+        "tlp": "false",
+        "apidocurl": "https://bits.netbeans.org/11.0/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/11.0/updates.xml.gz",
+        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/11.0/catalog.xml.gz",
+        "publish_apidoc": "true",
         "releasedate": {
-            "day": "19",
-            "month": "05",
-            "year": "2025"
+            "day": "04",
+            "month": "04",
+            "year": "2019"
         },
         "previousreleasedate": {
-            "day": "20",
-            "month": "02",
-            "year": "2025"
+            "day": "27",
+            "month": "12",
+            "year": "2018"
         }
     },
-    "release270": {
-        "position": "43",
+    "release100": {
+        "position": "2",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_24_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/24/docs/api/",
-        "maven": "maven_3_latest",
-        "mavenversion": "RELEASE270",
-        "versionName": "27",
-        "vsixVersion": "27.0.0",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/27/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/27/updates.xml?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/27/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "1c2ffa19e01db3da56db915b6af3f5d0ba9fb0e8": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "1e53285e34a6acb65d58ae5a50b902b4d94948d9": {
-                "version": "rc2",
-                "position": "2" 
-            },
-            "312307d41168e81225f112a1365f8706d843e5ea": {
-                "vote": "1",
-                "position": "3" 
-            }
-        },
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "10",
+        "mavenversion": "RELEASE100",
+        "tlp": "false",
+        "apidocurl": "https://bits.netbeans.org/10.0/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/10.0/updates.xml.gz",
+        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/10.0/catalog.xml.gz",
+        "publish_apidoc": "true",
         "releasedate": {
-            "day": "21",
-            "month": "08",
-            "year": "2025"
+            "day": "27",
+            "month": "12",
+            "year": "2018"
         },
         "previousreleasedate": {
-            "day": "19",
-            "month": "05",
-            "year": "2025"
+            "day": "29",
+            "month": "07",
+            "year": "2018"
         }
     },
-    "release280": {
-        "position": "44",
+    "release90": {
+        "position": "1",
         "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_25_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
-        "maven": "maven_3_latest",
-        "mavenversion": "RELEASE280",
-        "versionName": "28",
-        "vsixVersion": "28.0.0",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/28/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/28/updates.xml?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/28/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "a2a2958133b0d6ce07519419d56bf8fdbbfec201": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "bb4f5c31012229fb1577f019127e203b6925ab33": {
-                "vote": "1",
-                "position": "2"
-            }
-        },
+        "jdk": "jdk_1.8_latest",
+        "jdk_apidoc": "https://docs.oracle.com/javase/8/docs/api/",
+        "maven": "maven_3.3.9",
+        "versionName": "9.0",
+        "mavenversion": "RELEASE90",
+        "tlp": "false",
+        "apidocurl": "https://bits.netbeans.org/9.0/javadoc",
+        "update_url": "https://netbeans.apache.org/nb/updates/9.0/updates.xml.gz",
+        "plugin_url": "http://plugins.netbeans.org/nbpluginportal/updates/9.0/catalog.xml.gz",
+        "publish_apidoc": "true",
         "releasedate": {
-            "day": "10",
-            "month": "11",
-            "year": "2025"
+            "day": "29",
+            "month": "07",
+            "year": "2018"
         },
         "previousreleasedate": {
-            "day": "21",
-            "month": "08",
-            "year": "2025"
-        }
-    },
-    "release290": {
-        "position": "45",
-        "ant": "ant_latest",
-        "jdk": "jdk_17_latest",
-        "jdktoolapidoc" : "jdk_25_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
-        "maven": "maven_3_latest",
-        "mavenversion": "RELEASE290",
-        "versionName": "29",
-        "vsixVersion": "29.0.0",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/29/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/29/updates.xml?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/29/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "milestones": {
-            "46c5ee3e1dab0e6e8ba228e26a3ca7426c5aeaf0": {
-                "version": "rc1",
-                "position": "1"
-            },
-            "7d005b95e8ac4db1e1351c06fb75bbbaf9983d5a": {
-                "version": "rc2",
-                "position": "2"
-            },
-            "e45e218307fce4891f6ea1d58efb5ff7031518e2": {
-                "vote": "1",
-                "position": "3"
-            }
-        },
-        "releasedate": {
-            "day": "23",
-            "month": "02",
-            "year": "2026"
-        },
-        "previousreleasedate": {
-            "day": "10",
-            "month": "11",
-            "year": "2025"
-        }
-    },
-    "master": {
-        "position": "50000",
-        "ant": "ant_latest",
-        "jdk": "jdk_21_latest",
-        "jdktoolapidoc" : "jdk_25_latest",
-        "jdk_apidoc": "https://docs.oracle.com/en/java/javase/25/docs/api/",
-        "maven": "maven_3_latest",
-        "mavenversion": "dev-SNAPSHOT",
-        "versionName": "dev",
-        "tlp": "true",
-        "apidocurl": "https://bits.netbeans.org/dev/javadoc",
-        "update_url": "https://netbeans.apache.org/nb/updates/dev/updates.xml?{$netbeans.hash.code}",
-        "plugin_url": "https://netbeans.apache.org/nb/plugins/dev/catalog.xml.gz",
-        "publish_apidoc":"true",
-        "releasedate": {
-            "day": "-",
-            "month": "-",
-            "year": "-"
-        },
-        "previousreleasedate": {
-            "day": "23",
-            "month": "02",
-            "year": "2026"
+            "day": "03",
+            "month": "10",
+            "year": "2016"
         }
     }
 }
