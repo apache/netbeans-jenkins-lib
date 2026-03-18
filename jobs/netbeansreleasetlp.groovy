@@ -39,7 +39,7 @@ multibranchPipelineJob('NetBeans/netbeans-TLP') {
     factory {
         workflowBranchProjectFactory {
             // Relative location within the checkout of our Pipeline script.
-            scriptPath("nbbuild/jenkins/Jenkinsfile.groovy")
+            scriptPath("nbbuild/ci/jenkins/Jenkinsfile.groovy")
         }
     }
     orphanedItemStrategy {
