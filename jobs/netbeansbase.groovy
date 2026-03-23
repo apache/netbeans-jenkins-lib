@@ -31,7 +31,7 @@ def netbeansBaseJob(Map m, Closure c = {}) {
             numToKeep(2)
             daysToKeep(7)
         }
-        jdk('jdk_17_latest')    
+        jdk('jdk_21_latest')    
         triggers {
             scm('H/5 * * * *')
         }
