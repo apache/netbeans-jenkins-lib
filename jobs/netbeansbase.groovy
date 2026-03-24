@@ -18,7 +18,7 @@
  * under the License.
  */
 
-// import org.apache.netbeans.jenkins.Constants;
+import org.apache.netbeans.jenkins.NetBeansConstants;
 // ant version
 
 // Common job with all default
@@ -32,7 +32,7 @@ def netbeansBaseJob(Map m, Closure c = {}) {
             numToKeep(2)
             daysToKeep(7)
         }
-        jdk(Constants.JDK_BASELINE)    
+        jdk(NetBeansConstants.JDK_BASELINE)    
         triggers {
             scm('H/5 * * * *')
         }
@@ -83,7 +83,7 @@ The <b>licenses</b> are checked by the <a href="../netbeans-license/lastComplete
         ant {
             targets(['build','build-nbms', 'generate-uc-catalog', 'build-source-zips', 'index-layer-paths'])
             props('do.build.windows.launchers': 'true')
-            antInstallation(Constants.ANT_VERSION)
+            antInstallation(NetBeansConstants.ANT_VERSION)
         }
     }
     publishers {
@@ -102,7 +102,7 @@ There is also a <a href="../netbeans-linux">Linux version</a> of this build.</ht
         ant {
             targets(['build','test-platform'])
             props('test-unit-sys-prop.ignore.random.failures': 'true','continue.after.failing.tests':'true')
-            antInstallation(Constants.ANT_VERSION+"_windows")
+            antInstallation(NetBeansConstants.ANT_VERSION+"_windows")
         }
     }
     publishers {
@@ -123,7 +123,7 @@ The real code check is done by a <a href="../netbeans-linux">linux job</a>.""")
     steps {
         ant {
             targets(['rat','verify-libs-and-licenses'])
-            antInstallation(Constants.ANT_VERSION)
+            antInstallation(NetBeansConstants.ANT_VERSION)
         }
     }
     publishers {
@@ -146,7 +146,7 @@ The real code check is done by a <a href="../netbeans-linux">linux job</a>.""")
         ant {
             targets(['build','gen-sigtests-release'])
             props('sigtest.gen.fail.on.error':'false')
-            antInstallation(Constants.ANT_VERSION)
+            antInstallation(NetBeansConstants.ANT_VERSION)
         }
     }
     publishers {
