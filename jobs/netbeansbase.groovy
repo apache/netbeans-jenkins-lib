@@ -17,8 +17,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+import org.apache.netbeans.jenkins.Constants;
 // ant version
-def antversion='ant_1.10_latest'
 
 // Common job with all default
 // jdk
@@ -31,7 +32,7 @@ def netbeansBaseJob(Map m, Closure c = {}) {
             numToKeep(2)
             daysToKeep(7)
         }
-        jdk('jdk_17_latest')    
+        jdk(Constants.JDK_BASELINE)    
         triggers {
             scm('H/5 * * * *')
         }
@@ -82,7 +83,7 @@ The <b>licenses</b> are checked by the <a href="../netbeans-license/lastComplete
         ant {
             targets(['build','build-nbms', 'generate-uc-catalog', 'build-source-zips', 'index-layer-paths'])
             props('do.build.windows.launchers': 'true')
-            antInstallation(antversion)
+            antInstallation(Constants.ANT_VERSION)
         }
     }
     publishers {
@@ -101,7 +102,7 @@ There is also a <a href="../netbeans-linux">Linux version</a> of this build.</ht
         ant {
             targets(['build','test-platform'])
             props('test-unit-sys-prop.ignore.random.failures': 'true','continue.after.failing.tests':'true')
-            antInstallation(antversion+"_windows")
+            antInstallation(Constants.ANT_VERSION+"_windows")
         }
     }
     publishers {
@@ -122,7 +123,7 @@ The real code check is done by a <a href="../netbeans-linux">linux job</a>.""")
     steps {
         ant {
             targets(['rat','verify-libs-and-licenses'])
-            antInstallation(antversion)
+            antInstallation(Constants.ANT_VERSION)
         }
     }
     publishers {
@@ -145,7 +146,7 @@ The real code check is done by a <a href="../netbeans-linux">linux job</a>.""")
         ant {
             targets(['build','gen-sigtests-release'])
             props('sigtest.gen.fail.on.error':'false')
-            antInstallation(antversion)
+            antInstallation(Constants.ANT_VERSION)
         }
     }
     publishers {
