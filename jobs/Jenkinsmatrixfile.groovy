@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import org.apache.netbeans.jenkins.Constants;
+import org.apache.netbeans.jenkins.NetBeansConstants;
 
 pipeline {
     options {
