@@ -18,7 +18,7 @@
  * under the License.
  */
 
-import org.apache.netbeans.jenkins.Constants;
+// import org.apache.netbeans.jenkins.Constants;
 // ant version
 
 // Common job with all default
