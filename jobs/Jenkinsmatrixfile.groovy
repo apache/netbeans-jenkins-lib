@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import org.apache.netbeans.jenkins.Constants;
 
 pipeline {
     options {
@@ -28,8 +29,8 @@ pipeline {
 
         stage("clone and prepare build") {
             tools {
-                jdk 'jdk_17_latest'
-                ant 'ant_latest'
+                jdk Constants.JDK_BASELINE
+                ant Constants.ANT_VERSION
             }
             steps {
 
@@ -53,7 +54,7 @@ pipeline {
                 axes {
                     axis {
                         name 'JDK'
-                        values 'jdk_17_latest', 'jdk_21_latest','jdk_24_latest'
+                        values Constants.JDK_BASELINE, Constants.JDK_LATEST, Constants.JDK_FUTURE
                     }
                     axis {
                         name 'CLUSTER'
@@ -100,7 +101,7 @@ pipeline {
                 script { 
                     // generate an index 
                     // matrix axis  (jdk and cluster) should be copied here matrix do not allow variable
-                    def jdk = ['jdk_17_latest','jdk_21_latest','jdk_24_latest']
+                    def jdk = [Constants.JDK_BASELINE,Constants.JDK_LATEST,Constants.JDK_FUTURE]
                     def cluster = ['platform','ide','java','webcommon']
                     
                     def content = '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>testing website</title></head><body><h1>Unit and QA functional testing for Apache NetBeans</h1>'
