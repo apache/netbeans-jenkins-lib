@@ -17,12 +17,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import org.apache.netbeans.jenkins.NetBeansConstants;
 
 pipelineJob('NetBeans/netbeans-matrix') {
     definition {
         cps {
-            
-            script(readFileFromWorkspace('jobs/Jenkinsmatrixfile.groovy'))
+            def scriptcontent = readFileFromWorkspace('jobs/Jenkinsmatrixfile.groovy')
+            // replace all constant in the map by the actual value
+            for (entry in NetBeansConstants.REPLACE) {
+               scriptcontent = scriptcontent.replaceAll(entry.key,entry.value)
+            } 
+            script(scriptcontent)
             sandbox()
         }
     }

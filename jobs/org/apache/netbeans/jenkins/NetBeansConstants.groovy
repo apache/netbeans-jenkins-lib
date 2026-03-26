@@ -21,11 +21,9 @@ package org.apache.netbeans.jenkins;
 class NetBeansConstants {
 
     static final String JDK_BASELINE = 'jdk_21_latest';
-
     static final String JDK_LATEST = 'jdk_25_latest';
-
     static final String JDK_FUTURE = 'jdk_26_latest';
+    static final String  ANT_VERSION = 'ant_1.10_latest';
     
-    
-   static final String  ANT_VERSION = 'ant_1.10_latest';
+    static final REPLACE = ['JDK_BASELINE':JDK_BASELINE,'JDK_LATEST':JDK_LATEST,'JDK_FUTURE':JDK_FUTURE,'ANT_VERSION':ANT_VERSION];
 }
