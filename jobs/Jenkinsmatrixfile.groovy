@@ -29,8 +29,8 @@ pipeline {
 
         stage("clone and prepare build") {
             tools {
-                jdk Constants.JDK_BASELINE
-                ant Constants.ANT_VERSION
+                jdk NetBeansConstants.JDK_BASELINE
+                ant NetBeansConstants.ANT_VERSION
             }
             steps {
 
@@ -54,7 +54,7 @@ pipeline {
                 axes {
                     axis {
                         name 'JDK'
-                        values Constants.JDK_BASELINE, Constants.JDK_LATEST, Constants.JDK_FUTURE
+                        values NetBeansConstants.JDK_BASELINE, NetBeansConstants.JDK_LATEST, NetBeansConstants.JDK_FUTURE
                     }
                     axis {
                         name 'CLUSTER'
@@ -101,7 +101,7 @@ pipeline {
                 script { 
                     // generate an index 
                     // matrix axis  (jdk and cluster) should be copied here matrix do not allow variable
-                    def jdk = [Constants.JDK_BASELINE,Constants.JDK_LATEST,Constants.JDK_FUTURE]
+                    def jdk = [NetBeansConstants.JDK_BASELINE,NetBeansConstants.JDK_LATEST,NetBeansConstants.JDK_FUTURE]
                     def cluster = ['platform','ide','java','webcommon']
                     
                     def content = '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>testing website</title></head><body><h1>Unit and QA functional testing for Apache NetBeans</h1>'
