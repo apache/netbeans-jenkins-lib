@@ -41,7 +41,7 @@
         "publish_apidoc":"false",
         "milestones": {
             "b38c0f53dd722fadca20dd8de47ad813e9170344": {
-                "version": "rc1",
+                "vote": "1",
                 "position": "1"
             }
         },
