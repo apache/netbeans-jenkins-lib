@@ -45,9 +45,9 @@
                 "position": "1"
             },
             "f8ac37e0f2434a7f000fbe3360f1a92aa3ea67bc": {
-                "version": "rc2",
+                "vote": "1",
                 "position": "2"
-            }            
+            }
         },
         "releasedate": {
             "day": "-",
