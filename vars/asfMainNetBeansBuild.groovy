@@ -312,7 +312,7 @@ def doParallelClusters(cconfigs) {
             withAnt(installation: tooling.myAnt) {
                 sh "ant build-source-config -Dcluster.config=${clustername} -Dbuildnum=666 -Dmetabuild.branch=${branch}"
                 script {
-                    def targets = ['verify-libs-and-licenses',/*'rat',*/'build']
+                    def targets = ['verify-libs-and-licenses','rat','build']
                     for (String target in targets) {
                         stage("${target} for ${clustername}") {
 

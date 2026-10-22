@@ -44,6 +44,11 @@
                 "version": "rc1",
                 "position": "1"
             }
+            ,
+            "b113108b2112519b4a86856a59274d450355e383": {
+                "version": "rc2",
+                "position": "2"
+            }
         },
         "releasedate": {
             "day": "-",
