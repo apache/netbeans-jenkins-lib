@@ -189,15 +189,27 @@ def call(Map params = [:]) {
                                 script {
                                     def localRepo = "${env.WORKSPACE}/.repository"
                                     def netbeansbase = "nbbuild"
-                                    def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
 
                                     sh "rm -rf ${env.WORKSPACE}/.repository"
                                     withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo)
                                     {
-                                        sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
+                                        // mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get
+                                        //   -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}
+                                        //   -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
 
-                                        //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download -DnexusIndexDirectory=${env.WORKSPACE}/repoindex -DrepositoryUrl=https://repo.maven.apache.org/maven2"
-                                        sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate -X ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:5 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots"
+                                        // mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate
+                                        //   -X ${commonparam}
+                                        //   -DnetbeansNbmDirectory=${netbeansbase}/nbms
+                                        //   -DnetbeansInstallDirectory=${netbeansbase}/netbeans
+                                        //   -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips
+                                        //   -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc
+                                        //   -DparentGAV=org.apache.netbeans:netbeans-parent:5
+                                        //   -DforcedVersion=${mavenVersion}
+                                        //   -DskipInstall=true
+                                        //   -DdeployId=apache.snapshots.https
+                                        //   -DdeployUrl=https://repository.apache.org/content/repositories/snapshots
+                                        def commonparam = "-DskipInstall=true -DdeployId=apache.snapshots.https -DdeployUrl=https://repository.apache.org/content/repositories/snapshots -Dexternallist=${netbeansbase}/build/external.info"
+                                        sh "ant maven-install -DmavenVersion=${mavenVersion} -DmavenArgs='${commonparam}'"
                                     }
                                 }
                             }
@@ -430,11 +442,19 @@ def doParallelClusters(cconfigs) {
                                     sh "ant -f build-${clustername}-temp/build.xml getallmavencoordinates -Dmetabuild.branch=${branch}"
                                     withMaven(maven:tooling.myMaven,jdk:tooling.jdktool,publisherStrategy: 'EXPLICIT',mavenLocalRepo: localRepo,options:[artifactsPublisher(disabled: true)])
                                     {
-                                        sh "mvn org.apache.maven.plugins:maven-dependency-plugin:3.5.0:get -Dartifact=org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion} -Dmaven.repo.local=${env.WORKSPACE}/.repository -DremoteRepositories=apache.snapshots.https::::https://repository.apache.org/snapshots"
-                                        def commonparam = "-Dexternallist=${netbeansbase}/build/external.info"
-                                        //sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:1.5:download ${commonparam} -DrepositoryUrl=https://repo.maven.apache.org/maven2"
                                         if (heavyrelease) { // skip mavenrepo for vscode
-                                            sh "mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam} -DnetbeansNbmDirectory=${netbeansbase}/nbms -DnetbeansInstallDirectory=${netbeansbase}/netbeans -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc -DparentGAV=org.apache.netbeans:netbeans-parent:5 -DforcedVersion=${mavenVersion} -DskipInstall=true -DdeployUrl=file://${env.WORKSPACE}/mavenrepository"
+                                            // mvn org.apache.netbeans.utilities:nb-repository-plugin:${repopluginversion}:populate ${commonparam}
+                                            // -DnetbeansNbmDirectory=${netbeansbase}/nbms
+                                            // -DnetbeansInstallDirectory=${netbeansbase}/netbeans
+                                            // -DnetbeansSourcesDirectory=${netbeansbase}/build/source-zips
+                                            // -DnetbeansJavadocDirectory=${netbeansbase}/build/javadoc
+                                            // -DparentGAV=org.apache.netbeans:netbeans-parent:5
+                                            // -DforcedVersion=${mavenVersion}
+                                            // -DskipInstall=true
+                                            // -DdeployUrl=file://${env.WORKSPACE}/mavenrepository
+                                            def commonparam = "-DskipInstall -DdeployUrl=file://${env.WORKSPACE}/mavenrepository -Dexternallist=${netbeansbase}/build/external.info"
+                                            sh "ant -f maven-install -DmavenVersion=${mavenVersion} -DmavenArgs='${commonparam}'"
+
                                             zip zipFile:'mavenrepo.zip',dir:'mavenrepository',archive:'true'
                                         }
                                     }
