@@ -49,6 +49,11 @@
                 "version": "rc2",
                 "position": "2"
             }
+            ,
+            "fc5046fd498585541bc4319289bacced991054ec": {
+                "version": "rc3",
+                "position": "3"
+            }
         },
         "releasedate": {
             "day": "-",
