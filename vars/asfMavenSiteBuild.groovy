@@ -38,7 +38,7 @@ def call(Map params = [:]) {
         pipelineGraphPublisher(disabled: true), mavenLinkerPublisher(disabled: true)]
 	
     def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
-    def scmUrlGitBox = scmUrl.replaceAll('github\.com/apache','gitbox.apache.org/repos/asf')
+    def scmUrlGitBox = scmUrl.replaceAll('github.com/apache','gitbox.apache.org/repos/asf')
     pipeline {
         agent any
 	triggers {
