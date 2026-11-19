@@ -29,8 +29,8 @@ def call(Map params = [:]) {
         ])
 
     // now determine params 
-    def jdk = params.containsKey('jdk')
-    def mvnName = params.containsKey('mvnName') 
+    def jdk = params.jdk
+    def mvnName = params.mvnName 
     
     def defaultPublishers = [artifactsPublisher(disabled: false), junitPublisher(ignoreAttachments: false, disabled: false),
         findbugsPublisher(disabled: true), openTasksPublisher(disabled: true),
