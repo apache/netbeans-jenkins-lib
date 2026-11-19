@@ -109,7 +109,7 @@ def call(Map params = [:]) {
  * @param publishers array of publishers to configure (need to be defined as we publisherStrategy: 'EXPLICIT')
  * @return the Jenkinsfile step representing a maven build
  */
-def mavenBuild(jdk, cmdline, mvnName, publishers,archive) {
+def mavenBuild(jdk, cmdline, mvnName, publishers) {
     def localRepo = "../.maven_repositories/${env.EXECUTOR_NUMBER}" // ".repository" //
     //def settingsName = 'archiva-uid-jenkins'
     def mavenOpts = '-Xms1g -Xmx4g -Djava.awt.headless=true'
