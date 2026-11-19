@@ -64,5 +64,4 @@ def netbeansSubprojectSiteJob(Map m, Closure c = {}) {
 }
 
 netbeansSubprojectSiteJob(name:'parent',xvfb:false) {
-    label('ubuntu')
 }
