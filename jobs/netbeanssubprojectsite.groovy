@@ -33,7 +33,7 @@ def netbeansSubprojectSiteJob(Map m, Closure c = {}) {
                             gitBranchDiscovery()
                             gitTagDiscovery()
                             headRegexFilter {
-                                regex("(master|${m.name}-.*)")
+                                regex("(master|${m.tagname}-.*)")
                             }
                         }
                     }
@@ -63,5 +63,5 @@ def netbeansSubprojectSiteJob(Map m, Closure c = {}) {
      
 }
 
-netbeansSubprojectSiteJob(name:'parent',xvfb:false) {
+netbeansSubprojectSiteJob(name:'parent',tagname:'netbeans-parent',xvfb:false) {
 }
