@@ -32,12 +32,11 @@ def call(Map params = [:]) {
     def jdk = params.jdk
     def mvnName = params.mvnName 
     
-    def defaultPublishers = [artifactsPublisher(disabled: true), junitPublisher(ignoreAttachments: false, disabled: true),
+    def publishers = [artifactsPublisher(disabled: true), junitPublisher(ignoreAttachments: false, disabled: true),
         findbugsPublisher(disabled: true), openTasksPublisher(disabled: true),
         dependenciesFingerprintPublisher(disabled: true), invokerPublisher(disabled: true),
         pipelineGraphPublisher(disabled: true), mavenLinkerPublisher(disabled: true)]
-
-    def publishers = params.containsKey('publishers') ? params.publishers : defaultPublishers
+	
     def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
 
     pipeline {
@@ -50,7 +49,7 @@ def call(Map params = [:]) {
                 agent { node { label 'ubuntu && !nocredentials' } }
                 options { timeout(time: 120, unit: 'MINUTES') }                
                 steps{
-                    mavenBuild( jdk, 'clean install site:site site:stage', mvnName, publishers,true)        
+                    mavenBuild( jdk, 'clean install site:site site:stage', mvnName, publishers)        
                 }
             }   
             stage("Publish site") {
@@ -125,11 +124,8 @@ def mavenBuild(jdk, cmdline, mvnName, publishers,archive) {
         mavenLocalRepo: localRepo) {
         // Some common Maven command line + provided command line
         sh "mvn -V -B -U -e -DskipBrowserTests -Dmaven.test.failure.ignore=true $cmdline "
-	//sh "cd target/staging; zip ../../WEBSITE.zip ."
-    }
-    if (archive) {
-	stash includes:'./target/staging/*', name: 'site'
-    }
+		stash includes:'target/staging/*', name: 'site'
+	}
 }
 
 def notifyBuild(String buildStatus) {
