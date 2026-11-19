@@ -38,7 +38,7 @@ def call(Map params = [:]) {
         pipelineGraphPublisher(disabled: true), mavenLinkerPublisher(disabled: true)]
 	
     def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
-
+    def scmUrlGitBox = scmUrl.replaceAll('github\.com/apache','gitbox.apache.org/repos/asf')
     pipeline {
         agent any
 	triggers {
@@ -64,7 +64,7 @@ def call(Map params = [:]) {
                     dir ('build') {
                         sh 'git add .'
                         sh 'echo `git commit -m "site build"`'
-                        sh "git push ${scmUrl} asf-site"
+                        sh "git push ${scmUrlGitBox} asf-site"
                     }
                     
                     
@@ -124,7 +124,9 @@ def mavenBuild(jdk, cmdline, mvnName, publishers) {
         mavenLocalRepo: localRepo) {
         // Some common Maven command line + provided command line
         sh "mvn -V -B -U -e -DskipBrowserTests -Dmaven.test.failure.ignore=true $cmdline "
-		stash includes:'target/staging/*', name: 'site'
+		dir ('target/staging') {
+		   stash includes:'*', name: 'site'
+		}
 	}
 }
 
