@@ -32,10 +32,10 @@ def call(Map params = [:]) {
     def jdk = params.jdk
     def mvnName = params.mvnName 
     
-    def defaultPublishers = [artifactsPublisher(disabled: false), junitPublisher(ignoreAttachments: false, disabled: false),
+    def defaultPublishers = [artifactsPublisher(disabled: true), junitPublisher(ignoreAttachments: false, disabled: true),
         findbugsPublisher(disabled: true), openTasksPublisher(disabled: true),
-        dependenciesFingerprintPublisher(disabled: false), invokerPublisher(disabled: true),
-        pipelineGraphPublisher(disabled: false), mavenLinkerPublisher(disabled: false)]
+        dependenciesFingerprintPublisher(disabled: true), invokerPublisher(disabled: true),
+        pipelineGraphPublisher(disabled: true), mavenLinkerPublisher(disabled: true)]
 
     def publishers = params.containsKey('publishers') ? params.publishers : defaultPublishers
     def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
