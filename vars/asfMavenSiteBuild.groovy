@@ -142,7 +142,7 @@ def mavenBuild(jdk, cmdline, mvnName, publishers) {
         // Some common Maven command line + provided command line
         sh "mvn -V -B -U -e -DskipBrowserTests -Dmaven.test.failure.ignore=true $cmdline "
 		dir ('target/staging') {
-		   stash includes:'*', name: 'site'
+		   stash includes:'**', name: 'site'
 		}
 		stash includes:'.asf.yaml', name: 'asffile'
 	}
