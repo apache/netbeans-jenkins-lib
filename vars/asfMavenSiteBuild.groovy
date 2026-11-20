@@ -52,6 +52,7 @@ def call(Map params = [:]) {
                     mavenBuild( jdk, 'clean install site:site site:stage', mvnName, publishers)        
                 }
             }   
+			// publish the site in the tag or branch name
             stage("Publish site") {
                 agent { node { label 'git-websites' } }
                 steps{
@@ -65,12 +66,28 @@ def call(Map params = [:]) {
                         sh 'git add .'
                         sh 'echo `git commit -m "site build"`'
                         sh "git push ${scmUrlGitBox} asf-site"
-                    }
-                    
-                    
-                    
+                    }   
                 }
             }
+			// only for master, put the asf.yml file on the asf-site branch
+			stage("Synchronize asf only for master build") {
+				 when {
+                     branch 'master'
+                 }
+				 agent { node { label 'git-websites' } }
+				 steps{
+                    sh 'rm -rf buildasf'
+                    sh "git clone --depth 1 --branch asf-site ${scmUrl} buildasf"
+                    dir ("build") {
+                        unstash 'asffile'
+                    }
+                    dir ('build') {
+                        sh 'git add .'
+                        sh 'echo `git commit -m "asf sync"`'
+                        sh "git push ${scmUrlGitBox} asf-site"
+                    }   
+                }
+			}
         }
         post {
             always {
@@ -127,6 +144,7 @@ def mavenBuild(jdk, cmdline, mvnName, publishers) {
 		dir ('target/staging') {
 		   stash includes:'*', name: 'site'
 		}
+		stash includes:'.asf.yaml', name: 'asffile'
 	}
 }
 
