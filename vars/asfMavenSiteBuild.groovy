@@ -78,10 +78,10 @@ def call(Map params = [:]) {
 				 steps{
                     sh 'rm -rf buildasf'
                     sh "git clone --depth 1 --branch asf-site ${scmUrl} buildasf"
-                    dir ("build") {
+                    dir ("buildasf") {
                         unstash 'asffile'
                     }
-                    dir ('build') {
+                    dir ('buildasf') {
                         sh 'git add .'
                         sh 'echo `git commit -m "asf sync"`'
                         sh "git push ${scmUrlGitBox} asf-site"
