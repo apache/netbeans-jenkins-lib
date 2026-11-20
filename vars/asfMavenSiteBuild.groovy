@@ -57,7 +57,7 @@ def call(Map params = [:]) {
                 steps{
                     sh 'rm -rf build'
                     sh "git clone --depth 1 --branch asf-site ${scmUrl} build"
-                    sh "cd build;mkdir $BRANCH_NAME"
+                    sh "cd build;mkdir -p $BRANCH_NAME"
                     dir ("build/$BRANCH_NAME") {
                         unstash 'site'
                     }
