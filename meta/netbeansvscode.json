@@ -41,7 +41,7 @@
         "publish_apidoc":"false",
         "milestones": {
             "d75805e2c3a495a75f6062821069750096d44daa": {
-                "rc1": "1",
+                "vote": "1",
                 "position": "1"
             }
         },
